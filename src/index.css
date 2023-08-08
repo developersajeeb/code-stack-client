@@ -7,3 +7,11 @@
 * {
     font-family: 'Roboto', sans-serif;
 }
+
+.primary-bg {
+    background-color: #0278AE;
+}
+
+.small-btn {
+    @apply bg-[#0278AE] text-white px-3 py-1 rounded-full hover:bg-[#319ac6] duration-200
+}
