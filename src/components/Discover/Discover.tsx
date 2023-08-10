@@ -75,6 +75,9 @@ const Discover = () => {
                         <button className="btn btn-primary mt-3">Discover</button>
                         </div>
                     </div>
+
+
+                    
                 </div>
 
 
