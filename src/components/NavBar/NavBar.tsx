@@ -7,7 +7,7 @@ const NavBar = () => {
     const [isOpen, setOpen] = useState<boolean>(false);
 
     return (
-        <nav className='shadow-lg px-3 py-3 md:px-32 md:py-3 border-t-4 border-[#0278AE] flex items-center gap-4 md:gap-10'>
+        <nav className='shadow-lg px-3 py-3 md:px-8 lg:px-32 border-t-4 border-[#0278AE] flex items-center gap-4 md:gap-10'>
             <div className='flex items-center gap-4'>
                 <span onClick={() => { setOpen(!isOpen) }}><Hamburger size={25}></Hamburger></span>
                 <figure>
