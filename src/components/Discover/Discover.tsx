@@ -5,8 +5,6 @@ const Discover = () => {
             <h1 className="text-3xl text-center text-indigo-800 font-medium">I work in...</h1>
 
             <div className='max-w-[1240px] mx-auto grid md:grid-cols-3 lg:grid-cols-5 gap-8'>
-
-
                 <div className="card w-48 bg-base-300 shadow-2xl rounded-lg hover:scale-105 duration-300 mt-8">
                     <figure className="px-10 pt-10">
                         <p className="text-6xl text-teal-400"><FaHtml5></FaHtml5></p>
