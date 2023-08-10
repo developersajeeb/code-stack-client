@@ -1,6 +1,9 @@
 import { FaHtml5,FaJava,FaReact,FaNodeJs,FaCss3Alt } from "react-icons/fa";
 const Discover = () => {
     return (
+
+
+        
         <>
             <h1 className="text-3xl text-center text-indigo-800 font-medium">I work in...</h1>
             <div className='max-w-[1240px] mx-auto grid md:grid-cols-3 lg:grid-cols-5 gap-8'>
