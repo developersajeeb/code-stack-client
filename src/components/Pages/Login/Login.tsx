@@ -2,7 +2,7 @@ import { useContext, useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import Lottie from 'lottie-react'
 import login from '../../../assets/107385-login.json'
-// import { FaGoogle, FaGithub } from "react-icons/fa";
+
 import { FaGoogle } from "react-icons/fa";
 import {  toast } from 'react-toastify';
 import { AuthContext } from '../Provider/AuthProvider';
