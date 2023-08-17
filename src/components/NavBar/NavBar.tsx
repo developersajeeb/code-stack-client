@@ -1,11 +1,20 @@
 import Hamburger from 'hamburger-react';
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import logo from '../../assets/logo-codeStack.png'
 import { BiSearchAlt } from "react-icons/bi";
+import { AuthContext } from '../Pages/Provider/AuthProvider';
+import { Link, NavLink } from 'react-router-dom';
 
 const NavBar = () => {
     const [isOpen, setOpen] = useState<boolean>(false);
-
+    const { user, logOut } = useContext(AuthContext)
+    const handleLogOut = () => {
+        logOut()
+            .then(result => {
+                console.log(result)
+            })
+            .catch(error => console.log(error))  
+    }
     return (
         <nav className='shadow-lg px-3 py-3 md:px-32 md:py-3 border-t-4 border-[#0278AE] flex items-center gap-4 md:gap-10'>
             <div className='flex items-center gap-4'>
@@ -20,10 +29,33 @@ const NavBar = () => {
             </form>
             <div className='flex items-center gap-2'>
                 <div className='hidden md:block'>
-                    <button className='small-btn'>Login</button>
+                {
+                        user ? <>
+
+                            <div className="navbar-end">
+                                <div className="dropdown dropdown-end">
+                                    <label tabIndex={0} className="btn btn-ghost btn-circle avatar ">
+                                        <div className="w-10 rounded-full">
+                                            <img data-toggle="tooltip"
+                                                title={user && user.displayName} src={user && user.photoURL} />
+                                        </div>
+                                    </label>
+                                    <ul tabIndex={0} className="menu menu-compact dropdown-content mt-3 p-2 shadow bg-sky-200 text-black rounded-box w-52">
+                                        <li><Link to='/login' className='font-bold' onClick={handleLogOut}>Logout</Link></li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                        </> : <div className='navbar-end'>
+      <li className='btn btn-accent btn-md text-black '> <NavLink to='/login' title='' className={({ isActive }) => isActive ? "text-blue-600" : ''}>
+                                Login
+                            </NavLink></li>
+
+                        </div>
+                    }
                 </div>
                 <div className='hidden md:block'>
-                    <button className='small-btn'>SingUp</button>
+                <Link to='/register'> <button className='small-btn'>SingUp</button></Link>
                 </div>
             </div>
         </nav>
