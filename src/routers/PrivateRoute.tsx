@@ -11,6 +11,8 @@ const PrivateRoute = ({children}) => {
         return <><div className='mt-10 text-center'><progress className="progress w-56 mt-10 text-center"></progress></div></>
      }
 
+
+     
     if(user){
         return children
     }
