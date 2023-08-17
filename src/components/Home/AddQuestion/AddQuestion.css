@@ -94,10 +94,12 @@
   
   .button {
     max-width: fit-content;
-    margin: 10px 0px;
+    margin: 10px ;
+    padding: 5px;
+    background-color: #053086;
   }
   
   button:hover {
-    background-color: #053086;
+    background-color: #e4c53a;
   }
   
