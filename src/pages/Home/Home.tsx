@@ -1,9 +1,11 @@
-import headerImage from '../../assets/others/header-image.png'
-import { FaHtml5, FaCss3Alt, FaJava, FaReact, FaNodeJs } from "react-icons/fa";
+import headerImage from '../../assets/others/hero-three.jpg'
+import { FaHtml5, FaCss3Alt, FaJava, FaReact, FaNodeJs, FaUser, FaUsers, FaStar } from "react-icons/fa";
 import search from '../../assets/others/search.png'
 import analyze from '../../assets/others/analyze.png'
 import apply from '../../assets/others/apply.jpg'
 import BlogSlider from '../../components/Home/BlogSlider';
+import headerBannerImg from '../../assets/others/header-main-bg.jpg'
+import CountUp from '../../components/CountUp/CountUp';
 
 const Home = () => {
 
@@ -11,7 +13,7 @@ const Home = () => {
         <>
             <main className=''>
                 <header>
-                    <section className='px-3 py-12 md:px-8 md:py-28 lg:px-32 grid md:grid-cols-2 gap-10 items-center'>
+                    <section className='px-3 py-12 md:px-8 md:py-32 lg:px-32 grid md:grid-cols-2 gap-10 items-center bg-cover bg-center bg-no-repeat' style={{ backgroundImage: `url(${headerBannerImg})` }}>
                         <div>
                             <h1 className="text-4xl text-center md:text-start lg:text-5xl md:text-4xl font-bold text-gray-800">Best Website For Your Programming Or Code Solution.</h1>
                             <p className="text-gray-500 pt-4 pb-8 text-center md:text-start">CodeStack is a widely recognized platform where developers of all levels gather to ask questions, share knowledge, and find solutions to coding problems. The community-driven nature ensures a vast array of answers and discussions on a wide range of programming languages and technologies.</p>
@@ -32,29 +34,21 @@ const Home = () => {
                     </section>
                 </header>
 
-                <section className='px-3 md:px-8 lg:px-32 grid md:grid-cols-3 gap-8'>
-                    <div className='w-full shadow-xl flex flex-col p-4 my-4 rounded-lg hover:scale-105 duration-300 border-[rgb(197,230,245)] border-2'>
-                        <figure>
-                            <img className='w-24 mx-auto mt-2' src="https://i.ibb.co/v4ZH10M/images-1.png" alt="/" />
-                        </figure>
-                        <p className='text-center text-2xl text-blue-700'>Accelerate our R&D <br /> Development cycle</p>
-                        <p className="text-center mt-3 tracking-wide">Apply existing knowledge <br /> dynamically to new problem in <br /> real time. </p>
+                <section className='px-3 py-28 md:px-8 lg:px-32 grid md:grid-cols-3 gap-12 bg-[#202942]'>
+                    <div className='text-center'>
+                        <span className='text-color'><FaUser size={45} className='mx-auto' /></span>
+                        <h3 className='text-white text-6xl font-bold mb-2 mt-4'><CountUp from={0} to={1789} duration={3500} />+</h3>
+                        <span className='text-white text-xl font-normal'>Total Users</span>
                     </div>
-
-                    <div className='w-full shadow-xl flex flex-col p-4 my-4 rounded-lg hover:scale-105 duration-300 border-[#c5e6f5] border-2'>
-                        <figure>
-                            <img className='w-20 mx-auto mt-3 ' src="https://i.ibb.co/fdswGVp/image-2.png" alt="/" />
-                        </figure>
-                        <p className='text-center text-2xl text-blue-700 mt-2'>Improve business<br />agility</p>
-                        <p className="text-center mt-3 tracking-wide">Stengthen connection among <br /> experts across your entrie <br /> opportunities for grouth. </p>
+                    <div className='text-center'>
+                        <span className='text-color'><FaStar size={45} className='mx-auto' /></span>
+                        <h3 className='text-white text-6xl font-bold mb-2 mt-4'><CountUp from={0} to={1454} duration={3500} />+</h3>
+                        <span className='text-white text-xl font-normal'>Positive Reviews</span>
                     </div>
-
-                    <div className='w-full shadow-xl flex flex-col p-4 my-4 rounded-lg hover:scale-105 duration-300 border-2 border-[#c5e6f5]'>
-                        <figure>
-                            <img className='w-28 mx-auto mt-3 h-20' src="https://i.ibb.co/dWxGM6j/images-3.png" alt="/" />
-                        </figure>
-                        <p className='text-center text-2xl text-blue-700 mt-2'>Get the benefits of AI <br />with less risk</p>
-                        <p className="text-center mt-3 tracking-wide">Enterprise-grade tech <br /> accelerates knowledge sharing  <br /> your organization IP.</p>
+                    <div className='text-center'>
+                        <span className='text-color'><FaUsers size={45} className='mx-auto' /></span>
+                        <h3 className='text-white text-6xl font-bold mb-2 mt-4'><CountUp from={0} to={1200} duration={6500} />+</h3>
+                        <span className='text-white text-xl font-normal'>Daily Active Users</span>
                     </div>
                 </section>
 
