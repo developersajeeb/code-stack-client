@@ -7,6 +7,7 @@ import Loading from "../components/Loading/Loading";
 import Login from "../pages/Login/Login";
 import Register from "../pages/Register/Register";
 import NewsFeed from "../pages/NewsFeed/NewsFeed";
+import AddQuestions from "../pages/AddQuestions/AddQuestions";
 // import NewsFeed from "../pages/NewsFeed/NewsFeed";
 
 export const router = createBrowserRouter([
@@ -32,7 +33,12 @@ export const router = createBrowserRouter([
       },
       {
         path: 'news-feed',
-        element: <NewsFeed></NewsFeed>
+        element: <NewsFeed></NewsFeed>,
+        loader: () => fetch('https://code-stack-server.vercel.app/questions')
+      },
+      {
+        path: 'add-questions',
+        element: <AddQuestions></AddQuestions>
       },
     ]
   }

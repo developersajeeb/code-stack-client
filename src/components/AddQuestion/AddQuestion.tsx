@@ -19,6 +19,8 @@ const AddQuestion = () => {
         const form = event.target;
         const title: string = form.title.value;
         const question = { title, body, selected }
+        console.log(question);
+        
 
         fetch('https://code-stack-server.vercel.app/questions', {
             method: 'POST',

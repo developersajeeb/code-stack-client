@@ -27,12 +27,17 @@ const NavBar = () => {
                 {
                     user ?
                         <div className='flex'>
-                            <Link to='/news-feed'>
-                                <div className='hidden md:block'>
-                                    <button className='small-btn'>News</button>
+                            <div className='hidden md:block'>
+                                <div className='flex gap-3 items-center'>
+                                    <Link to='/news-feed'>
+                                        <button className='small-btn'>Home</button>
+                                    </Link>
+                                    <Link to='add-questions'>
+                                        <button className='small-btn'>AddQuestions</button>
+                                    </Link>
                                     <button className='small-btn' onClick={logOut}>LogOut</button>
                                 </div>
-                            </Link>
+                            </div>
                         </div>
                         :
                         <div className='flex items-center gap-2'>
