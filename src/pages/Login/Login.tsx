@@ -82,7 +82,7 @@ const Login = () => {
                         </div>
                         <a href="#" className="ml-auto text-sm color-one hover:underline" onClick={handleResetPass}>Lost Password?</a>
                     </div>
-                    <button type="submit" className="w-full text-white bg-two duration-300 hover:bg-[#62da8c] font-medium rounded-md px-5 py-2.5 text-center">Login to your account</button>
+                    <button type="submit" className="w-full text-white primary-bg duration-300 hover:bg-[#319ac6] font-medium rounded-md px-5 py-2.5 text-center">Login to your account</button>
                     <h4 className='text-center text-lg font-semibold text-gray-700'>Or sing In with</h4>
                     <SocialLogin></SocialLogin>
                     <Link to='/register'>
