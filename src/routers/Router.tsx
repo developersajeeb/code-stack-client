@@ -8,6 +8,7 @@ import Login from "../pages/Login/Login";
 import Register from "../pages/Register/Register";
 import NewsFeed from "../pages/NewsFeed/NewsFeed";
 import AddQuestions from "../pages/AddQuestions/AddQuestions";
+import MyProfile from "../pages/MyProfile/MyProfile";
 // import NewsFeed from "../pages/NewsFeed/NewsFeed";
 
 export const router = createBrowserRouter([
@@ -30,6 +31,10 @@ export const router = createBrowserRouter([
       {
         path: 'register',
         element: <Register></Register>
+      },
+      {
+        path: 'my-profile',
+        element: <MyProfile></MyProfile>
       },
       {
         path: 'news-feed',

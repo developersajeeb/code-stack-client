@@ -44,17 +44,17 @@ const Footer = () => {
                     <div>
                         <h3 className='text-white text-2xl font-normal'>Contact Info</h3>
                         <ul className='text-gray-400 mt-6 grid gap-5'>
-                            <li className='flex items-center hover:text-white duration-300 cursor-pointer gap-4'>
+                            <li className='flex items-center hover:text-white duration-300 gap-4'>
                                 <span className='bg-[#3e4868] p-3 rounded-full text-white border border-dashed border-gray-800'><AiOutlineHome size={18} /></span>
                                 Address: <br /> 5919 Trussville Crossings Pkwy, Birmingham
                             </li>
-                            <li className='flex items-center hover:text-white duration-300 cursor-pointer gap-4'>
+                            <li className='flex items-center hover:text-white duration-300 gap-4'>
                                 <span className='bg-[#3e4868] p-3 rounded-full text-white border border-dashed border-gray-800'><AiOutlineMail size={18} /></span>
                                 Email: <br /> info@codestack.com
                             </li>
-                            <li className='flex items-center hover:text-white duration-300 cursor-pointer gap-4'>
+                            <li className='flex items-center hover:text-white duration-300 gap-4'>
                                 <span className='bg-[#3e4868] p-3 rounded-full text-white border border-dashed border-gray-800'><AiOutlinePhone size={18} /></span>
-                                Email: <br /> +12345678900
+                                Phone: <br /> +12345678900
                             </li>
                         </ul>
                     </div>

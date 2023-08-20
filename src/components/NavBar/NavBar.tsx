@@ -35,6 +35,9 @@ const NavBar = () => {
                                     <Link to='add-questions'>
                                         <button className='small-btn'>AddQuestions</button>
                                     </Link>
+                                    <Link to='my-profile'>
+                                        <button className='small-btn'>Profile</button>
+                                    </Link>
                                     <button className='small-btn' onClick={logOut}>LogOut</button>
                                 </div>
                             </div>

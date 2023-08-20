@@ -9,13 +9,13 @@
 }
 
 .primary-bg {
-    background-color: #0278AE;
+    background-color: #5138EE;
 }
 
 .text-color {
-    color: #0278AE;
+    color: #5138EE;
 }
 
 .small-btn {
-    @apply bg-[#0278AE] text-white px-3 py-1 rounded-full hover:bg-[#319ac6] duration-200 shadow-md
+    @apply bg-[#5138EE] text-white px-3 py-1 rounded-full hover:bg-[#319ac6] duration-200 shadow-md
 }
