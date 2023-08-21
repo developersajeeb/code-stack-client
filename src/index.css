@@ -17,5 +17,13 @@
 }
 
 .small-btn {
-    @apply bg-[#5138EE] text-white px-3 py-1 rounded-full hover:bg-[#319ac6] duration-200 shadow-md
+    @apply bg-[#5138EE] text-white px-3 py-1 rounded-full duration-200 shadow-md
+}
+
+.bg-button {
+    @apply primary-bg px-6 py-3 text-white font-medium rounded-md border-2 border-[#5138EE] hover:bg-white duration-200 hover:text-[#5138EE] flex items-center gap-2 shadow-md hover:shadow-sm
+}
+
+.transparent-button {
+    @apply bg-white hover:bg-[#5138EE] px-6 py-3 hover:text-white font-medium rounded-md border-2 border-[#5138EE] duration-200 text-color flex items-center gap-2 shadow-sm hover:shadow-md
 }

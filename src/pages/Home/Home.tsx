@@ -1,31 +1,32 @@
 import headerImage from '../../assets/others/hero-three.jpg'
-import { FaUser, FaUsers, FaStar, FaRegLightbulb } from "react-icons/fa";
+import { FaUser, FaUsers, FaStar, FaRegLightbulb, FaCheckCircle, FaArrowRight, FaRegCalendarAlt } from "react-icons/fa";
 import { BiSearchAlt } from "react-icons/bi";
-import { AiOutlineVideoCameraAdd, AiFillAndroid } from "react-icons/ai";
-import search from '../../assets/others/search.png'
-import analyze from '../../assets/others/analyze.png'
-import apply from '../../assets/others/apply.jpg'
-import BlogSlider from '../../components/Home/BlogSlider';
+import { AiOutlineVideoCameraAdd, AiFillAndroid, AiOutlineComment } from "react-icons/ai";
 import headerBannerImg from '../../assets/others/header-main-bg.jpg'
 import CountUp from '../../components/CountUp/CountUp';
 import bg from '../../assets/others/bg-dots.png';
-import webPhoto from '../../assets/others/web.png'
+import webPhoto from '../../assets/others/web.png';
+import aboutUs from '../../assets/others/about-two.png'
+import UiSlider from '../../components/UiSlider/UiSlider';
+import logo1 from '../../assets/sponsor/phero.png'
+import logo2 from '../../assets/sponsor/ollyo.png'
+import logo3 from '../../assets/sponsor/codersBucket.png'
+import logo4 from '../../assets/sponsor/DS-logo.png'
+import logo5 from '../../assets/sponsor/BS-Logo-Blue_Hr.svg'
 
 const Home = () => {
 
     return (
         <>
-            <main className=''>
+            <main>
                 <header>
-                    <section className='px-3 py-12 md:px-8 md:py-32 lg:px-32 grid md:grid-cols-2 gap-10 items-center bg-cover bg-center bg-no-repeat' style={{ backgroundImage: `url(${headerBannerImg})` }}>
+                    <section className='px-4 py-12 md:px-8 md:py-32 lg:px-32 grid md:grid-cols-2 gap-10 items-center bg-cover bg-center bg-no-repeat' style={{ backgroundImage: `url(${headerBannerImg})` }}>
                         <div>
                             <h1 className="text-4xl text-center md:text-start lg:text-5xl md:text-4xl font-semibold text-gray-800">Best Website For Your Programming Or Code Solution.</h1>
                             <p className="text-gray-500 pt-4 pb-8 text-center md:text-start">CodeStack is a widely recognized platform where developers of all levels gather to ask questions, share knowledge, and find solutions to coding problems. The community-driven nature ensures a vast array of answers and discussions on a wide range of programming languages and technologies.</p>
-                            <div className='text-center md:text-start'>
-                                <button className="relative inline-flex items-center justify-start inline-block px-5 py-3 overflow-hidden font-medium transition-all primary-bg rounded-full hover:bg-white group border-2 border-[#5138EE]">
-                                    <span className="absolute inset-0 border-0 group-hover:border-[25px] ease-linear duration-200 transition-all border-white rounded-full"></span>
-                                    <span className="relative w-full text-left text-white transition-colors duration-200 ease-in-out group-hover:text-[#5138EE]">Get Start</span>
-                                </button>
+                            <div className='flex flex-wrap gap-6 justify-center md:justify-start'>
+                                <button className='bg-button'>Get Start <FaArrowRight size={15} /></button>
+                                <button className='transparent-button'>Take A Tour <FaArrowRight size={15} /></button>
                             </div>
                         </div>
                         <div>
@@ -34,7 +35,7 @@ const Home = () => {
                     </section>
                 </header>
 
-                <section className='px-3 py-28 md:px-8 lg:px-32 grid md:grid-cols-3 gap-12 bg-[#202942] bg-cover bg-no-repeat' style={{ backgroundImage: `url(${bg})` }}>
+                <section className='px-4 py-28 md:px-8 lg:px-32 grid md:grid-cols-3 gap-12 bg-[#202942] bg-cover bg-no-repeat' style={{ backgroundImage: `url(${bg})` }}>
                     <div className='text-center'>
                         <span className='text-color'><FaUser size={45} className='mx-auto' /></span>
                         <h3 className='text-white text-6xl font-bold mb-2 mt-4'><CountUp from={0} to={1789} duration={3500} />+</h3>
@@ -52,7 +53,7 @@ const Home = () => {
                     </div>
                 </section>
 
-                <section className='px-3 py-24 md:px-8 md:py-28 lg:px-32 grid md:grid-cols-2 gap-14'>
+                <section className='px-4 py-24 md:px-8 md:py-32 lg:px-32 grid md:grid-cols-2 gap-14'>
                     <figure>
                         <img src={webPhoto} alt="" />
                     </figure>
@@ -100,41 +101,78 @@ const Home = () => {
                     </div>
                 </section>
 
-                <section className="grid md:grid-cols-3 gap-10 px-3 pt-10 md:px-8 lg:px-32">
-                    <div className='bg-slate-100 rounded-xl'>
-                        <div className='flex items-center justify-between bg-orange-500 px-10 py-5 rounded-t-xl'>
-                            <h3 className='text-4xl font-bold text-white'>Find</h3>
-                            <img src={search} alt="" className='h-20' />
+                <section className='px-4 md:px-8 lg:px-32 grid md:grid-cols-2 gap-14'>
+                    <div>
+                        <span className='bg-indigo-50 px-5 py-2 text-color rounded-md font-medium'>About Us</span>
+                        <h2 className='text-4xl font-semibold text-gray-800 my-6 leading-snug'>Architects of Tomorrow's Tech CodeStack's Odyssey Unveiled</h2>
+                        <p className='leading-7 text-gray-500'>CodeStack is a widely recognized platform where developers of all levels gather to ask questions, share knowledge, and find solutions to coding problems. The community-driven nature ensures a vast array of answers and discussions on a wide range of programming languages and technologies.</p>
+                        <div className='md:flex items-center gap-6 mt-6'>
+                            <p className='flex items-center gap-2 text-xl font-semibold text-gray-700'><span className='text-orange-400'><FaCheckCircle size={23} /></span> Tags and Categories</p>
+                            <p className='flex items-center gap-2 text-xl font-semibold text-gray-700'><span className='text-color'><FaCheckCircle size={23} /></span> Leader-board & Badges</p>
                         </div>
-                        <div className='px-4 py-6 space-y-2'>
-                            <h4 className='font-medium text-2xl'>How to deploy Next.js App...</h4>
-                            <p>Introduction: Netlify is a development tool used by frontend developers to...</p>
-                        </div>
+                        <button className='transparent-button mt-10'>Get Start<FaArrowRight size={15} /></button>
                     </div>
-                    <div className='bg-slate-100 rounded-xl'>
-                        <div className='flex items-center justify-between bg-green-600 px-10 py-5 rounded-t-xl'>
-                            <h3 className='text-4xl font-bold text-white'>Analyze</h3>
-                            <img src={analyze} alt="" className='h-20' />
-                        </div>
-                        <div className='px-4 py-6 space-y-2'>
-                            <h4 className='font-medium text-2xl'>Analyze all solutions</h4>
-                            <p>Thoroughly examine various approaches to understand, evaluate, and select...</p>
-                        </div>
+                    <figure>
+                        <img className='w-full' src={aboutUs} alt="" />
+                    </figure>
+                </section>
+
+                <section className='px-4 py-24 md:px-8 md:py-32 lg:px-32'>
+                    <div className='text-center'>
+                        <span className='bg-indigo-50 px-5 py-2 text-color rounded-md font-medium'>Web Introduction</span>
+                        <h2 className='text-4xl font-semibold text-gray-800 leading-snug mb-2 mt-4'>Watch A Details Tutorial</h2>
+                        <p className='leading-7 text-gray-500'>Embark on a Comprehensive Video Tutorial to Discover the Intricacies of Our Portal</p>
                     </div>
-                    <div className='bg-slate-100 rounded-xl'>
-                        <div className='flex items-center justify-between bg-sky-600 px-10 py-5 rounded-t-xl'>
-                            <h3 className='text-4xl font-bold text-white'>Apply</h3>
-                            <img src={apply} alt="" className='h-20' />
-                        </div>
-                        <div className='px-4 py-6 space-y-2'>
-                            <h4 className='font-medium text-2xl'>Applying optimal solutions</h4>
-                            <p>Implement chosen code or options to address challenges effectively and...</p>
-                        </div>
+                    <div>
+                        <img className='w-full h-[600px] mt-16 object-cover' src="https://t4.ftcdn.net/jpg/03/32/54/93/360_F_332549362_Y2Nkokepqc6AbUfVvyAhrL1CjA9QpZND.jpg" alt="" />
                     </div>
                 </section>
 
-                <section className='px-3 py-12 md:px-8 md:py-28 lg:px-32'>
-                    <BlogSlider></BlogSlider>
+                <section>
+                    <div className='text-center px-4'>
+                        <span className='bg-indigo-50 px-5 py-2 text-color rounded-md font-medium'>Application Screenshot</span>
+                        <h2 className='text-4xl font-semibold text-gray-800 leading-snug mb-2 mt-4'>Let’s See Our Software UI Design Screenshot</h2>
+                        <p className='leading-7 text-gray-500'>Embark on a Comprehensive Video Tutorial to Discover the Intricacies of Our Portal</p>
+                    </div>
+                    <div className='mt-16'>
+                        <UiSlider></UiSlider>
+                    </div>
+                </section>
+
+                <section className='px-4 py-20 md:px-8 md:py-28 lg:px-32 my-12 md:my-28 bg-gray-50 grid md:grid-cols-3 gap-6'>
+                    <div>
+                        <div>
+                            <span className='bg-indigo-50 px-5 py-2 text-color rounded-md font-medium'>Latest News & Blog</span>
+                            <h2 className='text-4xl font-semibold text-gray-800 leading-snug my-6'>Get Our Every Single Update Latest News and Blog</h2>
+                        </div>
+                        <button className='transparent-button'>View More News <FaArrowRight size={15} /></button>
+                    </div>
+                    <div className='bg-white p-8 grid gap-4 rounded-lg border-dashed border-2'>
+                        <div className='flex items-center gap-6'>
+                            <p className='flex items-center gap-2'><FaRegCalendarAlt/> 25 March 2022</p>
+                            <p className='flex items-center gap-2'><AiOutlineComment/> Com (5)</p>
+                        </div>
+                        <h2 className='text-[28px] font-medium leading-snug'>Smashin Podcast Episode Web Frameworks Solve Vanilla</h2>
+                        <p className='leading-7'>On the other hand, we denounce with righteous indignation and dislike men who are so beguiled and demoralized the charms of pleasure</p>
+                        <span className='flex items-center gap-2 text-color cursor-pointer'>Read More <FaArrowRight size={15} /></span>
+                    </div>
+                    <div className='bg-white p-8 grid gap-4 rounded-lg border-dashed border-2'>
+                        <div className='flex items-center gap-6'>
+                            <p className='flex items-center gap-2'><FaRegCalendarAlt/> 25 March 2022</p>
+                            <p className='flex items-center gap-2'><AiOutlineComment/> Com (5)</p>
+                        </div>
+                        <h2 className='text-[28px] font-medium leading-snug'>Smashin Podcast Episode Web Frameworks Solve Vanilla</h2>
+                        <p className='leading-7'>On the other hand, we denounce with righteous indignation and dislike men who are so beguiled and demoralized the charms of pleasure</p>
+                        <span className='flex items-center gap-2 text-color cursor-pointer'>Read More <FaArrowRight size={15} /></span>
+                    </div>
+                </section>
+
+                <section className='px-4 pb-20 md:px-8 md:pb-28 lg:px-32 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 items-center gap-12'>
+                    <img className='w-full' src={logo1} alt="" />
+                    <img className='w-full' src={logo2} alt="" />
+                    <img className='w-full' src={logo3} alt="" />
+                    <img className='w-full' src={logo4} alt="" />
+                    <img className='w-full' src={logo5} alt="" />
                 </section>
             </main>
         </>
