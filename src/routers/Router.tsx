@@ -1,20 +1,47 @@
 import {
-    createBrowserRouter,
+  createBrowserRouter,
 } from "react-router-dom";
 import MainLayouts from "../Layouts/MainLayouts";
-import Home from "../components/Pages/Home";
-
+import Home from "../pages/Home/Home";
+import Login from "../pages/Login/Login";
+import Register from "../pages/Register/Register";
+import NewsFeed from "../pages/NewsFeed/NewsFeed";
+import AddQuestions from "../pages/AddQuestions/AddQuestions";
+import MyProfile from "../pages/MyProfile/MyProfile";
+import PrivateRoute from "./PrivateRoute";
+// import NewsFeed from "../pages/NewsFeed/NewsFeed";
 
 export const router = createBrowserRouter([
-    {
-      path: "/",
-      element: <MainLayouts></MainLayouts>,
-      children:[
-        {
-          path: '/',
-          element: <Home />
-        }
-      ]
-    },
-   
-  ]);
+  {
+    path: "/",
+    element: <MainLayouts></MainLayouts>,
+    children: [
+      {
+        path: '/',
+        element: <Home></Home>
+      },
+      {
+        path: 'login',
+        element: <Login></Login>
+      },
+      {
+        path: 'register',
+        element: <Register></Register>
+      },
+      {
+        path: 'my-profile',
+        element: <MyProfile></MyProfile>
+      },
+      {
+        path: 'news-feed',
+        element: <NewsFeed></NewsFeed>,
+        loader: () => fetch('https://code-stack-server.vercel.app/questions')
+      },
+      {
+        path: 'ask-question',
+        element: <PrivateRoute><AddQuestions></AddQuestions></PrivateRoute>
+      },
+    ]
+  }
+
+]);

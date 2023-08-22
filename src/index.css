@@ -9,9 +9,29 @@
 }
 
 .primary-bg {
-    background-color: #0278AE;
+    background-color: #5138EE;
 }
 
-.small-btn {
-    @apply bg-[#0278AE] text-white px-3 py-1 rounded-full hover:bg-[#319ac6] duration-200
+.text-color {
+    color: #5138EE;
+}
+
+.content{
+    min-height: calc(100vh - 88px - 72px);
+  }
+
+.bg-button {
+    @apply primary-bg px-6 py-3 text-white font-medium rounded-md border-2 border-[#5138EE] hover:bg-white duration-200 hover:text-[#5138EE] flex items-center gap-2 shadow-md hover:shadow-sm
+}
+
+.bg-button-small {
+    @apply primary-bg px-3 py-1 text-white font-medium rounded-md border-2 border-[#5138EE] hover:bg-white duration-200 hover:text-[#5138EE] flex items-center gap-2 shadow-md hover:shadow-sm
+}
+
+.transparent-button {
+    @apply bg-white hover:bg-[#5138EE] px-6 py-3 hover:text-white font-medium rounded-md border-2 border-[#5138EE] duration-200 text-color flex items-center gap-2 shadow-sm hover:shadow-md
+}
+
+.transparent-button-small {
+    @apply bg-white hover:bg-[#5138EE] px-3 py-1 hover:text-white font-medium rounded-md border-2 border-[#5138EE] duration-200 text-color flex items-center gap-2 shadow-sm hover:shadow-md
 }
