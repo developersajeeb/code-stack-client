@@ -22,7 +22,8 @@ const Home = () => {
                 <header>
                     <section className='px-4 py-12 md:px-8 md:py-32 lg:px-32 grid md:grid-cols-2 gap-10 items-center bg-cover bg-center bg-no-repeat' style={{ backgroundImage: `url(${headerBannerImg})` }}>
                         <div>
-                            <h1 className="text-4xl text-center md:text-start lg:text-5xl md:text-4xl font-semibold text-gray-800">Best Website For Your Programming Or Code Solution.</h1>
+                            <span className='bg-indigo-50 px-5 py-2 text-color rounded-md font-medium'>Welcome</span>
+                            <h1 className="text-4xl text-center md:text-start lg:text-5xl md:text-4xl font-semibold text-gray-800 mt-6">Best Website For Your Programming Or Code Solution.</h1>
                             <p className="text-gray-500 pt-4 pb-8 text-center md:text-start">CodeStack is a widely recognized platform where developers of all levels gather to ask questions, share knowledge, and find solutions to coding problems. The community-driven nature ensures a vast array of answers and discussions on a wide range of programming languages and technologies.</p>
                             <div className='flex flex-wrap gap-6 justify-center md:justify-start'>
                                 <button className='bg-button'>Get Start <FaArrowRight size={15} /></button>
@@ -149,8 +150,8 @@ const Home = () => {
                     </div>
                     <div className='bg-white p-8 grid gap-4 rounded-lg border-dashed border-2'>
                         <div className='flex items-center gap-6'>
-                            <p className='flex items-center gap-2'><FaRegCalendarAlt/> 25 March 2022</p>
-                            <p className='flex items-center gap-2'><AiOutlineComment/> Com (5)</p>
+                            <p className='flex items-center gap-2'><FaRegCalendarAlt /> 25 March 2022</p>
+                            <p className='flex items-center gap-2'><AiOutlineComment /> Com (5)</p>
                         </div>
                         <h2 className='text-[28px] font-medium leading-snug'>Smashin Podcast Episode Web Frameworks Solve Vanilla</h2>
                         <p className='leading-7'>On the other hand, we denounce with righteous indignation and dislike men who are so beguiled and demoralized the charms of pleasure</p>
@@ -158,8 +159,8 @@ const Home = () => {
                     </div>
                     <div className='bg-white p-8 grid gap-4 rounded-lg border-dashed border-2'>
                         <div className='flex items-center gap-6'>
-                            <p className='flex items-center gap-2'><FaRegCalendarAlt/> 25 March 2022</p>
-                            <p className='flex items-center gap-2'><AiOutlineComment/> Com (5)</p>
+                            <p className='flex items-center gap-2'><FaRegCalendarAlt /> 25 March 2022</p>
+                            <p className='flex items-center gap-2'><AiOutlineComment /> Com (5)</p>
                         </div>
                         <h2 className='text-[28px] font-medium leading-snug'>Smashin Podcast Episode Web Frameworks Solve Vanilla</h2>
                         <p className='leading-7'>On the other hand, we denounce with righteous indignation and dislike men who are so beguiled and demoralized the charms of pleasure</p>

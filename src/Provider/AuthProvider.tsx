@@ -2,6 +2,7 @@ import { createContext, useEffect, useState } from "react";
 import { GithubAuthProvider, GoogleAuthProvider, createUserWithEmailAndPassword, getAuth, onAuthStateChanged, sendPasswordResetEmail, signInWithEmailAndPassword, signInWithPopup, signOut, updateProfile } from "firebase/auth";
 import app from "../firebase/firebase.config";
 
+type LogoutFunction = () => Promise<void>
 export const AuthContext = createContext(null);
 const auth = getAuth(app);
 
@@ -22,7 +23,7 @@ const AuthProviders = ({ children }) => {
         return signInWithEmailAndPassword(auth, email, password)
     }
 
-    const logOut = () => {
+    const logOut:LogoutFunction = () => {
         setLoading(true);
         return signOut(auth)
     }

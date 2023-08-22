@@ -6,10 +6,12 @@ import { AuthContext } from '../Provider/AuthProvider';
 const PrivateRoute = ({ children }) => {
 
     const { user, loading } = useContext(AuthContext)
-    let location = useLocation()
+    const location = useLocation()
 
     if (loading) {
-        return <><div className='mt-10 text-center'><progress className="progress w-56 mt-10 text-center"></progress></div></>
+        return <div className='h-screen flex justify-center items-center'>
+            <div className="w-12 h-12 rounded-full animate-spin border-x-8 border-solid border-purple-500 border-t-transparent"></div>
+        </div>
     }
 
     if (user) {

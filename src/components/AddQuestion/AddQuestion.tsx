@@ -1,9 +1,9 @@
 import { useState } from "react";
 import ReactQuill from "react-quill";
 import 'react-quill/dist/quill.snow.css';
-import '../AddQuestion/AddQuestion.css'
 import { TagsInput } from "react-tag-input-component";
 import { toast, Toaster } from "react-hot-toast";
+import { FaArrowRight } from "react-icons/fa";
 
 
 const AddQuestion = () => {
@@ -20,7 +20,7 @@ const AddQuestion = () => {
         const title: string = form.title.value;
         const question = { title, body, selected }
         console.log(question);
-        
+
 
         fetch('https://code-stack-server.vercel.app/questions', {
             method: 'POST',
@@ -41,67 +41,58 @@ const AddQuestion = () => {
     }
 
     return (
-        <form onSubmit={questionField}>
-            <Toaster
-                position="top-center"
-                reverseOrder={false}
-            />
-            <div className="add-question">
-                <div className="add-question-container">
-                    <div className="head-title">
-                        <h1>Ask a public question</h1>
-                    </div>
-                    <div className="question-container">
-                        <div className="question-options">
-                            <div className="question-option">
-                                <div className="title">
-                                    <h3>Title</h3>
-                                    <small>
-                                        Be specific and imagine you are asking a question to another
-                                        person
-                                    </small>
-                                    <input type="text" name="title" id="" placeholder="e.g Is there an R function for finding teh index of an element in a vector?" />
-                                </div>
-                            </div>
-                            <div className="question-option">
-                                <div className="title">
-                                    <h3>Body</h3>
-                                    <small>
-                                        Include all the information someone would need to answer your
-                                        question
-                                    </small>
-                                    <ReactQuill
-                                        value={body}
-                                        onChange={handleQuill}
-                                        className="react-quill"
-                                        theme="snow"
-                                    />
-                                </div>
-                            </div>
-
-
-                            <div className="question-option">
-                                <div className="title">
-                                    <h3>Tags</h3>
-                                    <small>
-                                        Add up to five tags to describe what your question is about
-                                    </small>
-                                    <TagsInput
-                                        value={selected}
-                                        onChange={setSelected}
-                                        name="tags"
-                                        placeHolder="Enter tags"
-                                    />
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <button>ADD NOW</button>
-                    {/* <button className="button"> Add  question </button> */}
-
+        <>
+            <main>
+                <Toaster
+                    position="top-center"
+                    reverseOrder={false}
+                />
+                <div>
+                    <span className='bg-indigo-50 px-5 py-2 text-color rounded-md font-medium'>Questions</span>
+                    <h2 className='text-4xl font-semibold text-gray-800 leading-snug mb-2 mt-4'>Ask A Public Question For Solve Your Issus</h2>
                 </div>
-            </div>
-        </form>
+                <section className="mt-6">
+                    <form onSubmit={questionField}>
+                        <div className="bg-white border p-4 border-dashed rounded-md shadow mb-6">
+                            <h3 className="text-xl font-semibold">Title</h3>
+                            <small className="text-gray-400">
+                                Be specific and imagine you are asking a question to another
+                                person
+                            </small>
+                            <input className="block border-2 w-full px-4 py-2 rounded-md mt-3" type="text" name="title" id="" placeholder="e.g Is there an R function for finding teh index of an element in a vector?" />
+                        </div>
+
+                        <div className="bg-white border p-4 pb-16 border-dashed rounded-md shadow">
+                            <h3 className="text-xl font-semibold">Body</h3>
+                            <small className="text-gray-400">
+                                Include all the information someone would need to answer your
+                                question
+                            </small>
+                            <ReactQuill
+                                value={body}
+                                onChange={handleQuill}
+                                className="react-quill block w-full rounded-md mt-3 h-56"
+                                theme="snow"
+                            />
+                        </div>
+
+                        <div className="bg-white border p-4 border-dashed rounded-md shadow my-6">
+                            <h3 className="text-xl font-semibold">Tags</h3>
+                            <small className="text-gray-400">
+                                Add up to five tags to describe what your question is about
+                            </small>
+                            <TagsInput
+                                value={selected}
+                                onChange={setSelected}
+                                name="tags"
+                                placeHolder="Enter tags"
+                            />
+                        </div>
+                        <button className="bg-button">Add Now <FaArrowRight size={15} /></button>
+                    </form>
+                </section>
+            </main>
+        </>
     )
 };
 
