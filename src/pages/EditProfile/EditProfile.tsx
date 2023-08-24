@@ -14,7 +14,7 @@ const EditProfile = () => {
 
     const [selected, setSelected] = useState(["Web Development"]);
 
-    const handleUpdateDetails = event => {
+    const handleUpdateDetails = (event: { preventDefault: () => void; target: any; }) => {
 
         event.preventDefault();
         const form = event.target;
@@ -73,7 +73,7 @@ const EditProfile = () => {
                     </div>
                     <div>
                         <label className='block text-gray-600' htmlFor="gender">Gender</label>
-                        <input className='border-2 border-gray-300 rounded-md w-full py-3 px-5 mt-2 focus:border-2 text-sm' type="text" name="gender" id="" placeholder="Gender" defaultValue={userData?.age} />
+                        <input className='border-2 border-gray-300 rounded-md w-full py-3 px-5 mt-2 focus:border-2 text-sm' type="text" name="gender" id="" placeholder="Gender" defaultValue={userData?.gender} />
                     </div>
                 </div>
                 <div className="grid md:grid-cols-2 gap-4 mb-6">
