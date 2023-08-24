@@ -13,7 +13,7 @@ const MyProfile = () => {
     const {user} = useContext(AuthContext);
 
     return (
-        <main className="px-5 py-16 md:px-32">
+        <main className="px-5 py-4 md:py-20 md:px-32">
             <section className="">
                 <div className="drawer lg:drawer-open">
                     <input id="my-drawer-2" type="checkbox" className="drawer-toggle" />

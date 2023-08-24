@@ -21,11 +21,11 @@ const NavBar = () => {
                 <span onClick={() => { setOpen(!isOpen) }}><Hamburger size={25}></Hamburger></span>
                 <ul className={`drop-shadow-xl grid font-medium text-gray-600 bg-white px-8 py-6 rounded-md absolute w-60 duration-300 border-2 border-dashed ${isOpen ? 'left-4 lg:left-32 top-20' : 'top-20 -left-60'}`}>
                     <NavLink className={({ isActive }) => isActive ? 'text-color flex items-center gap-2 mb-5' : ' text-gray-500 flex items-center gap-2 mb-5'} to='/'><BiHomeAlt /> Home</NavLink>
-                    <NavLink className={({ isActive }) => isActive ? 'text-color flex items-center gap-2 mb-5' : ' text-gray-500 flex items-center gap-2 mb-5'} to='/news-feed'><FaRegNewspaper /> News Feed</NavLink>
-                    <NavLink className={({ isActive }) => isActive ? 'text-color flex items-center gap-2 mb-5' : ' text-gray-500 flex items-center gap-2 mb-5'} to='/ask-question'><TbUserQuestion /> Ask Question</NavLink>
-                    <NavLink className={({ isActive }) => isActive ? 'text-color flex items-center gap-2 mb-5' : ' text-gray-500 flex items-center gap-2 mb-5'} to='/tags'><TbTags /> Tags</NavLink>
-                    <NavLink className={({ isActive }) => isActive ? 'text-color flex items-center gap-2 mb-5' : ' text-gray-500 flex items-center gap-2 mb-5'} to='/users'><FiUsers /> Users</NavLink>
-                    <NavLink className={({ isActive }) => isActive ? 'text-color flex items-center gap-2 mb-5' : ' text-gray-500 flex items-center gap-2 mb-5'} to='/badges'><BiBookmarkAlt /> Badges</NavLink>
+                    <NavLink className={({ isActive }) => isActive ? 'text-color flex items-center gap-2 mb-5' : ' text-gray-500 flex items-center gap-2 mb-5'} to='/main/news-feed'><FaRegNewspaper /> News Feed</NavLink>
+                    <NavLink className={({ isActive }) => isActive ? 'text-color flex items-center gap-2 mb-5' : ' text-gray-500 flex items-center gap-2 mb-5'} to='/main/ask-question'><TbUserQuestion /> Ask Question</NavLink>
+                    <NavLink className={({ isActive }) => isActive ? 'text-color flex items-center gap-2 mb-5' : ' text-gray-500 flex items-center gap-2 mb-5'} to='/main/tags'><TbTags /> Tags</NavLink>
+                    <NavLink className={({ isActive }) => isActive ? 'text-color flex items-center gap-2 mb-5' : ' text-gray-500 flex items-center gap-2 mb-5'} to='/main/users'><FiUsers /> Users</NavLink>
+                    <NavLink className={({ isActive }) => isActive ? 'text-color flex items-center gap-2 mb-5' : ' text-gray-500 flex items-center gap-2 mb-5'} to='/main/badges'><BiBookmarkAlt /> Badges</NavLink>
                     {
                         user ?
                             <>

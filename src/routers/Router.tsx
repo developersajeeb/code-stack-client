@@ -13,6 +13,7 @@ import ProfileDashboard from "../pages/ProfileDashboard/ProfileDashboard";
 import Summery from "../pages/Summery/Summery";
 import EditProfile from "../pages/EditProfile/EditProfile";
 import ErrorPage from "../pages/ErrorPage/ErrorPage";
+import Main from "../pages/Main/Main";
 // import NewsFeed from "../pages/NewsFeed/NewsFeed";
 
 export const router = createBrowserRouter([
@@ -34,18 +35,9 @@ export const router = createBrowserRouter([
         element: <Register></Register>
       },
       {
-        path: 'news-feed',
-        element: <PrivateRoute><NewsFeed></NewsFeed></PrivateRoute>,
-        loader: () => fetch('https://code-stack-server.vercel.app/questions')
-      },
-      {
-        path: 'ask-question',
-        element: <PrivateRoute><AddQuestions></AddQuestions></PrivateRoute>,
-        errorElement: <ErrorPage></ErrorPage>,
-      },
-      {
         path: 'my-profile',
         element: <PrivateRoute><MyProfile></MyProfile></PrivateRoute>,
+        errorElement: <ErrorPage></ErrorPage>,
         children: [
           {
             path: 'user-dashboard/:email',
@@ -63,6 +55,20 @@ export const router = createBrowserRouter([
           },
         ]
       },
+      {
+        path: 'main',
+        element: <PrivateRoute><Main></Main></PrivateRoute>,
+        children: [
+          {
+            path: 'news-feed',
+            element: <NewsFeed></NewsFeed>
+          },
+          {
+            path: 'ask-question',
+            element: <PrivateRoute><AddQuestions></AddQuestions></PrivateRoute>,
+          },
+        ]
+      }
     ]
   }
 
