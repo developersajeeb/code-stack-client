@@ -16,7 +16,7 @@ const NavBar = () => {
     const { user, logOut } = useContext(AuthContext);
 
     return (
-        <nav className='shadow-md px-3 py-3 md:px-8 lg:px-32 border-t-4 border-[#5138EE] flex items-center gap-4 md:gap-10 bg-transparent'>
+        <nav className='shadow-md px-2 py-3 md:px-8 lg:px-32 border-t-4 border-[#5138EE] flex items-center gap-4 md:gap-10 bg-transparent bg-white'>
             <div className='flex items-center gap-4'>
                 <span onClick={() => { setOpen(!isOpen) }}><Hamburger size={25}></Hamburger></span>
                 <ul className={`drop-shadow-xl grid font-medium text-gray-600 bg-white px-8 py-6 rounded-md absolute w-60 duration-300 border-2 border-dashed ${isOpen ? 'left-4 lg:left-32 top-20' : 'top-20 -left-60'}`}>
@@ -30,7 +30,7 @@ const NavBar = () => {
                         user ?
                             <>
                                 <figure className='w-10 h-10 mb-5'>
-                                    <Link to='my-profile'>
+                                    <Link to={`/my-profile/user-dashboard/${user?.email}`}>
                                         <img className='rounded-full' src={user?.photoURL} alt="" />
                                     </Link>
                                 </figure>
@@ -57,13 +57,13 @@ const NavBar = () => {
                 {
                     user ?
                         <div className='hidden md:block'>
-                            <div className='flex items-center gap-3'>
-                                <figure className='w-10 h-10'>
-                                    <Link to='my-profile'>
+                            <div className='flex items-center gap-3 border-2 p-2 bg-white shadow-sm rounded-full'>
+                                <figure className='w-9 h-9'>
+                                    <Link to={`/my-profile/user-dashboard/${user?.email}`}>
                                         <img className='rounded-full' src={user?.photoURL} alt="" />
                                     </Link>
                                 </figure>
-                                <button className='small-btn transparent-button-small' onClick={logOut}><BiLogInCircle /></button>
+                                <button className='transparent-button-small' onClick={logOut}><BiLogInCircle /></button>
                             </div>
                         </div>
                         :

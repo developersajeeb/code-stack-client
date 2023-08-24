@@ -1,12 +1,15 @@
+//TODO: Implement Formik Form Validation
+
 import { useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import { AuthContext } from "../../Provider/AuthProvider";
 import SocialLogin from "../../components/SocialLogin/SocialLogin";
+import { ImSpinner10 } from "react-icons/im";
 
 
 const Register = () => {
-    const { createUser, updateUserProfile } = useContext(AuthContext);
+    const { createUser, updateUserProfile, loading } = useContext(AuthContext);
     const navigate = useNavigate();
 
     const handleRegister = event => {
@@ -85,15 +88,18 @@ const Register = () => {
                         <label htmlFor="password" className="block mb-2 font-medium text-gray-900">Your password</label>
                         <input type="password" name="password" id="password" placeholder="••••••••" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-md block w-full p-3" required></input>
                     </div>
-                    {/* {
-                        logError && <p className="text-red-500 text-center text-sm">{logError}</p>
-                    } */}
-                    <button type="submit" className="w-full text-white primary-bg duration-300 hover:bg-[#319ac6] font-medium rounded-md px-5 py-2.5 text-center">Register to your account</button>
+                    <button type="submit" className="w-full text-white primary-bg duration-300 font-medium rounded-md px-5 py-2.5 text-center">
+                        {loading ? (
+                            <ImSpinner10 className='m-auto animate-spin' size={24} />
+                        ) : (
+                            'Register to your account'
+                        )}
+                    </button>
                     <h4 className='text-center text-lg font-semibold text-gray-700'>Or SingUp With</h4>
                     <SocialLogin></SocialLogin>
                     <Link to='/login'>
                         <div className="font-medium text-gray-500 dark:text-gray-300 mt-4 text-center text-sm">
-                            Already have an account? <span className="color-one hover:underline">Login</span>
+                            Already have an account? <span className="text-color hover:underline">Login</span>
                         </div>
                     </Link>
                 </form>

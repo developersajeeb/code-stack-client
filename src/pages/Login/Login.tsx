@@ -1,15 +1,18 @@
+//TODO: Implement Formik Form Validation
+
 import { useContext, useRef, useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import { AuthContext } from '../../Provider/AuthProvider';
 import SocialLogin from '../../components/SocialLogin/SocialLogin';
+import { ImSpinner10 } from "react-icons/im";
 
 const Login = () => {
     const navigate = useNavigate();
     const location = useLocation();
     const emailRef = useRef();
     const [resetError, setResetError] = useState('');
-    const {singIn, ResetPassword} = useContext(AuthContext);
+    const { loading, singIn, ResetPassword } = useContext(AuthContext);
 
     const from = location.state?.from?.pathname;
 
@@ -18,7 +21,7 @@ const Login = () => {
         const form = event.target;
         const email = form.email.value;
         const password = form.password.value;
-        
+
         singIn(email, password)
             .then(() => {
                 Swal.fire(
@@ -26,7 +29,7 @@ const Login = () => {
                     'You have successfully logged in.',
                     'success'
                 )
-                navigate(from, {replace: true});
+                navigate(from, { replace: true });
                 // setLogError('')
             })
             .catch(() => {
@@ -40,17 +43,17 @@ const Login = () => {
 
     const handleResetPass = () => {
         const email = emailRef.current.value;
-        if(!email){
+        if (!email) {
             setResetError('Please provide your email for reset!')
             return;
         }
         ResetPassword(email)
-        .then(() => {
-            console.log('done');
-        })
-        .catch(error => {
-            console.log(error);
-        })
+            .then(() => {
+                console.log('done');
+            })
+            .catch(error => {
+                console.log(error);
+            })
     }
 
 
@@ -82,12 +85,18 @@ const Login = () => {
                         </div>
                         <a href="#" className="ml-auto text-sm color-one hover:underline" onClick={handleResetPass}>Lost Password?</a>
                     </div>
-                    <button type="submit" className="w-full text-white primary-bg duration-300 hover:bg-[#319ac6] font-medium rounded-md px-5 py-2.5 text-center">Login to your account</button>
+                    <button type="submit" className="w-full text-white primary-bg duration-300 font-medium rounded-md px-5 py-2.5 text-center">
+                        {loading ? (
+                            <ImSpinner10 className='m-auto animate-spin' size={24} />
+                        ) : (
+                            'Login to your account'
+                        )}
+                    </button>
                     <h4 className='text-center text-lg font-semibold text-gray-700'>Or sing In with</h4>
                     <SocialLogin></SocialLogin>
                     <Link to='/register'>
                         <div className="font-medium text-gray-500 dark:text-gray-300 mt-4 text-center text-sm">
-                            Not registered? <span className="color-one hover:underline">Create account</span>
+                            Not registered? <span className="text-color hover:underline">Create account</span>
                         </div>
                     </Link>
                 </form>

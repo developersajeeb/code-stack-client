@@ -59,7 +59,7 @@ const AddQuestion = () => {
                                 Be specific and imagine you are asking a question to another
                                 person
                             </small>
-                            <input className="block border-2 w-full px-4 py-2 rounded-md mt-3" type="text" name="title" id="" placeholder="e.g Is there an R function for finding teh index of an element in a vector?" />
+                            <input required className="block border-2 w-full px-4 py-2 rounded-md mt-3" type="text" name="title" id="" placeholder="e.g Is there an R function for finding teh index of an element in a vector?" />
                         </div>
 
                         <div className="bg-white border p-4 pb-16 border-dashed rounded-md shadow">
