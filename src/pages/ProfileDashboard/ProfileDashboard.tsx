@@ -1,8 +1,12 @@
 import { Link, useLoaderData } from "react-router-dom";
 import storage from '../../assets/others/pngwing.com.png'
 
+interface UserInfo {
+    aboutMe: string;
+}
+
 const ProfileDashboard = () => {
-    const userData = useLoaderData();
+    const userData = useLoaderData() as UserInfo | undefined;
     
     return (
         <main>

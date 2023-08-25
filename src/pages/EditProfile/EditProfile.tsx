@@ -9,8 +9,12 @@ import { AuthContext } from "../../Provider/AuthProvider";
 
 const EditProfile = () => {
     // const image_hosting_url = `https://api.imgbb.com/1/upload?expiration=600&key=${image_hosting_api}`
-    const { user } = useContext(AuthContext);
     const userData = useLoaderData();
+    const authContext   = useContext(AuthContext)
+    if (!authContext) {
+        return <p>Loading...</p>;
+    }
+    const { user } = authContext;
 
     const [selected, setSelected] = useState(["Web Development"]);
 

@@ -2,7 +2,7 @@ import Hamburger from 'hamburger-react';
 import { useState, useContext } from 'react';
 import logo from '../../assets/logo-codeStack.png'
 
-import { BiSearchAlt, BiHomeAlt, BiBookmarkAlt, BiLogInCircle, BiLogOutCircle } from "react-icons/bi";
+import { BiSearchAlt, BiHomeAlt, BiBookmarkAlt, BiLogInCircle } from "react-icons/bi";
 import { FaRegNewspaper } from "react-icons/fa";
 import { TbUserQuestion, TbTags } from "react-icons/tb";
 import { BsPersonAdd } from "react-icons/bs";
@@ -13,7 +13,11 @@ import { AuthContext } from '../../Provider/AuthProvider';
 
 const NavBar = () => {
     const [isOpen, setOpen] = useState<boolean>(false);
-    const { user, logOut } = useContext(AuthContext);
+    const authContext   = useContext(AuthContext)
+    if (!authContext) {
+        return <p>Loading...</p>;
+    }
+    const { user, logOut } = authContext;
 
     return (
         <nav className='shadow-md px-2 py-3 md:px-8 lg:px-32 border-t-4 border-[#5138EE] flex items-center gap-4 md:gap-10 bg-transparent bg-white'>

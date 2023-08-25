@@ -12,9 +12,13 @@ const Login = () => {
     const location = useLocation();
     const emailRef = useRef();
     const [resetError, setResetError] = useState('');
-    const { loading, singIn, ResetPassword } = useContext(AuthContext);
-
     const from = location.state?.from?.pathname;
+    
+    const authContext   = useContext(AuthContext)
+    if (!authContext) {
+        return <p>Loading...</p>;
+    }
+    const { loading, singIn, ResetPassword } = authContext;
 
     const handleLoginUser = event => {
         event.preventDefault();

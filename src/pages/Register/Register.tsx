@@ -9,7 +9,11 @@ import { ImSpinner10 } from "react-icons/im";
 
 
 const Register = () => {
-    const { createUser, updateUserProfile, loading } = useContext(AuthContext);
+    const authContext   = useContext(AuthContext)
+    if (!authContext) {
+        return <p>Loading...</p>;
+    }
+    const { createUser, updateUserProfile, loading } = authContext;
     const navigate = useNavigate();
 
     const handleRegister = event => {

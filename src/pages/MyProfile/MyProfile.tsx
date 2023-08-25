@@ -10,7 +10,11 @@ import { BiBookmarkAlt } from "react-icons/bi";
 import { LuTags } from "react-icons/lu";
 
 const MyProfile = () => {
-    const {user} = useContext(AuthContext);
+    const authContext   = useContext(AuthContext);
+    if (!authContext) {
+        return <p>Loading...</p>;
+    }
+    const { user } = authContext;
 
     return (
         <main className="px-5 py-4 md:py-20 md:px-32">

@@ -5,9 +5,9 @@ import { AuthContext } from "../../Provider/AuthProvider";
 
 
 const SocialLogin = () => {
-    const { googleSingIn, githubSingIn } = useContext(AuthContext);
     const navigate = useNavigate();
     const location = useLocation();
+    const { googleSingIn, githubSingIn } = useContext(AuthContext);
 
     const from = location.state?.from?.pathname || '/';
 

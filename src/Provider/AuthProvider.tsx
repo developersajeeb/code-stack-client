@@ -1,11 +1,18 @@
 import { ReactNode, createContext, useEffect, useState } from "react";
-import { GithubAuthProvider, GoogleAuthProvider, User, createUserWithEmailAndPassword, getAuth, onAuthStateChanged, sendPasswordResetEmail, signInWithEmailAndPassword, signInWithPopup, signOut, updateProfile } from "firebase/auth";
+import { GithubAuthProvider, GoogleAuthProvider, User, UserCredential, createUserWithEmailAndPassword, getAuth, onAuthStateChanged, sendPasswordResetEmail, signInWithEmailAndPassword, signInWithPopup, signOut, updateProfile } from "firebase/auth";
 import app from "../firebase/firebase.config";
 
 interface AuthContextType {
     user: User | null;
-    signIn: () => void;
-    logOut: () => void;
+    // signIn: () => void;
+    // logOut: () => void;
+    createUser: (email: string, password: string) => Promise<UserCredential>;
+    signIn: (email: string, password: string) => Promise<UserCredential>;
+    logOut: () => Promise<void>;
+    googleSignIn: () => Promise<UserCredential>;
+    githubSignIn: () => Promise<UserCredential>;
+    ResetPassword: (email: string) => Promise<void>;
+    updateUserProfile: (name: string, photo: string) => Promise<void>;
 }
 
 interface AuthProviderProps {
