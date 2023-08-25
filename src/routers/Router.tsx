@@ -61,7 +61,8 @@ export const router = createBrowserRouter([
         children: [
           {
             path: 'news-feed',
-            element: <NewsFeed></NewsFeed>
+            element: <NewsFeed></NewsFeed>,
+            loader: () => fetch('http://localhost:5000/questions')
           },
           {
             path: 'ask-question',

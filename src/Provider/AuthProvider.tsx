@@ -1,29 +1,38 @@
-import { createContext, useEffect, useState } from "react";
-import { GithubAuthProvider, GoogleAuthProvider, createUserWithEmailAndPassword, getAuth, onAuthStateChanged, sendPasswordResetEmail, signInWithEmailAndPassword, signInWithPopup, signOut, updateProfile } from "firebase/auth";
+import { ReactNode, createContext, useEffect, useState } from "react";
+import { GithubAuthProvider, GoogleAuthProvider, User, createUserWithEmailAndPassword, getAuth, onAuthStateChanged, sendPasswordResetEmail, signInWithEmailAndPassword, signInWithPopup, signOut, updateProfile } from "firebase/auth";
 import app from "../firebase/firebase.config";
 
-type LogoutFunction = () => Promise<void>
-export const AuthContext = createContext(null);
+interface AuthContextType {
+    user: User | null;
+    signIn: () => void;
+    logOut: () => void;
+}
+
+interface AuthProviderProps {
+    children: ReactNode;
+}
+
+export const AuthContext = createContext<AuthContextType | undefined>(undefined);
 const auth = getAuth(app);
 
-const AuthProviders = ({ children }) => {
-    const [user, setUser] = useState(null);
+const AuthProviders: React.FC<AuthProviderProps> = ({ children }) => {
+    const [user, setUser] = useState<User | null>(null);
     const [loading, setLoading] = useState(true);
 
     const googleProvider = new GoogleAuthProvider();
     const githubProvider = new GithubAuthProvider();
 
-    const createUser = (email: string | number, password: string | number) => {
+    const createUser = (email: string, password: string) => {
         setLoading(true);
         return createUserWithEmailAndPassword(auth, email, password)
     }
 
-    const singIn = (email: string | number, password: string | number) => {
+    const singIn = (email: string, password: string) => {
         setLoading(true);
         return signInWithEmailAndPassword(auth, email, password)
     }
 
-    const logOut:LogoutFunction = () => {
+    const logOut = () => {
         setLoading(true);
         return signOut(auth)
     }
@@ -43,9 +52,17 @@ const AuthProviders = ({ children }) => {
     }
 
     const updateUserProfile = (name: string, photo: string) => {
-        return updateProfile(auth.currentUser, {
-            displayName: name, photoURL: photo
-        });
+        const currentUser = auth.currentUser;
+
+        if (currentUser) {
+            return updateProfile(currentUser, {
+                displayName: name,
+                photoURL: photo
+            });
+        } else {
+            console.error("No user is currently logged in.");
+            return null;
+        }
     }
 
     useEffect(() => {
