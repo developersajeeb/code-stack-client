@@ -4,8 +4,7 @@ import app from "../firebase/firebase.config";
 
 interface AuthContextType {
     user: User | null;
-    // signIn: () => void;
-    // logOut: () => void;
+    loading: boolean;
     createUser: (email: string, password: string) => Promise<UserCredential>;
     signIn: (email: string, password: string) => Promise<UserCredential>;
     logOut: () => Promise<void>;
@@ -34,7 +33,7 @@ const AuthProviders: React.FC<AuthProviderProps> = ({ children }) => {
         return createUserWithEmailAndPassword(auth, email, password)
     }
 
-    const singIn = (email: string, password: string) => {
+    const signIn = (email: string, password: string) => {
         setLoading(true);
         return signInWithEmailAndPassword(auth, email, password)
     }
@@ -44,11 +43,11 @@ const AuthProviders: React.FC<AuthProviderProps> = ({ children }) => {
         return signOut(auth)
     }
 
-    const googleSingIn = () => {
+    const googleSignIn = () => {
         setLoading(true);
         return signInWithPopup(auth, googleProvider)
     }
-    const githubSingIn = () => {
+    const githubSignIn = () => {
         setLoading(true);
         return signInWithPopup(auth, githubProvider)
     }
@@ -68,14 +67,14 @@ const AuthProviders: React.FC<AuthProviderProps> = ({ children }) => {
             });
         } else {
             console.error("No user is currently logged in.");
-            return null;
+            return Promise.reject(new Error("No user is currently logged in."));
         }
     }
 
     useEffect(() => {
         const unsubscribe = onAuthStateChanged(auth, currentUser => {
             setUser(currentUser);
-            setLoading(false)
+            setLoading(false);
             console.log('now user', currentUser);
         });
         return () => {
@@ -83,14 +82,14 @@ const AuthProviders: React.FC<AuthProviderProps> = ({ children }) => {
         }
     }, [])
 
-    const authInfo = {
+    const authInfo: AuthContextType  = {
         user,
-        createUser,
-        singIn,
         loading,
+        createUser,
+        signIn,
         logOut,
-        googleSingIn,
-        githubSingIn,
+        googleSignIn,
+        githubSignIn,
         ResetPassword,
         updateUserProfile,
     }

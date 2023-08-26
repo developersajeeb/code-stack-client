@@ -4,7 +4,7 @@ import { BsQuestionCircle } from "react-icons/bs";
 import { FiUploadCloud } from "react-icons/fi";
 import { MdUnfoldMore } from "react-icons/md";
 import { PiChatsCircleBold } from "react-icons/pi";
-import { useLoaderData } from "react-router-dom";
+import { Link, useLoaderData } from "react-router-dom";
 
 interface Question {
     _id: string;
@@ -24,7 +24,7 @@ const NewsFeed = () => {
                     <h2 className='text-2xl font-medium text-gray-800 mt-4 mb-4 md:mb-0'>Ask A Public Question For Solve Your Issus</h2>
                 </div>
                 <div>
-                    <button className="bg-button">Ask Question <BsQuestionCircle /></button>
+                    <Link to='/main/ask-question'><button className="bg-button">Ask Question <BsQuestionCircle /></button></Link>
                 </div>
             </section>
 

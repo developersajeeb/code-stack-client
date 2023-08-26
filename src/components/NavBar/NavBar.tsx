@@ -35,7 +35,7 @@ const NavBar = () => {
                             <>
                                 <figure className='w-10 h-10 mb-5'>
                                     <Link to={`/my-profile/user-dashboard/${user?.email}`}>
-                                        <img className='rounded-full' src={user?.photoURL} alt="" />
+                                        <img className='rounded-full' src={user?.photoURL || ''} alt="" />
                                     </Link>
                                 </figure>
                                 <button className='small-btn transparent-button-small w-12' onClick={logOut}><BiLogInCircle /></button>
@@ -64,7 +64,7 @@ const NavBar = () => {
                             <div className='flex items-center gap-3 border-2 p-2 bg-white shadow-sm rounded-full'>
                                 <figure className='w-9 h-9'>
                                     <Link to={`/my-profile/user-dashboard/${user?.email}`}>
-                                        <img className='rounded-full' src={user?.photoURL} alt="" />
+                                        <img className='rounded-full' src={user?.photoURL || ''} alt="" />
                                     </Link>
                                 </figure>
                                 <button className='transparent-button-small' onClick={logOut}><BiLogInCircle /></button>

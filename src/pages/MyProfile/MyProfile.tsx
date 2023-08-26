@@ -37,7 +37,7 @@ const MyProfile = () => {
                         <ul className="menu px-4 py-8 lg:py-0 h-full text-base-content text-center bg-white">
                             {/* Sidebar content here */}
                             <figure className="flex items-center gap-2 mb-10">
-                                <img className="w-20 h-20 rounded-full object-cover mx-auto border-4 border-indigo-100" src={user?.photoURL} alt="" />
+                                <img className="w-20 h-20 rounded-full object-cover mx-auto border-4 border-indigo-100" src={user?.photoURL || ''} alt="" />
                                 <div>
                                     <h4 className="font-medium text-3xl text-start">{user?.displayName}</h4>
                                     <p className="text-gray-500 text-start">{user?.email}</p>

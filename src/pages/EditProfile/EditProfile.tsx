@@ -7,9 +7,25 @@ import { AuthContext } from "../../Provider/AuthProvider";
 
 // const image_hosting_api=import.meta.env.VITE_Image_API;
 
+interface UserInfo {
+    _id: string;
+    name: string;
+    email: string;
+    aboutMe: string;
+    age: number;
+    city: string;
+    country: string;
+    facebookURL: URL;
+    gender: string;
+    githubURL: URL;
+    portfolioURL: URL;
+    twitterURL: URL;
+    selected: string[];
+}
+
 const EditProfile = () => {
     // const image_hosting_url = `https://api.imgbb.com/1/upload?expiration=600&key=${image_hosting_api}`
-    const userData = useLoaderData();
+    const userData = useLoaderData() as UserInfo | undefined;
     const authContext   = useContext(AuthContext)
     if (!authContext) {
         return <p>Loading...</p>;
@@ -87,7 +103,7 @@ const EditProfile = () => {
                     </div>
                     <div>
                         <label className='block text-gray-600' htmlFor="portfolioURL">Portfolio URL</label>
-                        <input className='border-2 border-gray-300 rounded-md w-full py-3 px-5 mt-2 focus:border-2 text-sm' type="url" name="portfolioURL" id="" placeholder="Your Portfolio" defaultValue={userData?.portfolioURL} />
+                        <input className='border-2 border-gray-300 rounded-md w-full py-3 px-5 mt-2 focus:border-2 text-sm' type="url" name="portfolioURL" id="" placeholder="Your Portfolio" defaultValue={userData?.portfolioURL?.toString()} />
                     </div>
                 </div>
                 <div className="grid md:grid-cols-2 gap-4 mb-6">
@@ -103,15 +119,15 @@ const EditProfile = () => {
                 <div className="grid md:grid-cols-3 gap-4 mb-6">
                     <div>
                         <label className='block text-gray-600' htmlFor="facebookURL">Facebook Profile URL</label>
-                        <input className='border-2 border-gray-300 rounded-md w-full py-3 px-5 mt-2 focus:border-2 text-sm' type="url" name="facebookURL" id="" placeholder="Facebook Profile URL" defaultValue={userData?.facebookURL} />
+                        <input className='border-2 border-gray-300 rounded-md w-full py-3 px-5 mt-2 focus:border-2 text-sm' type="url" name="facebookURL" id="" placeholder="Facebook Profile URL" defaultValue={userData?.facebookURL?.toString()} />
                     </div>
                     <div>
                         <label className='block text-gray-600' htmlFor="twitterURL">Twitter Profile URL</label>
-                        <input className='border-2 border-gray-300 rounded-md w-full py-3 px-5 mt-2 focus:border-2 text-sm' type="url" name="twitterURL" id="" placeholder="Twitter Profile URL" defaultValue={userData?.twitterURL} />
+                        <input className='border-2 border-gray-300 rounded-md w-full py-3 px-5 mt-2 focus:border-2 text-sm' type="url" name="twitterURL" id="" placeholder="Twitter Profile URL" defaultValue={userData?.twitterURL?.toString()} />
                     </div>
                     <div>
                         <label className='block text-gray-600' htmlFor="githubURL">GitHub Profile URL</label>
-                        <input className='border-2 border-gray-300 rounded-md w-full py-3 px-5 mt-2 focus:border-2 text-sm' type="url" name="githubURL" id="" placeholder="GitHub Profile URL" defaultValue={userData?.githubURL} />
+                        <input className='border-2 border-gray-300 rounded-md w-full py-3 px-5 mt-2 focus:border-2 text-sm' type="url" name="githubURL" id="" placeholder="GitHub Profile URL" defaultValue={userData?.githubURL?.toString()} />
                     </div>
                 </div>
                 <div>
@@ -125,7 +141,7 @@ const EditProfile = () => {
                 </div>
                 <div className="my-6">
                     <label className='block text-gray-600' htmlFor="aboutMe">About</label>
-                    <textarea className="border-2 border-gray-300 rounded-md w-full py-3 px-5 mt-2 focus:border-2 text-sm" name="aboutMe" id="" cols="30" rows="6" placeholder="About Yourself" defaultValue={userData?.aboutMe}></textarea>
+                    <textarea className="border-2 border-gray-300 rounded-md w-full py-3 px-5 mt-2 focus:border-2 text-sm" name="aboutMe" id="" cols={30} rows={6} placeholder="About Yourself" defaultValue={userData?.aboutMe}></textarea>
                 </div>
 
                 <button className="bg-button">Update <FaArrowRight size={15} /></button>
