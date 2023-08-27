@@ -1,6 +1,7 @@
 import Hamburger from 'hamburger-react';
 import { useState, useContext } from 'react';
-import logo from '../../assets/logo-codeStack.png'
+import logo from '../../assets/logo-codeStack.png';
+import notUser from '../../assets/icons/user-not.png';
 
 import { BiSearchAlt, BiHomeAlt, BiBookmarkAlt, BiLogInCircle } from "react-icons/bi";
 import { FaRegNewspaper } from "react-icons/fa";
@@ -18,6 +19,8 @@ const NavBar = () => {
         return <p>Loading...</p>;
     }
     const { user, logOut } = authContext;
+    console.log(user);
+    
 
     return (
         <nav className='shadow-md px-2 py-3 md:px-8 lg:px-32 border-t-4 border-[#5138EE] flex items-center gap-4 md:gap-10 bg-transparent bg-white'>
@@ -64,7 +67,7 @@ const NavBar = () => {
                             <div className='flex items-center gap-3 border-2 p-2 bg-white shadow-sm rounded-full'>
                                 <figure className='w-9 h-9'>
                                     <Link to={`/my-profile/user-dashboard/${user?.email}`}>
-                                        <img className='rounded-full' src={user?.photoURL || ''} alt="" />
+                                        <img className='rounded-full' src={user?.photoURL || notUser} alt="" />
                                     </Link>
                                 </figure>
                                 <button className='transparent-button-small' onClick={logOut}><BiLogInCircle /></button>

@@ -9,6 +9,8 @@ import { ImSpinner10 } from "react-icons/im";
 import bg from '../../assets/others/logreg.jpg'
 import { BsPersonAdd } from "react-icons/bs";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
+import Lottie from 'lottie-react'
+import animation from '../../assets/animation/reg.json'
 
 
 const Register = () => {
@@ -19,6 +21,21 @@ const Register = () => {
     }
     const { createUser, updateUserProfile, loading } = authContext;
     const navigate = useNavigate();
+    const [isUsernameValid, setIsUsernameValid] = useState('');
+
+    const handleUsernameChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
+        const newUsername = event.target.value;
+
+        try {
+            const response = await fetch(`http://localhost:5000/check-username?username=${newUsername}`);
+            const data = await response.json();
+            console.log(data);
+
+            setIsUsernameValid(data.message);
+        } catch (error) {
+            console.error("Error checking username:", error);
+        }
+    };
 
     const handleRegister = (event: { preventDefault: () => void; target: any; }) => {
         event.preventDefault();
@@ -27,9 +44,8 @@ const Register = () => {
         const name = form.name.value;
         const email = form.email.value;
         const password = form.password.value;
-        const facebookURL = form.facebookURL.value;
-        const githubURL = form.githubURL.value;
         const role = 'normalUser';
+
 
         createUser(email, password)
             .then(() => {
@@ -37,8 +53,8 @@ const Register = () => {
                 updateUserProfile(email, password)
                     .then(() => {
 
-                        const saveUser = { name, username, email, password, facebookURL, githubURL, role }
-                        fetch('https://code-stack-server.vercel.app/users', {
+                        const saveUser = { name, username, email, password, role }
+                        fetch('http://localhost:5000/users', {
                             method: 'POST',
                             headers: {
                                 'content-type': 'application/json'
@@ -81,7 +97,8 @@ const Register = () => {
                     <div className="grid grid-cols-2 gap-6">
                         <div>
                             <label htmlFor="username" className="block mb-2 font-medium text-gray-900">Username<span className="text-red-500"> *</span></label>
-                            <input type="text" name="username" id="username" className="border border-gray-300 text-gray-900 text-sm rounded-md block w-full p-3" placeholder="your username" required></input>
+                            <input onChange={handleUsernameChange} type="text" name="username" id="username" className="border border-gray-300 text-gray-900 text-sm rounded-md block w-full p-3" placeholder="your username" required></input>
+                            <p className="text-sm ml-0.5">{isUsernameValid}</p>
                         </div>
                         <div>
                             <label htmlFor="name" className="block mb-2 font-medium text-gray-900">Your Name<span className="text-red-500"> *</span></label>
@@ -89,7 +106,7 @@ const Register = () => {
                         </div>
                     </div>
                     <div>
-                        <label htmlFor="email" className="block mb-2 font-medium text-gray-900">Your email<span className="text-red-500"> *</span></label>
+                        <label htmlFor="email" className="block mb-2 font-medium text-gray-900">Your Email<span className="text-red-500"> *</span></label>
                         <input type="email" name="email" id="email" className="border border-gray-300 text-gray-900 text-sm rounded-md block w-full p-3" placeholder="name@mail.com" required></input>
                     </div>
                     <div>
@@ -97,7 +114,7 @@ const Register = () => {
                         <input className="cursor-pointer file:cursor-pointer relative m-0 block w-full min-w-0 rounded-md border py-3 px-5 transition duration-300 ease-in-out file:-mx-3 file:-my-[0.32rem] file:overflow-hidden file:border-0 file:border-solid file:border-inherit file:px-3 file:py-[0.32rem] file:text-neutral-700 file:transition file:duration-150 file:ease-in-out file:[margin-inline-end:0.75rem] hover:file:bg-[#5138EE] hover:file:text-white border-gray-300 file:bg-indigo-50 file:font-medium file:rounded-md" type="file" name="profilePhoto" id="profilePhoto" />
                     </div>
                     <div>
-                        <label htmlFor="password" className="block mb-2 font-medium text-gray-900">Your password<span className="text-red-500"> *</span></label>
+                        <label htmlFor="password" className="block mb-2 font-medium text-gray-900">Your Password<span className="text-red-500"> *</span></label>
                         <div className='flex items-center'>
                             <input type={showPassword ? "text" : "password"} name="password" id="password" placeholder="••••••••" className="border border-gray-300 text-gray-900 text-sm rounded-md block w-full p-3" required></input>
                             <span className="-ml-8 cursor-pointer text-gray-500" onClick={handleTogglePassword}>
@@ -122,9 +139,8 @@ const Register = () => {
                 </form>
             </div>
             <div className='bg-cover py-20 px-4 md:p-6 lg:px-24 lg:py-28' style={{ backgroundImage: `url(${bg})` }}>
-                <div className='backdrop-blur-lg bg-white/25 rounded-lg p-6 md:p-12 lg:p-16 h-full border-2 border-gray-200'>
-                    <h1 className='leading-snug md:leading-snug lg:leading-snug text-3xl md:text-4xl lg:text-5xl font-semibold text-white line-space'><span className='text-[#263358]'>CodeStack</span> Is A Platform For Programming Or Coding Solution</h1>
-                    <p className='mt-6 text-[#263358] leading-7'>CodeStack is a widely recognized platform where developers of all levels gather to ask questions, share knowledge, and find solutions to coding problems. The community-driven nature ensures a vast array of answers and discussions on a wide range of programming languages and technologies.</p>
+                <div className='backdrop-blur-lg bg-white/25 rounded-lg h-full border-2 border-gray-200 flex items-center'>
+                    <Lottie className='w-full' animationData={animation} loop={true} />
                 </div>
             </div>
         </main>

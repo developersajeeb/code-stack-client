@@ -1,5 +1,6 @@
 //TODO: Implement Formik Form Validation
 
+import Lottie from 'lottie-react'
 import { useContext, useRef, useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
@@ -9,6 +10,7 @@ import { ImSpinner10 } from "react-icons/im";
 import { BiLogInCircle } from 'react-icons/bi';
 import bg from '../../assets/others/logreg.jpg'
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
+import animation from '../../assets/animation/login.json'
 
 const Login = () => {
     const navigate = useNavigate();
@@ -119,9 +121,8 @@ const Login = () => {
                 </form>
             </div>
             <div className='bg-cover py-20 px-4 md:p-6 lg:px-24 lg:py-28' style={{ backgroundImage: `url(${bg})` }}>
-                <div className='backdrop-blur-lg bg-white/25 rounded-lg p-6 md:p-12 lg:p-16 h-full border-2 border-gray-200'>
-                    <h1 className='leading-snug md:leading-snug lg:leading-snug text-3xl md:text-4xl lg:text-5xl font-semibold text-white line-space'><span className='text-[#263358]'>CodeStack</span> Is A Platform For Programming Or Coding Solution</h1>
-                    <p className='mt-6 text-[#263358] leading-7'>CodeStack is a widely recognized platform where developers of all levels gather to ask questions, share knowledge, and find solutions to coding problems. The community-driven nature ensures a vast array of answers and discussions on a wide range of programming languages and technologies.</p>
+                <div className='backdrop-blur-lg bg-white/25 rounded-lg h-full border-2 border-gray-200 flex items-center'>
+                    <Lottie className='w-full' animationData={animation} loop={true} />
                 </div>
             </div>
         </main>
