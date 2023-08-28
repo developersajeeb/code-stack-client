@@ -5,7 +5,7 @@ import { useState, useContext } from "react";
 import { Toaster, toast } from "react-hot-toast";
 import { AuthContext } from "../../Provider/AuthProvider";
 
-// const image_hosting_api=import.meta.env.VITE_Image_API;
+const image_hosting_token = import.meta.env.VITE_Image_API;
 
 interface UserInfo {
     _id: string;
@@ -24,17 +24,17 @@ interface UserInfo {
 }
 
 const EditProfile = () => {
-    // const image_hosting_url = `https://api.imgbb.com/1/upload?expiration=600&key=${image_hosting_api}`
+    const image_hosting_url = `https://api.imgbb.com/1/upload?key=${image_hosting_token}`
     const userData = useLoaderData() as UserInfo | undefined;
-    const authContext   = useContext(AuthContext)
+    const [image, setImage] = useState<File | null>(null);
+    const authContext = useContext(AuthContext)
     if (!authContext) {
         return <p>Loading...</p>;
     }
     const { user } = authContext;
-
     const [selected, setSelected] = useState(["Web Development"]);
 
-    const handleUpdateDetails = (event: { preventDefault: () => void; target: any; }) => {
+    const handleUpdateDetails = async (event: { preventDefault: () => void; target: any; }) => {
 
         event.preventDefault();
         const form = event.target;
@@ -48,8 +48,22 @@ const EditProfile = () => {
         const twitterURL = form.twitterURL.value;
         const githubURL = form.githubURL.value;
         const aboutMe = form.aboutMe.value;
-        const personalData = { name, age, gender, portfolioURL, country, city, facebookURL, twitterURL, githubURL, selected, aboutMe }
 
+        const formData = new FormData();
+        if (image) {
+            formData.append('image', image);
+        }
+
+        const response = await fetch(image_hosting_url, {
+            method: 'POST',
+            body: formData
+        });
+
+        const imgResponse = await response.json();
+        const imgURL = imgResponse?.data?.display_url || '';
+        console.log(imgURL);
+
+        const personalData = { name, imgURL, age, gender, portfolioURL, country, city, facebookURL, twitterURL, githubURL, selected, aboutMe }
         fetch(`http://localhost:5000/user/${user?.email}`, {
             method: 'PUT',
             headers: {
@@ -80,7 +94,13 @@ const EditProfile = () => {
             <form onSubmit={handleUpdateDetails} className="mt-10">
                 <div className="mb-6">
                     <label htmlFor="image" className="block text-gray-600 mb-2">Upload Your Profile Photo</label>
-                    <input className="cursor-pointer file:cursor-pointer relative m-0 block w-full min-w-0 rounded-md border py-3 px-5 transition duration-300 ease-in-out file:-mx-3 file:-my-[0.32rem] file:overflow-hidden file:border-0 file:border-solid file:border-inherit file:px-3 file:py-[0.32rem] file:text-neutral-700 file:transition file:duration-150 file:ease-in-out file:[margin-inline-end:0.75rem] hover:file:bg-[#5138EE] hover:file:text-white border-gray-300 file:bg-indigo-50 file:font-medium file:rounded-md" type="file" name="image" id="image" />
+                    <input className="cursor-pointer file:cursor-pointer relative m-0 block w-full min-w-0 rounded-md border py-3 px-5 transition duration-300 ease-in-out file:-mx-3 file:-my-[0.32rem] file:overflow-hidden file:border-0 file:border-solid file:border-inherit file:px-3 file:py-[0.32rem] file:text-neutral-700 file:transition file:duration-150 file:ease-in-out file:[margin-inline-end:0.75rem] hover:file:bg-[#5138EE] hover:file:text-white border-gray-300 file:bg-indigo-50 file:font-medium file:rounded-md" type="file" name="image" id="image"
+                        onChange={(e) => {
+                            const selectedFile = e.target.files?.[0];
+                            if (selectedFile) {
+                                setImage(selectedFile);
+                            }
+                        }} />
                 </div>
                 <div className="grid md:grid-cols-3 gap-4 mb-6">
                     <div>

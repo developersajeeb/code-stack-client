@@ -1,5 +1,5 @@
 import { NavLink, Outlet } from "react-router-dom";
-import { useContext } from "react";
+import { useState, useContext, useEffect } from 'react';
 
 import { FaArrowLeft, FaRegNewspaper } from "react-icons/fa";
 import { AuthContext } from "../../Provider/AuthProvider";
@@ -8,13 +8,28 @@ import { TbBrandGoogleAnalytics, TbDeviceIpadHorizontalQuestion, TbUserEdit } fr
 import { IoChatbubblesOutline } from "react-icons/io5";
 import { BiBookmarkAlt } from "react-icons/bi";
 import { LuTags } from "react-icons/lu";
+import notUser from '../../assets/icons/user-not.png';
+
+const initialUserData = {
+    name: '',
+    username: '',
+    email: '',
+    imgURL: ''
+};
 
 const MyProfile = () => {
+    const [userData, setUserData] = useState(initialUserData);
     const authContext   = useContext(AuthContext);
     if (!authContext) {
         return <p>Loading...</p>;
     }
-    const { user } = authContext;
+    const { user } = authContext;    
+
+    useEffect(() => {
+        fetch(`http://localhost:5000/user?email=${user?.email}`)
+        .then(res => res.json())
+        .then(data => setUserData(data))
+    },[])
 
     return (
         <main className="px-5 py-4 md:py-20 md:px-32">
@@ -37,13 +52,13 @@ const MyProfile = () => {
                         <ul className="menu px-4 py-8 lg:py-0 h-full text-base-content text-center bg-white">
                             {/* Sidebar content here */}
                             <figure className="flex items-center gap-2 mb-10">
-                                <img className="w-20 h-20 rounded-full object-cover mx-auto border-4 border-indigo-100" src={user?.photoURL || ''} alt="" />
+                                <img className="w-20 h-20 rounded-full object-cover mx-auto border-4 border-indigo-100" src={userData?.imgURL || notUser} alt="" />
                                 <div>
-                                    <h4 className="font-medium text-3xl text-start">{user?.displayName}</h4>
-                                    <p className="text-gray-500 text-start">{user?.email}</p>
+                                    <h4 className="font-medium text-3xl text-start">{userData?.name}</h4>
+                                    <p className="text-gray-500 text-start">{userData?.email}</p>
                                 </div>
                             </figure>
-                            <li><NavLink className={({ isActive }) => isActive ? 'text-color flex items-center gap-2 font-medium' : 'text-gray-500 flex items-center gap-2 font-medium'} to={`/my-profile/user-dashboard/${user?.email}`}><RiProfileLine size={18} /> User Dashboard</NavLink></li>
+                            <li><NavLink className={({ isActive }) => isActive ? 'text-color flex items-center gap-2 font-medium' : 'text-gray-500 flex items-center gap-2 font-medium'} to={`/my-profile/${user?.email}`}><RiProfileLine size={18} /> User Dashboard</NavLink></li>
                             <li><NavLink className={({ isActive }) => isActive ? 'text-color flex items-center gap-2 font-medium' : 'text-gray-500 flex items-center gap-2 font-medium'} to='/my-profile/summery'><TbBrandGoogleAnalytics size={18} /> Summery</NavLink></li>
                             <li><NavLink className={({ isActive }) => isActive ? 'text-color flex items-center gap-2 font-medium' : 'text-gray-500 flex items-center gap-2 font-medium'} to='/my-profile/'><IoChatbubblesOutline size={18} /> Answers</NavLink></li>
                             <li><NavLink className={({ isActive }) => isActive ? 'text-color flex items-center gap-2 font-medium' : 'text-gray-500 flex items-center gap-2 font-medium'} to='/my-profile/'><TbDeviceIpadHorizontalQuestion size={18} /> Questions</NavLink></li>

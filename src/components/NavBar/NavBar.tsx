@@ -1,5 +1,5 @@
 import Hamburger from 'hamburger-react';
-import { useState, useContext } from 'react';
+import { useState, useContext, useEffect } from 'react';
 import logo from '../../assets/logo-codeStack.png';
 import notUser from '../../assets/icons/user-not.png';
 
@@ -12,14 +12,24 @@ import { FiUsers } from "react-icons/fi";
 import { Link, NavLink } from 'react-router-dom';
 import { AuthContext } from '../../Provider/AuthProvider';
 
+const initialUserData = {
+    imgURL: ''
+};
+
 const NavBar = () => {
     const [isOpen, setOpen] = useState<boolean>(false);
+    const [userData, setUserData] = useState(initialUserData);
     const authContext   = useContext(AuthContext)
     if (!authContext) {
         return <p>Loading...</p>;
     }
     const { user, logOut } = authContext;
-    console.log(user);
+
+    useEffect(() => {
+        fetch(`http://localhost:5000/user?email=${user?.email}`)
+        .then(res => res.json())
+        .then(data => setUserData(data))
+    }, [])
     
 
     return (
@@ -37,7 +47,7 @@ const NavBar = () => {
                         user ?
                             <>
                                 <figure className='w-10 h-10 mb-5'>
-                                    <Link to={`/my-profile/user-dashboard/${user?.email}`}>
+                                    <Link to={`/my-profile/${user?.email}`}>
                                         <img className='rounded-full' src={user?.photoURL || ''} alt="" />
                                     </Link>
                                 </figure>
@@ -66,8 +76,8 @@ const NavBar = () => {
                         <div className='hidden md:block'>
                             <div className='flex items-center gap-3 border-2 p-2 bg-white shadow-sm rounded-full'>
                                 <figure className='w-9 h-9'>
-                                    <Link to={`/my-profile/user-dashboard/${user?.email}`}>
-                                        <img className='rounded-full' src={user?.photoURL || notUser} alt="" />
+                                    <Link to={`/my-profile/${user?.email}`}>
+                                        <img className='rounded-full' src={userData?.imgURL || notUser} alt="" />
                                     </Link>
                                 </figure>
                                 <button className='transparent-button-small' onClick={logOut}><BiLogInCircle /></button>

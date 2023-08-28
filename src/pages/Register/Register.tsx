@@ -12,6 +12,7 @@ import { FaEye, FaEyeSlash } from "react-icons/fa";
 import Lottie from 'lottie-react'
 import animation from '../../assets/animation/reg.json'
 
+const image_hosting_token = import.meta.env.VITE_Image_API;
 
 const Register = () => {
     const [showPassword, setShowPassword] = useState(false);
@@ -22,6 +23,8 @@ const Register = () => {
     const { createUser, updateUserProfile, loading } = authContext;
     const navigate = useNavigate();
     const [isUsernameValid, setIsUsernameValid] = useState('');
+    const [image, setImage] = useState<File | null>(null);
+    const img_hosting_url = `https://api.imgbb.com/1/upload?key=${image_hosting_token}`;
 
     const handleUsernameChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
         const newUsername = event.target.value;
@@ -51,34 +54,47 @@ const Register = () => {
             .then(() => {
 
                 updateUserProfile(email, password)
-                    .then(() => {
+                    .then(async () => {
 
-                        const saveUser = { name, username, email, password, role }
-                        fetch('http://localhost:5000/users', {
-                            method: 'POST',
-                            headers: {
-                                'content-type': 'application/json'
-                            },
-                            body: JSON.stringify(saveUser)
-                        })
-                            .then(result => result.json())
-                            .then(() => {
-                                Swal.fire(
-                                    'Successful Register!',
-                                    'You have successfully Register.',
-                                    'success'
-                                )
-                                navigate('/');
-                            })
+                        if (image) {
+                            const formData = new FormData();
+                            formData.append('image', image);
+
+                            try {
+                                const response = await fetch(img_hosting_url, {
+                                    method: 'POST',
+                                    body: formData
+                                });
+
+                                const imgResponse = await response.json();
+                                if (imgResponse.success) {
+                                    const imgURL = imgResponse.data.display_url;
+                                    const saveUser = { name, username, email, imgURL, password, role }
+                                    fetch('http://localhost:5000/users', {
+                                        method: 'POST',
+                                        headers: {
+                                            'content-type': 'application/json'
+                                        },
+                                        body: JSON.stringify(saveUser)
+                                    })
+                                        .then(result => result.json())
+                                        .then(() => {
+                                            Swal.fire(
+                                                'Successful Register!',
+                                                'You have successfully Register.',
+                                                'success'
+                                            )
+                                            navigate('/');
+                                        })
+                                }
+                            } catch (error) {
+                                console.error("Error uploading image:", error);
+                            }
+                        }
                     })
-                // setLogError('')
             })
             .catch(() => {
-                // if (error.code === 'auth/wrong-password') {
-                //     setLogError('Wrong password');
-                // } else if (error.code === 'auth/user-not-found') {
-                //     setLogError('User not found');
-                // }
+
             })
     }
 
@@ -111,7 +127,13 @@ const Register = () => {
                     </div>
                     <div>
                         <label htmlFor="profilePhoto" className="block mb-2 font-medium text-gray-900">Upload Your Photo</label>
-                        <input className="cursor-pointer file:cursor-pointer relative m-0 block w-full min-w-0 rounded-md border py-3 px-5 transition duration-300 ease-in-out file:-mx-3 file:-my-[0.32rem] file:overflow-hidden file:border-0 file:border-solid file:border-inherit file:px-3 file:py-[0.32rem] file:text-neutral-700 file:transition file:duration-150 file:ease-in-out file:[margin-inline-end:0.75rem] hover:file:bg-[#5138EE] hover:file:text-white border-gray-300 file:bg-indigo-50 file:font-medium file:rounded-md" type="file" name="profilePhoto" id="profilePhoto" />
+                        <input className="cursor-pointer file:cursor-pointer relative m-0 block w-full min-w-0 rounded-md border py-3 px-5 transition duration-300 ease-in-out file:-mx-3 file:-my-[0.32rem] file:overflow-hidden file:border-0 file:border-solid file:border-inherit file:px-3 file:py-[0.32rem] file:text-neutral-700 file:transition file:duration-150 file:ease-in-out file:[margin-inline-end:0.75rem] hover:file:bg-[#5138EE] hover:file:text-white border-gray-300 file:bg-indigo-50 file:font-medium file:rounded-md" type="file" name="profilePhoto" id="profilePhoto"
+                            onChange={(e) => {
+                                const selectedFile = e.target.files?.[0];
+                                if (selectedFile) {
+                                    setImage(selectedFile);
+                                }
+                            }} />
                     </div>
                     <div>
                         <label htmlFor="password" className="block mb-2 font-medium text-gray-900">Your Password<span className="text-red-500"> *</span></label>
@@ -122,7 +144,7 @@ const Register = () => {
                             </span>
                         </div>
                     </div>
-                    <button type="submit" className="bg-button w-full flex justify-center">
+                    <button type="submit" className="bg-button w-full flex justify-center" disabled={isUsernameValid === 'Username already exists!'}>
                         {loading ? (
                             <ImSpinner10 className='m-auto animate-spin' size={24} />
                         ) : (

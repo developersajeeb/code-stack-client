@@ -40,7 +40,7 @@ export const router = createBrowserRouter([
         errorElement: <ErrorPage></ErrorPage>,
         children: [
           {
-            path: 'user-dashboard/:email',
+            path: '/my-profile/:email',
             element: <ProfileDashboard></ProfileDashboard>,
             loader: ({ params }) => fetch(`http://localhost:5000/user?email=${params.email}`)
           },
