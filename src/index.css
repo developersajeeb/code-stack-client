@@ -24,6 +24,10 @@
     color: #02B1FC;
 }
 
+.content{
+    min-height: calc(100vh - 88px - 72px);
+  }
+
 .bg-button {
     @apply primary-bg px-6 py-3 text-white font-medium rounded-md border-2 border-[#33B89F] hover:bg-white duration-200 hover:text-[#33B89F] flex items-center gap-2 shadow-md hover:shadow-sm
 }

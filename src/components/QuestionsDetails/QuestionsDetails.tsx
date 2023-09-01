@@ -1,12 +1,13 @@
 import { Link, useLoaderData } from "react-router-dom";
-import notUser from '../../assets/icons/user-not.png';
-import ReactQuill from "react-quill";
 import { useState, useContext, useEffect } from "react";
+import ReactQuill from "react-quill";
+import 'react-quill/dist/quill.snow.css';
 import { FaArrowRight } from "react-icons/fa";
 import { Toaster, toast } from "react-hot-toast";
 import { AuthContext } from "../../Provider/AuthProvider";
 import AnswerDetails from "./AnswerDetails";
 import { BiLike } from "react-icons/bi";
+import notUser from '../../assets/icons/user-not.png';
 
 interface QuestionInfo {
     _id: '',

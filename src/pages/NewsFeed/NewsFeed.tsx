@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import { AiOutlineEye } from "react-icons/ai";
 import { BiLike } from "react-icons/bi";
 import { BsQuestionCircle } from "react-icons/bs";
@@ -5,6 +6,7 @@ import { FiUploadCloud } from "react-icons/fi";
 import { MdUnfoldMore } from "react-icons/md";
 import { PiChatsCircleBold } from "react-icons/pi";
 import { Link, useLoaderData } from "react-router-dom";
+import './NewsFeed.css';
 
 interface Question {
     _id: string;
@@ -14,9 +16,26 @@ interface Question {
 }
 
 const NewsFeed = () => {
-    const allQuestions = useLoaderData() as Question[] | undefined;
+    const allQuestions = useLoaderData() as Question[];
+    const [selectedTag, setSelectedTag] = useState<string>('');
+    const [filteredQuestions, setFilteredQuestions] = useState<Question[]>([]);
 
+    const handleTagSelect = (event: React.ChangeEvent<HTMLSelectElement>) => {
+        const selected = event.target.value;
+        setSelectedTag(selected);
+      };
 
+      useEffect(() => {
+        if (selectedTag === '') {
+          setFilteredQuestions(allQuestions);
+        } else {
+          const filtered = allQuestions.filter((question) =>
+            question.selected.includes(selectedTag)
+          );
+          setFilteredQuestions(filtered);
+        }
+      }, [selectedTag, allQuestions]);
+    
     return (
         <main className="px-0 lg:pl-6">
             <section className="md:flex justify-between items-end bg-purple-50 p-5 rounded-lg">
@@ -28,10 +47,19 @@ const NewsFeed = () => {
                     <Link to='/main/ask-question'><button className="bg-button">Ask Question <BsQuestionCircle /></button></Link>
                 </div>
             </section>
+            <div id="box" className="mt-2 flex justify-between items-center gap-3">
+                <h4 className="text-3xl font-semibold">Filtering by topic: </h4>
+            <select onChange={handleTagSelect} value={selectedTag} name="tag">
+                <option value="">All</option>
+                <option value="html">HTML</option>
+                <option value="css">CSS</option>
+                <option value="react">React</option>
+            </select>
+            </div>
 
             <section className="mt-6">
                 {
-                    allQuestions?.map(question => <div key={question?._id} className="py-4 border-b md:flex justify-between gap-6 items-center">
+                    filteredQuestions?.map(question => <div key={question?._id} className="py-4 border-b md:flex justify-between gap-6 items-center">
                         <div>
                             <Link to={`/main/news-feed/${question?._id}`}>
                                 <h2 className="text-xl font-medium hover:text-[#33B89F] cursor-pointer duration-200">{question?.title}</h2>
