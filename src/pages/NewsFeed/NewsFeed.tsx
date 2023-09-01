@@ -48,7 +48,7 @@ const NewsFeed = () => {
                 </div>
             </section>
             <div id="box" className="mt-2 flex justify-between items-center gap-3">
-                <h4 className="text-3xl font-semibold">Filtering by topic:</h4>
+                <h4 className="text-3xl font-semibold">Filtering by topic: </h4>
             <select onChange={handleTagSelect} value={selectedTag} name="tag">
                 <option value="">All</option>
                 <option value="html">HTML</option>
