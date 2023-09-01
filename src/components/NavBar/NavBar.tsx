@@ -11,6 +11,7 @@ import { FiUsers } from "react-icons/fi";
 
 import { Link, NavLink } from 'react-router-dom';
 import { AuthContext } from '../../Provider/AuthProvider';
+import useAdmin from '../../hooks/useAdmin';
 
 const initialUserData = {
     imgURL: ''
@@ -20,6 +21,8 @@ const NavBar = () => {
     const [isOpen, setOpen] = useState<boolean>(false);
     const [userData, setUserData] = useState(initialUserData);
     const authContext   = useContext(AuthContext)
+    const {isAdmin} = useAdmin();
+    console.log(isAdmin)
     if (!authContext) {
         return <p>Loading...</p>;
     }
@@ -71,6 +74,10 @@ const NavBar = () => {
                 <span className='text-gray-500 absolute right-3 top-2 cursor-pointer'><BiSearchAlt size={25} /></span>
             </form>
             <div>
+                {
+                    isAdmin && <NavLink className={({ isActive }) => isActive ? 'text-color flex items-center gap-2 mb-5' : ' text-gray-500 flex items-center gap-2 mb-5'} to='/dashboard/allUsers'> Admin</NavLink>
+                    
+                }
                 {
                     user ?
                         <div className='hidden md:block'>
