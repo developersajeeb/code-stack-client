@@ -46,7 +46,7 @@ export const router = createBrowserRouter([
           {
             path: '/my-profile/:email',
             element: <ProfileDashboard></ProfileDashboard>,
-            loader: ({ params }) => fetch(`http://localhost:5000/user?email=${params.email}`)
+            loader: ({ params }) => fetch(`https://code-stack-server.vercel.app/user?email=${params.email}`)
           },
           {
             path: 'summery',
@@ -55,7 +55,7 @@ export const router = createBrowserRouter([
           {
             path: 'edit-profile/:email',
             element: <EditProfile></EditProfile>,
-            loader: ({ params }) => fetch(`http://localhost:5000/user?email=${params.email}`)
+            loader: ({ params }) => fetch(`https://code-stack-server.vercel.app/user?email=${params.email}`)
           },
         ]
       },
@@ -66,12 +66,12 @@ export const router = createBrowserRouter([
           {
             path: 'news-feed',
             element: <NewsFeed></NewsFeed>,
-            loader: () => fetch('http://localhost:5000/questions')
+            loader: () => fetch('https://code-stack-server.vercel.app/questions')
           },
           {
             path: 'news-feed/:id',
             element: <QuestionsDetails></QuestionsDetails>,
-            loader: ({ params }) => fetch(`http://localhost:5000/question-details/${params.id}`)
+            loader: ({ params }) => fetch(`https://code-stack-server.vercel.app/question-details/${params.id}`)
           },
           {
             path: 'ask-question',

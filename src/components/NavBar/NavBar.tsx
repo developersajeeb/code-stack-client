@@ -11,7 +11,6 @@ import { FiUsers } from "react-icons/fi";
 
 import { Link, NavLink } from 'react-router-dom';
 import { AuthContext } from '../../Provider/AuthProvider';
-import useAdmin from '../../hooks/useAdmin';
 
 const initialUserData = {
     imgURL: ''
@@ -21,7 +20,7 @@ const NavBar = () => {
     const [isOpen, setOpen] = useState<boolean>(false);
     const [userData, setUserData] = useState(initialUserData);
     const authContext   = useContext(AuthContext)
-    const {isAdmin} = useAdmin();
+    const isAdmin = true;
     console.log(isAdmin)
     if (!authContext) {
         return <p>Loading...</p>;
@@ -29,7 +28,7 @@ const NavBar = () => {
     const { user, logOut } = authContext;
 
     useEffect(() => {
-        fetch(`http://localhost:5000/user?email=${user?.email}`)
+        fetch(`https://code-stack-server.vercel.app/user?email=${user?.email}`)
         .then(res => res.json())
         .then(data => setUserData(data))
     }, [])

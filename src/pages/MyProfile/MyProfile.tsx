@@ -26,7 +26,7 @@ const MyProfile = () => {
     const { user } = authContext;    
 
     useEffect(() => {
-        fetch(`http://localhost:5000/user?email=${user?.email}`)
+        fetch(`https://code-stack-server.vercel.app/user?email=${user?.email}`)
         .then(res => res.json())
         .then(data => setUserData(data))
     },[])

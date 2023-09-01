@@ -10,7 +10,7 @@ const AnswerDetails = (questionId: { questionId: any; }) => {
     const [answerData, setAnswerData] = useState([] as Array<AnswerInfo>);
 
     useEffect(() => {
-        fetch(`http://localhost:5000/answer/${questionId.questionId}`)
+        fetch(`https://code-stack-server.vercel.app/answer/${questionId.questionId}`)
             .then(res => res.json())
             .then(data => setAnswerData(data))
     }, [])

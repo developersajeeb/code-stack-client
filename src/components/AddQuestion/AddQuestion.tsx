@@ -29,7 +29,7 @@ const AddQuestion = () => {
     const uploadTime = new Date().toLocaleTimeString();
     
     useEffect(() => {
-        fetch(`http://localhost:5000/user?email=${user?.email}`)
+        fetch(`https://code-stack-server.vercel.app/user?email=${user?.email}`)
             .then(res => res.json())
             .then(data => setUserData(data))
     }, [])
@@ -68,7 +68,7 @@ const AddQuestion = () => {
             uploadDate,
             uploadTime
         }
-        fetch('http://localhost:5000/questions', {
+        fetch('https://code-stack-server.vercel.app/questions', {
             method: 'POST',
             headers: {
                 'content-type': 'application/json'
