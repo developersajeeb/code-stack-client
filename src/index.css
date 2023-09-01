@@ -12,6 +12,10 @@
     background-color: #33B89F;
 }
 
+.second-bg {
+    background-color: #02B1FC;
+}
+
 .text-color {
     color: #33B89F;
 }
@@ -33,5 +37,5 @@
 }
 
 .transparent-button-small {
-    @apply bg-white hover:bg-[#5138EE] px-3 py-1 hover:text-white font-medium rounded-md border-2 border-[#5138EE] duration-200 text-color flex items-center gap-2 shadow-sm hover:shadow-md
+    @apply bg-white hover:bg-[#33B89F] px-3 py-1 hover:text-white font-medium rounded-md border-2 border-[#33B89F] duration-200 text-color flex items-center gap-2 shadow-sm hover:shadow-md
 }

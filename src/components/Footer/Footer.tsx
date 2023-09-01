@@ -12,7 +12,7 @@ const Footer = () => {
                         <p className='text-gray-400 my-6'>CodeStack is a widely recognized platform where developers of all levels gather to ask questions, share knowledge, and find solutions to coding problems</p>
                         <form className='relative'>
                             <input className='bg-[#283353] py-3 px-5 w-full border border-dashed border-gray-600 rounded-md text-white' type="email" name="email" id="email" placeholder='Your Email' />
-                            <span className='text-blue-500 absolute top-3 right-3 cursor-pointer'><AiOutlineArrowRight size={25} /></span>
+                            <span className='text-color absolute top-3 right-3 cursor-pointer'><AiOutlineArrowRight size={25} /></span>
                         </form>
                     </div>
                     <div className='grid md:grid-cols-2'>
@@ -62,7 +62,7 @@ const Footer = () => {
             </footer>
             <section className='grid md:grid-cols-3 bg-[#283353]'>
                 <div className='px-4 py-8 md:px-8 lg:px-32 text-gray-400 md:col-span-2 bg-[#202942] border-t border-gray-700'>
-                    <div className='text-center md:text-start text-sm'><p>© Copyright {new Date().getFullYear()}. All Rights Reserved by <span className='text-color cursor-pointer font-medium'>CodeStack</span></p></div>
+                    <div className='text-center md:text-start text-sm'><p>© Copyright {new Date().getFullYear()}. All Rights Reserved by <span className='text-color duration-200 hover:text-[#02B1FC] cursor-pointer font-medium'>CodeStack</span></p></div>
                 </div>
             </section>
         </>

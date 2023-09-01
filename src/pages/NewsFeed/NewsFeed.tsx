@@ -16,6 +16,7 @@ interface Question {
 const NewsFeed = () => {
     const allQuestions = useLoaderData() as Question[] | undefined;
 
+
     return (
         <main className="px-0 lg:pl-6">
             <section className="md:flex justify-between items-end bg-purple-50 p-5 rounded-lg">
@@ -30,18 +31,20 @@ const NewsFeed = () => {
 
             <section className="mt-6">
                 {
-                    allQuestions?.map(question => <div key={question._id} className="py-4 border-b md:flex justify-between gap-6 items-center">
+                    allQuestions?.map(question => <div key={question?._id} className="py-4 border-b md:flex justify-between gap-6 items-center">
                         <div>
-                            <h2 className="text-xl font-medium hover:text-[#5138EE] cursor-pointer duration-200">{question?.title}</h2>
+                            <Link to={`/main/news-feed/${question?._id}`}>
+                                <h2 className="text-xl font-medium hover:text-[#33B89F] cursor-pointer duration-200">{question?.title}</h2>
+                            </Link>
                             <ul className="flex flex-wrap gap-3 my-3">
                                 {
-                                    question?.selected?.map((skill: string, index: number) => <li key={index} className="hover:bg-indigo-50 hover:border-indigo-300 hover:text-[#5138EE] duration-200 bg-white border border-gray-400 px-3 text-sm py-1 text-gray-400 rounded-full font-medium cursor-pointer">{skill}</li>)
+                                    question?.selected?.map((skill: string, index: number) => <li key={index} className="hover:bg-indigo-50 hover:border-[#02B1FC] hover:text-[#33B89F] duration-200 bg-white border border-gray-400 px-3 text-sm py-1 text-gray-400 rounded-full font-medium cursor-pointer">{skill}</li>)
                                 }
                             </ul>
                             <p className="flex items-center gap-2 mt-5">
-                                <span className="border rounded-full p-1.5 border-gray-400 text-orange-400 bg-orange-50"><FiUploadCloud /></span>
+                                <span className="border rounded-full p-1.5 border-gray-400 text-color-second"><FiUploadCloud /></span>
                                 <span className="text-gray-500 text-sm">Upload 5 min ago</span>
-                                <span className="hover:text-orange-400 text-gray-700 duration-200 cursor-pointer">sajeeb.dev</span>
+                                <span className="hover:text-[#02B1FC] text-gray-700 duration-200 cursor-pointer">sajeeb.dev</span>
                             </p>
                         </div>
                         <div className="flex items-center gap-10 mt-6 md:mt-0">
@@ -63,7 +66,7 @@ const NewsFeed = () => {
                         </div>
                     </div>)
                 }
-                <div className="mt-10"><button className="bg-button mx-auto">Load More <MdUnfoldMore size={20}/></button></div>
+                <div className="mt-10"><button className="bg-button mx-auto">Load More <MdUnfoldMore size={20} /></button></div>
             </section>
         </main>
     );

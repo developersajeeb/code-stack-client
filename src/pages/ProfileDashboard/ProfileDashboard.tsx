@@ -26,7 +26,7 @@ const ProfileDashboard = () => {
                     <p className="text-sm mt-4 text-gray-500 text-center">
                         <img className="w-40 mx-auto" src={storage} alt="" />
                         <span>Just getting started? Try answering a question!</span>
-                        <p className="w-full md:w-96 mt-3">Your most helpful questions, answers and tags will appear here. Start by <Link to='/main/ask-question'><span className="ml-1 text-orange-400 cursor-pointer">answering a question</span></Link> or selecting tags that match topics you’re interested in.</p>
+                        <p className="w-full md:w-96 mt-3">Your most helpful questions, answers and tags will appear here. Start by <Link to='/main/ask-question'><span className="ml-1 text-color-second cursor-pointer">answering a question</span></Link> or selecting tags that match topics you’re interested in.</p>
                     </p>
                 </div>
             </div>

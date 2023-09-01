@@ -48,7 +48,7 @@ const NavBar = () => {
                             <>
                                 <figure className='w-10 h-10 mb-5'>
                                     <Link to={`/my-profile/${user?.email}`}>
-                                        <img className='rounded-full' src={userData?.imgURL || ''} alt="" />
+                                        <img className='rounded-full' src={userData?.imgURL || notUser} alt="" />
                                     </Link>
                                 </figure>
                                 <button className='small-btn transparent-button-small w-12' onClick={logOut}><BiLogInCircle /></button>

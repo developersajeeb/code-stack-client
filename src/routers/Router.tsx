@@ -14,6 +14,7 @@ import Summery from "../pages/Summery/Summery";
 import EditProfile from "../pages/EditProfile/EditProfile";
 import ErrorPage from "../pages/ErrorPage/ErrorPage";
 import Main from "../pages/Main/Main";
+import QuestionsDetails from "../components/QuestionsDetails/QuestionsDetails";
 // import NewsFeed from "../pages/NewsFeed/NewsFeed";
 
 export const router = createBrowserRouter([
@@ -65,8 +66,13 @@ export const router = createBrowserRouter([
             loader: () => fetch('http://localhost:5000/questions')
           },
           {
+            path: 'news-feed/:id',
+            element: <QuestionsDetails></QuestionsDetails>,
+            loader: ({ params }) => fetch(`http://localhost:5000/question-details/${params.id}`)
+          },
+          {
             path: 'ask-question',
-            element: <PrivateRoute><AddQuestions></AddQuestions></PrivateRoute>,
+            element: <AddQuestions></AddQuestions>,
           },
         ]
       }

@@ -108,7 +108,7 @@ const Home = () => {
                         <h2 className='text-4xl font-semibold text-gray-800 my-6 leading-snug'>Architects of Tomorrow's Tech CodeStack's Odyssey Unveiled</h2>
                         <p className='leading-7 text-gray-500'>CodeStack is a widely recognized platform where developers of all levels gather to ask questions, share knowledge, and find solutions to coding problems. The community-driven nature ensures a vast array of answers and discussions on a wide range of programming languages and technologies.</p>
                         <div className='md:flex items-center gap-6 mt-6'>
-                            <p className='flex items-center gap-2 text-xl font-semibold text-gray-700'><span className='text-orange-400'><FaCheckCircle size={23} /></span> Tags and Categories</p>
+                            <p className='flex items-center gap-2 text-xl font-semibold text-gray-700'><span className='text-color-second'><FaCheckCircle size={23} /></span> Tags and Categories</p>
                             <p className='flex items-center gap-2 text-xl font-semibold text-gray-700 mt-4 md:mt-0'><span className='text-color'><FaCheckCircle size={23} /></span> Leader-board & Badges</p>
                         </div>
                         <button className='transparent-button mt-10'>Get Start<FaArrowRight size={15} /></button>

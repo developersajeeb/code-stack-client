@@ -12,7 +12,7 @@ import { FaEye, FaEyeSlash } from "react-icons/fa";
 import Lottie from 'lottie-react'
 import animation from '../../assets/animation/reg.json'
 
-const image_hosting_token = import.meta.env.VITE_Image_API;
+const image_hosting_token = import.meta.env.VITE_Problem_Image_Name;
 
 const Register = () => {
     const [showPassword, setShowPassword] = useState(false);
