@@ -13,6 +13,7 @@ import logo2 from '../../assets/sponsor/ollyo.png'
 import logo3 from '../../assets/sponsor/codersBucket.png'
 import logo4 from '../../assets/sponsor/DS-logo.png'
 import logo5 from '../../assets/sponsor/BS-Logo-Blue_Hr.svg'
+import Video from '../../pages/Home/VideoTutorial/Video'
 
 const Home = () => {
 
@@ -21,9 +22,9 @@ const Home = () => {
             <main>
                 <header>
                     <section className='px-4 py-12 md:px-8 md:py-32 lg:px-32 grid md:grid-cols-2 gap-10 items-center bg-cover bg-center bg-no-repeat' style={{ backgroundImage: `url(${headerBannerImg})` }}>
-                        <div>
+                        <div className='text-center md:text-start'>
                             <span className='bg-indigo-50 px-5 py-2 text-color rounded-md font-medium'>Welcome</span>
-                            <h1 className="text-4xl text-center md:text-start lg:text-5xl md:text-4xl font-semibold text-gray-800 mt-6">Best Website For Your Programming Or Code Solution.</h1>
+                            <h1 className="text-4xl text-center md:text-start lg:text-5xl md:text-4xl font-semibold text-gray-800 mt-6 leading-snug md:leading-snug lg:leading-snug">Best Website For Your Programming Or Code Solution.</h1>
                             <p className="text-gray-500 pt-4 pb-8 text-center md:text-start">CodeStack is a widely recognized platform where developers of all levels gather to ask questions, share knowledge, and find solutions to coding problems. The community-driven nature ensures a vast array of answers and discussions on a wide range of programming languages and technologies.</p>
                             <div className='flex flex-wrap gap-6 justify-center md:justify-start'>
                                 <button className='bg-button'>Get Start <FaArrowRight size={15} /></button>
@@ -108,8 +109,8 @@ const Home = () => {
                         <h2 className='text-4xl font-semibold text-gray-800 my-6 leading-snug'>Architects of Tomorrow's Tech CodeStack's Odyssey Unveiled</h2>
                         <p className='leading-7 text-gray-500'>CodeStack is a widely recognized platform where developers of all levels gather to ask questions, share knowledge, and find solutions to coding problems. The community-driven nature ensures a vast array of answers and discussions on a wide range of programming languages and technologies.</p>
                         <div className='md:flex items-center gap-6 mt-6'>
-                            <p className='flex items-center gap-2 text-xl font-semibold text-gray-700'><span className='text-orange-400'><FaCheckCircle size={23} /></span> Tags and Categories</p>
-                            <p className='flex items-center gap-2 text-xl font-semibold text-gray-700'><span className='text-color'><FaCheckCircle size={23} /></span> Leader-board & Badges</p>
+                            <p className='flex items-center gap-2 text-xl font-semibold text-gray-700'><span className='text-color-second'><FaCheckCircle size={23} /></span> Tags and Categories</p>
+                            <p className='flex items-center gap-2 text-xl font-semibold text-gray-700 mt-4 md:mt-0'><span className='text-color'><FaCheckCircle size={23} /></span> Leader-board & Badges</p>
                         </div>
                         <button className='transparent-button mt-10'>Get Start<FaArrowRight size={15} /></button>
                     </div>
@@ -125,7 +126,7 @@ const Home = () => {
                         <p className='leading-7 text-gray-500'>Embark on a Comprehensive Video Tutorial to Discover the Intricacies of Our Portal</p>
                     </div>
                     <div>
-                        <img className='w-full h-[600px] mt-16 object-cover' src="https://t4.ftcdn.net/jpg/03/32/54/93/360_F_332549362_Y2Nkokepqc6AbUfVvyAhrL1CjA9QpZND.jpg" alt="" />
+                        <Video></Video>
                     </div>
                 </section>
 

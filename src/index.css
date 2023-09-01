@@ -9,11 +9,19 @@
 }
 
 .primary-bg {
-    background-color: #5138EE;
+    background-color: #33B89F;
+}
+
+.second-bg {
+    background-color: #02B1FC;
 }
 
 .text-color {
-    color: #5138EE;
+    color: #33B89F;
+}
+
+.text-color-second {
+    color: #02B1FC;
 }
 
 .content{
@@ -21,17 +29,17 @@
   }
 
 .bg-button {
-    @apply primary-bg px-6 py-3 text-white font-medium rounded-md border-2 border-[#5138EE] hover:bg-white duration-200 hover:text-[#5138EE] flex items-center gap-2 shadow-md hover:shadow-sm
+    @apply primary-bg px-6 py-3 text-white font-medium rounded-md border-2 border-[#33B89F] hover:bg-white duration-200 hover:text-[#33B89F] flex items-center gap-2 shadow-md hover:shadow-sm
 }
 
 .bg-button-small {
-    @apply primary-bg px-3 py-1 text-white font-medium rounded-md border-2 border-[#5138EE] hover:bg-white duration-200 hover:text-[#5138EE] flex items-center gap-2 shadow-md hover:shadow-sm
+    @apply primary-bg px-3 py-1 text-white font-medium rounded-md border-2 border-[#33B89F] hover:bg-white duration-200 hover:text-[#33B89F] flex items-center gap-2 shadow-md hover:shadow-sm
 }
 
 .transparent-button {
-    @apply bg-white hover:bg-[#5138EE] px-6 py-3 hover:text-white font-medium rounded-md border-2 border-[#5138EE] duration-200 text-color flex items-center gap-2 shadow-sm hover:shadow-md
+    @apply bg-white hover:bg-[#33B89F] px-6 py-3 hover:text-white font-medium rounded-md border-2 border-[#33B89F] duration-200 text-color flex items-center gap-2 shadow-sm hover:shadow-md
 }
 
 .transparent-button-small {
-    @apply bg-white hover:bg-[#5138EE] px-3 py-1 hover:text-white font-medium rounded-md border-2 border-[#5138EE] duration-200 text-color flex items-center gap-2 shadow-sm hover:shadow-md
+    @apply bg-white hover:bg-[#33B89F] px-3 py-1 hover:text-white font-medium rounded-md border-2 border-[#33B89F] duration-200 text-color flex items-center gap-2 shadow-sm hover:shadow-md
 }

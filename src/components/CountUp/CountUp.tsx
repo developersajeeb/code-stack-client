@@ -16,9 +16,9 @@ interface ICountUpState {
  */
 export default class CountUp extends React.Component<ICountUpProps, ICountUpState> {
 
-  private startTimestamp: number;
+  private startTimestamp: number | undefined;
 
-  constructor(props) {
+  constructor(props: ICountUpProps | Readonly<ICountUpProps>) {
     super(props);
 
     let maxDuration = (props.to > props.from ? props.to - props.from : props.from - props.to) * 200;
@@ -77,7 +77,7 @@ export default class CountUp extends React.Component<ICountUpProps, ICountUpStat
       requestAnimationFrame(this.performAnimation)
     } else {
       this.setState({ val: this.computeValue(this.state.duration) });
-      this.startTimestamp = null;
+      this.startTimestamp = undefined;
     }
   }
 

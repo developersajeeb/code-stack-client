@@ -1,38 +1,53 @@
-import { createContext, useEffect, useState } from "react";
-import { GithubAuthProvider, GoogleAuthProvider, createUserWithEmailAndPassword, getAuth, onAuthStateChanged, sendPasswordResetEmail, signInWithEmailAndPassword, signInWithPopup, signOut, updateProfile } from "firebase/auth";
+import { ReactNode, createContext, useEffect, useState } from "react";
+import { GithubAuthProvider, GoogleAuthProvider, User, UserCredential, createUserWithEmailAndPassword, getAuth, onAuthStateChanged, sendPasswordResetEmail, signInWithEmailAndPassword, signInWithPopup, signOut, updateProfile } from "firebase/auth";
 import app from "../firebase/firebase.config";
 
-type LogoutFunction = () => Promise<void>
-export const AuthContext = createContext(null);
+interface AuthContextType {
+    user: User | null;
+    loading: boolean;
+    createUser: (email: string, password: string) => Promise<UserCredential>;
+    signIn: (email: string, password: string) => Promise<UserCredential>;
+    logOut: () => Promise<void>;
+    googleSignIn: () => Promise<UserCredential>;
+    githubSignIn: () => Promise<UserCredential>;
+    ResetPassword: (email: string) => Promise<void>;
+    updateUserProfile: (name: string, photo: string) => Promise<void>;
+}
+
+interface AuthProviderProps {
+    children: ReactNode;
+}
+
+export const AuthContext = createContext<AuthContextType | undefined>(undefined);
 const auth = getAuth(app);
 
-const AuthProviders = ({ children }) => {
-    const [user, setUser] = useState(null);
+const AuthProviders: React.FC<AuthProviderProps> = ({ children }) => {
+    const [user, setUser] = useState<User | null>(null);
     const [loading, setLoading] = useState(true);
 
     const googleProvider = new GoogleAuthProvider();
     const githubProvider = new GithubAuthProvider();
 
-    const createUser = (email: string | number, password: string | number) => {
+    const createUser = (email: string, password: string) => {
         setLoading(true);
         return createUserWithEmailAndPassword(auth, email, password)
     }
 
-    const singIn = (email: string | number, password: string | number) => {
+    const signIn = (email: string, password: string) => {
         setLoading(true);
         return signInWithEmailAndPassword(auth, email, password)
     }
 
-    const logOut:LogoutFunction = () => {
+    const logOut = () => {
         setLoading(true);
         return signOut(auth)
     }
 
-    const googleSingIn = () => {
+    const googleSignIn = () => {
         setLoading(true);
         return signInWithPopup(auth, googleProvider)
     }
-    const githubSingIn = () => {
+    const githubSignIn = () => {
         setLoading(true);
         return signInWithPopup(auth, githubProvider)
     }
@@ -43,15 +58,23 @@ const AuthProviders = ({ children }) => {
     }
 
     const updateUserProfile = (name: string, photo: string) => {
-        return updateProfile(auth.currentUser, {
-            displayName: name, photoURL: photo
-        });
+        const currentUser = auth.currentUser;
+
+        if (currentUser) {
+            return updateProfile(currentUser, {
+                displayName: name,
+                photoURL: photo
+            });
+        } else {
+            console.error("No user is currently logged in.");
+            return Promise.reject(new Error("No user is currently logged in."));
+        }
     }
 
     useEffect(() => {
         const unsubscribe = onAuthStateChanged(auth, currentUser => {
             setUser(currentUser);
-            setLoading(false)
+            setLoading(false);
             console.log('now user', currentUser);
         });
         return () => {
@@ -59,14 +82,14 @@ const AuthProviders = ({ children }) => {
         }
     }, [])
 
-    const authInfo = {
+    const authInfo: AuthContextType  = {
         user,
-        createUser,
-        singIn,
         loading,
+        createUser,
+        signIn,
         logOut,
-        googleSingIn,
-        githubSingIn,
+        googleSignIn,
+        githubSignIn,
         ResetPassword,
         updateUserProfile,
     }

@@ -5,20 +5,24 @@ import { AuthContext } from "../../Provider/AuthProvider";
 
 
 const SocialLogin = () => {
-    const { googleSingIn, githubSingIn } = useContext(AuthContext);
     const navigate = useNavigate();
     const location = useLocation();
+    const authContext   = useContext(AuthContext)
+    if (!authContext) {
+        return <p>Loading...</p>;
+    }
+    const { googleSignIn, githubSignIn } = authContext;
 
     const from = location.state?.from?.pathname || '/';
 
     const handleGoogleSingIn = () => {
-        googleSingIn()
-            .then(result => {
+        googleSignIn()
+            .then((result: { user: any; }) => {
                 console.log(result.user);
 
                 const loggedInUser = result.user;
-                const saveUser = { name: loggedInUser.displayName, email: loggedInUser.email, role: 'normalUser', photo: loggedInUser.photoURL }
-                fetch('https://code-stack-server.vercel.app/users', {
+                const saveUser = { name: loggedInUser.displayName, email: loggedInUser.email, role: 'normalUser', imgURL: loggedInUser.photoURL }
+                fetch('http://localhost:5000/users', {
                     method: 'POST',
                     headers: {
                         'content-type': 'application/json'
@@ -38,8 +42,8 @@ const SocialLogin = () => {
     }
 
     const handleGithubSingIn = () => {
-        githubSingIn()
-            .then(result => {
+        githubSignIn()
+            .then((result: { user: any; }) => {
                 console.log(result.user);
 
                 const loggedInUser = result.user;
