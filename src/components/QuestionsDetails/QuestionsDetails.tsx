@@ -43,7 +43,7 @@ const QuestionsDetails = () => {
     }
 
     useEffect(() => {
-        fetch(`http://localhost:5000/user?email=${user?.email}`)
+        fetch(`https://code-stack-server.vercel.app/user?email=${user?.email}`)
             .then(res => res.json())
             .then(data => setUserData(data))
     }, [])
@@ -63,7 +63,7 @@ const QuestionsDetails = () => {
             uploadTime,
         }
 
-        fetch('http://localhost:5000/answers', {
+        fetch('https://code-stack-server.vercel.app/answers', {
             method: 'POST',
             headers: {
                 'content-type': 'application/json'

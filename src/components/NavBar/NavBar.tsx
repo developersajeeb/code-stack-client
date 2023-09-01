@@ -20,13 +20,15 @@ const NavBar = () => {
     const [isOpen, setOpen] = useState<boolean>(false);
     const [userData, setUserData] = useState(initialUserData);
     const authContext   = useContext(AuthContext)
+    const isAdmin = true;
+    console.log(isAdmin)
     if (!authContext) {
         return <p>Loading...</p>;
     }
     const { user, logOut } = authContext;
 
     useEffect(() => {
-        fetch(`http://localhost:5000/user?email=${user?.email}`)
+        fetch(`https://code-stack-server.vercel.app/user?email=${user?.email}`)
         .then(res => res.json())
         .then(data => setUserData(data))
     }, [])
@@ -71,6 +73,10 @@ const NavBar = () => {
                 <span className='text-gray-500 absolute right-3 top-2 cursor-pointer'><BiSearchAlt size={25} /></span>
             </form>
             <div>
+                {
+                    isAdmin && <NavLink className={({ isActive }) => isActive ? 'text-color flex items-center gap-2 mb-5' : ' text-gray-500 flex items-center gap-2 mb-5'} to='/dashboard/allUsers'> Admin</NavLink>
+                    
+                }
                 {
                     user ?
                         <div className='hidden md:block'>
