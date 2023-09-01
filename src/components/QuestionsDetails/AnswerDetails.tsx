@@ -7,13 +7,13 @@ interface AnswerInfo {
 }
 
 const AnswerDetails = (questionId: { questionId: any; }) => {
-    const [answerData, setAnswerData] = useState([] as Array<AnswerInfo>)
+    const [answerData, setAnswerData] = useState([] as Array<AnswerInfo>);
 
     useEffect(() => {
         fetch(`http://localhost:5000/answer/${questionId.questionId}`)
             .then(res => res.json())
             .then(data => setAnswerData(data))
-    }, [])    
+    }, [])
 
     return (
         <>

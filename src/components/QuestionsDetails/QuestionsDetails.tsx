@@ -1,11 +1,12 @@
 import { Link, useLoaderData } from "react-router-dom";
 import notUser from '../../assets/icons/user-not.png';
 import ReactQuill from "react-quill";
-import { SetStateAction, useState, useContext, useEffect } from "react";
+import { useState, useContext, useEffect } from "react";
 import { FaArrowRight } from "react-icons/fa";
 import { Toaster, toast } from "react-hot-toast";
 import { AuthContext } from "../../Provider/AuthProvider";
 import AnswerDetails from "./AnswerDetails";
+import { BiLike } from "react-icons/bi";
 
 interface QuestionInfo {
     _id: '',
@@ -33,24 +34,27 @@ const QuestionsDetails = () => {
         return <p>Loading...</p>;
     }
     const { user } = authContext;
-    
+    const [isQuillValid, setIsQuillValid] = useState(false);
 
-    const handleQuill = (value: SetStateAction<string>) => {
-        setBody(value)
-    }    
+    const handleQuill = (value: string) => {
+        setBody(value);
+        setIsQuillValid(value.trim() !== '');
+    }
 
     useEffect(() => {
         fetch(`http://localhost:5000/user?email=${user?.email}`)
-        .then(res => res.json())
-        .then(data => setUserData(data))
-    },[])
-
-    console.log(questionData?.userPhoto);
+            .then(res => res.json())
+            .then(data => setUserData(data))
+    }, [])
 
     const handlePostAnswer = (event: { preventDefault: () => void; target: any; }) => {
         event.preventDefault();
-        const answerData = { 
-            username: userData?.username || user?.displayName?.slice(0,6)+'...' || 'anonymous',
+        if (!isQuillValid) {
+            toast.error("Please enter your answer!");
+            return;
+        }
+        const answerData = {
+            username: userData?.username || user?.displayName?.slice(0, 6) + '...' || 'anonymous',
             email: user?.email,
             questionID: questionData?._id,
             body,
@@ -68,7 +72,8 @@ const QuestionsDetails = () => {
             .then(result => result.json())
             .then((data) => {
                 if (data.insertedId) {
-                    toast.success('Added Successfully!');
+                    toast.success('Post your answer!');
+                    setBody('');
                 } else {
                     toast.error("Error, Please try again!")
                 }
@@ -85,7 +90,7 @@ const QuestionsDetails = () => {
             <section>
                 <Link to='/'>
                     <div className="inline-block mb-6">
-                        <div className="flex items-center gap-2 bg-indigo-50 px-3 py-2 rounded-md">
+                        <div className="flex items-center gap-2 bg-gray-100 px-3 py-2 rounded-md">
                             <img className="w-11 h-11 object-cover rounded-full" src={questionData?.userPhoto || user?.photoURL || notUser} alt="" />
                             <div>
                                 <p className="font-medium">{questionData?.name}</p>
@@ -94,7 +99,12 @@ const QuestionsDetails = () => {
                         </div>
                     </div>
                 </Link>
-                <h1 className="text-3xl font-medium text-gray-800">{questionData?.title}</h1>
+                <div className="flex gap-4 items-center">
+                    <div className="border border-gray-300 p-2 rounded-full text-center">
+                        <p className="cursor-pointer text-gray-500"><BiLike size={25} /> <span className="text-sm font-medium">11</span></p>
+                    </div>
+                    <h1 className="text-3xl font-medium text-gray-700">{questionData?.title}</h1>
+                </div>
                 <div className="my-4" dangerouslySetInnerHTML={{
                     __html: questionData && questionData.body ? questionData.body : ""
                 }} />
@@ -121,7 +131,7 @@ const QuestionsDetails = () => {
 
             <section>
                 <h2 className="text-2xl font-semibold text-gray-700 mb-4">Answers</h2>
-                <AnswerDetails questionId = {questionData?._id}></AnswerDetails>
+                <AnswerDetails questionId={questionData?._id}></AnswerDetails>
             </section>
 
             <form className="mt-8" onSubmit={handlePostAnswer}>
