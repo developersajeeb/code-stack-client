@@ -15,6 +15,9 @@ import EditProfile from "../pages/EditProfile/EditProfile";
 import ErrorPage from "../pages/ErrorPage/ErrorPage";
 import Main from "../pages/Main/Main";
 import QuestionsDetails from "../components/QuestionsDetails/QuestionsDetails";
+import DashboardLayout from "../Layouts/DashboardLayout";
+import AdminHome from "../pages/Dashboard/AdminHome/AdminHome";
+import AllUsers from "../pages/Dashboard/AllUsers/AllUsers";
 // import NewsFeed from "../pages/NewsFeed/NewsFeed";
 
 export const router = createBrowserRouter([
@@ -75,6 +78,20 @@ export const router = createBrowserRouter([
             element: <AddQuestions></AddQuestions>,
           },
         ]
+      }
+    ]
+  },
+  {
+    path: 'dashboard',
+    element: <PrivateRoute><DashboardLayout></DashboardLayout></PrivateRoute>,
+    children: [
+      {
+        path: '/dashboard',
+        element: <AdminHome></AdminHome>
+      },
+      {
+        path: "allUsers",
+        element: <AllUsers></AllUsers>
       }
     ]
   }
