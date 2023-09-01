@@ -13,6 +13,7 @@ import logo2 from '../../assets/sponsor/ollyo.png'
 import logo3 from '../../assets/sponsor/codersBucket.png'
 import logo4 from '../../assets/sponsor/DS-logo.png'
 import logo5 from '../../assets/sponsor/BS-Logo-Blue_Hr.svg'
+import Video from '../../pages/Home/VideoTutorial/Video'
 
 const Home = () => {
 
@@ -125,7 +126,7 @@ const Home = () => {
                         <p className='leading-7 text-gray-500'>Embark on a Comprehensive Video Tutorial to Discover the Intricacies of Our Portal</p>
                     </div>
                     <div>
-                        <img className='w-full h-[600px] mt-16 object-cover' src="https://t4.ftcdn.net/jpg/03/32/54/93/360_F_332549362_Y2Nkokepqc6AbUfVvyAhrL1CjA9QpZND.jpg" alt="" />
+                        <Video></Video>
                     </div>
                 </section>
 
