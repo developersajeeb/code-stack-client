@@ -1,12 +1,10 @@
 import { useEffect, useState, useContext } from "react";
-import { AiOutlineEye } from "react-icons/ai";
-import { BiLike } from "react-icons/bi";
 import { BsQuestionCircle } from "react-icons/bs";
-import { FiUploadCloud } from "react-icons/fi";
 import { MdUnfoldMore } from "react-icons/md";
 import { PiArrowCircleDownLight, PiChatsCircleBold } from "react-icons/pi";
 import { Link, useLoaderData } from "react-router-dom";
 import { AuthContext } from "../../Provider/AuthProvider";
+import { FiUploadCloud } from "react-icons/fi";
 
 interface Question {
     email: any;
@@ -99,6 +97,7 @@ const NewsFeed = () => {
                         <option value="html">HTML</option>
                         <option value="css">CSS</option>
                         <option value="react">React</option>
+                <option value="javascript">JavaScript</option>
                     </select>
                     <span className="absolute top-2 right-2"><PiArrowCircleDownLight size={20} /></span>
                 </div>
@@ -182,6 +181,9 @@ const NewsFeed = () => {
                         </button>
                     </div>
                 )}
+                    filteredQuestions?.map(question => <QueCard key={question?._id} question={question}/>)
+                }
+                <div className="mt-10"><button className="bg-button mx-auto">Load More <MdUnfoldMore size={20} /></button></div>
             </section>
         </main>
     );
