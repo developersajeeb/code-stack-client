@@ -19,11 +19,8 @@ import DashboardLayout from "../Layouts/DashboardLayout";
 import AdminHome from "../pages/Dashboard/AdminHome/AdminHome";
 import AllUsers from "../pages/Dashboard/AllUsers/AllUsers";
 import Tag from "../pages/Tags/Tag";
-
-
-
 import SingleUser from "../pages/SingleUser/SingleUser";
-// import NewsFeed from "../pages/NewsFeed/NewsFeed";
+import TagQuestions from "../pages/TagQuestions/TagQuestions";
 
 export const router = createBrowserRouter([
   {
@@ -73,7 +70,7 @@ export const router = createBrowserRouter([
             element: <NewsFeed></NewsFeed>,
             loader: () => fetch('http://localhost:5000/questions')
           },
-          
+
           {
             path: 'news-feed/:id',
             element: <QuestionsDetails></QuestionsDetails>,
@@ -84,42 +81,36 @@ export const router = createBrowserRouter([
             element: <AddQuestions></AddQuestions>,
           },
           {
-            path:'/main/tags',
-            element:<Tag></Tag>,
+            path: 'tagged',
+            element: <TagQuestions></TagQuestions>,
             loader: () => fetch('https://code-stack-server.vercel.app/questions')
-          
-          }
-  
-
-
-        ],
-       
+          },
           {
             path: 'user/:email',
             element: <SingleUser></SingleUser>,
             loader: ({ params }) => fetch(`http://localhost:5000/user?email=${params.email}`)
+          },
+          {
+            path: 'tags',
+            element: <Tag></Tag>
           }
         ]
-      }
-    ],
-
-  },
-  {
-
-    path: 'dashboard',
-    element: <PrivateRoute><DashboardLayout></DashboardLayout></PrivateRoute>,
-    children: [
-      {
-        path: '/dashboard',
-        element: <AdminHome></AdminHome>
       },
       {
-        path: "allUsers",
-        element: <AllUsers></AllUsers>
+        path: 'dashboard',
+        element: <PrivateRoute><DashboardLayout></DashboardLayout></PrivateRoute>,
+        children: [
+          {
+            path: '/dashboard',
+            element: <AdminHome></AdminHome>
+          },
+          {
+            path: "allUsers",
+            element: <AllUsers></AllUsers>
+          },
+
+        ]
       },
-      
     ]
   },
-
-
-]);
+])
