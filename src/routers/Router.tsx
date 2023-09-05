@@ -18,6 +18,10 @@ import QuestionsDetails from "../components/QuestionsDetails/QuestionsDetails";
 import DashboardLayout from "../Layouts/DashboardLayout";
 import AdminHome from "../pages/Dashboard/AdminHome/AdminHome";
 import AllUsers from "../pages/Dashboard/AllUsers/AllUsers";
+import Tag from "../pages/Tags/Tag";
+
+
+
 // import NewsFeed from "../pages/NewsFeed/NewsFeed";
 
 export const router = createBrowserRouter([
@@ -68,6 +72,7 @@ export const router = createBrowserRouter([
             element: <NewsFeed></NewsFeed>,
             loader: () => fetch('https://code-stack-server.vercel.app/questions')
           },
+          
           {
             path: 'news-feed/:id',
             element: <QuestionsDetails></QuestionsDetails>,
@@ -77,11 +82,23 @@ export const router = createBrowserRouter([
             path: 'ask-question',
             element: <AddQuestions></AddQuestions>,
           },
-        ]
+          {
+            path:'/main/tags',
+            element:<Tag></Tag>,
+            loader: () => fetch('https://code-stack-server.vercel.app/questions')
+          
+          }
+  
+
+
+        ],
+       
       }
-    ]
+    ],
+
   },
   {
+
     path: 'dashboard',
     element: <PrivateRoute><DashboardLayout></DashboardLayout></PrivateRoute>,
     children: [
@@ -92,8 +109,10 @@ export const router = createBrowserRouter([
       {
         path: "allUsers",
         element: <AllUsers></AllUsers>
-      }
+      },
+      
     ]
-  }
+  },
+
 
 ]);
