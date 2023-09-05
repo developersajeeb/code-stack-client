@@ -1,7 +1,5 @@
 import { Outlet } from "react-router-dom";
 import SideDrawer from "../components/SideDrawer/SideDrawer";
-import { ReactNode } from 'react';
-
 
 const DashboardLayout = () => {
   return (

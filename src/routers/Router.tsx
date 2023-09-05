@@ -18,6 +18,7 @@ import QuestionsDetails from "../components/QuestionsDetails/QuestionsDetails";
 import DashboardLayout from "../Layouts/DashboardLayout";
 import AdminHome from "../pages/Dashboard/AdminHome/AdminHome";
 import AllUsers from "../pages/Dashboard/AllUsers/AllUsers";
+import SingleUser from "../pages/SingleUser/SingleUser";
 // import NewsFeed from "../pages/NewsFeed/NewsFeed";
 
 export const router = createBrowserRouter([
@@ -46,7 +47,7 @@ export const router = createBrowserRouter([
           {
             path: '/my-profile/:email',
             element: <ProfileDashboard></ProfileDashboard>,
-            loader: ({ params }) => fetch(`https://code-stack-server.vercel.app/user?email=${params.email}`)
+            loader: ({ params }) => fetch(`http://localhost:5000/user?email=${params.email}`)
           },
           {
             path: 'summery',
@@ -55,7 +56,7 @@ export const router = createBrowserRouter([
           {
             path: 'edit-profile/:email',
             element: <EditProfile></EditProfile>,
-            loader: ({ params }) => fetch(`https://code-stack-server.vercel.app/user?email=${params.email}`)
+            loader: ({ params }) => fetch(`http://localhost:5000/user?email=${params.email}`)
           },
         ]
       },
@@ -66,17 +67,22 @@ export const router = createBrowserRouter([
           {
             path: 'news-feed',
             element: <NewsFeed></NewsFeed>,
-            loader: () => fetch('https://code-stack-server.vercel.app/questions')
+            loader: () => fetch('http://localhost:5000/questions')
           },
           {
             path: 'news-feed/:id',
             element: <QuestionsDetails></QuestionsDetails>,
-            loader: ({ params }) => fetch(`https://code-stack-server.vercel.app/question-details/${params.id}`)
+            loader: ({ params }) => fetch(`http://localhost:5000/question-details/${params.id}`)
           },
           {
             path: 'ask-question',
             element: <AddQuestions></AddQuestions>,
           },
+          {
+            path: 'user/:email',
+            element: <SingleUser></SingleUser>,
+            loader: ({ params }) => fetch(`http://localhost:5000/user?email=${params.email}`)
+          }
         ]
       }
     ]

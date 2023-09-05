@@ -1,8 +1,9 @@
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import { useQuery } from "@tanstack/react-query";
-import { Swal } from "sweetalert2";
+// import { Swal as Swale } from "sweetalert2";
 
 interface User {
+  imgURL: string | undefined;
   _id: string;
   image: string;
   name: string;
@@ -33,17 +34,17 @@ const AllUsers = () => {
   }
 
   // Explicitly specify the types for the parameters user and index
-  const handleUpdateRole = (user: User, role: string, index: number) => {
+  const handleUpdateRole = (user: User, role: string) => {
     axiosSecure.patch(`users/admin/${user._id}`, { role }).then((res) => {
       if (res.data.modifiedCount > 0) {
         refetch();
-        Swal.fire({
-          position: "top-end",
-          icon: "success",
-          title: `${user.name} is an ${role}`,
-          showConfirmButton: false,
-          timer: 1500,
-        });
+        // Swale.fire({
+        //   position: "top-end",
+        //   icon: "success",
+        //   title: `${user.name} is an ${role}`,
+        //   showConfirmButton: false,
+        //   timer: 1500,
+        // });
       }
     });
   };
@@ -80,7 +81,7 @@ const AllUsers = () => {
               <td>{user.email}</td>
               <td>
                 <button
-                  onClick={() => handleUpdateRole(user, "admin", index)}
+                  onClick={() => handleUpdateRole(user, "admin")}
                   className="btn btn-accent btn-sm"
                 >
                   Make Admin
