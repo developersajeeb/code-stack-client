@@ -19,10 +19,8 @@ import DashboardLayout from "../Layouts/DashboardLayout";
 import AdminHome from "../pages/Dashboard/AdminHome/AdminHome";
 import AllUsers from "../pages/Dashboard/AllUsers/AllUsers";
 import Tag from "../pages/Tags/Tag";
-
-
-
-// import NewsFeed from "../pages/NewsFeed/NewsFeed";
+import SingleUser from "../pages/SingleUser/SingleUser";
+import TagQuestions from "../pages/TagQuestions/TagQuestions";
 
 export const router = createBrowserRouter([
   {
@@ -50,7 +48,7 @@ export const router = createBrowserRouter([
           {
             path: '/my-profile/:email',
             element: <ProfileDashboard></ProfileDashboard>,
-            loader: ({ params }) => fetch(`https://code-stack-server.vercel.app/user?email=${params.email}`)
+            loader: ({ params }) => fetch(`http://localhost:5000/user?email=${params.email}`)
           },
           {
             path: 'summery',
@@ -59,7 +57,7 @@ export const router = createBrowserRouter([
           {
             path: 'edit-profile/:email',
             element: <EditProfile></EditProfile>,
-            loader: ({ params }) => fetch(`https://code-stack-server.vercel.app/user?email=${params.email}`)
+            loader: ({ params }) => fetch(`http://localhost:5000/user?email=${params.email}`)
           },
         ]
       },
@@ -70,49 +68,49 @@ export const router = createBrowserRouter([
           {
             path: 'news-feed',
             element: <NewsFeed></NewsFeed>,
-            loader: () => fetch('https://code-stack-server.vercel.app/questions')
+            loader: () => fetch('http://localhost:5000/questions')
           },
-          
+
           {
             path: 'news-feed/:id',
             element: <QuestionsDetails></QuestionsDetails>,
-            loader: ({ params }) => fetch(`https://code-stack-server.vercel.app/question-details/${params.id}`)
+            loader: ({ params }) => fetch(`http://localhost:5000/question-details/${params.id}`)
           },
           {
             path: 'ask-question',
             element: <AddQuestions></AddQuestions>,
           },
           {
-            path:'/main/tags',
-            element:<Tag></Tag>,
+            path: 'tagged',
+            element: <TagQuestions></TagQuestions>,
             loader: () => fetch('https://code-stack-server.vercel.app/questions')
-          
+          },
+          {
+            path: 'user/:email',
+            element: <SingleUser></SingleUser>,
+            loader: ({ params }) => fetch(`http://localhost:5000/user?email=${params.email}`)
+          },
+          {
+            path: 'tags',
+            element: <Tag></Tag>
           }
-  
-
-
-        ],
-       
-      }
-    ],
-
-  },
-  {
-
-    path: 'dashboard',
-    element: <PrivateRoute><DashboardLayout></DashboardLayout></PrivateRoute>,
-    children: [
-      {
-        path: '/dashboard',
-        element: <AdminHome></AdminHome>
+        ]
       },
       {
-        path: "allUsers",
-        element: <AllUsers></AllUsers>
+        path: 'dashboard',
+        element: <PrivateRoute><DashboardLayout></DashboardLayout></PrivateRoute>,
+        children: [
+          {
+            path: '/dashboard',
+            element: <AdminHome></AdminHome>
+          },
+          {
+            path: "allUsers",
+            element: <AllUsers></AllUsers>
+          },
+
+        ]
       },
-      
     ]
   },
-
-
-]);
+])

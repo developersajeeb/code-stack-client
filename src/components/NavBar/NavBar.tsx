@@ -11,6 +11,7 @@ import { FiUsers } from "react-icons/fi";
 
 import { Link, NavLink } from 'react-router-dom';
 import { AuthContext } from '../../Provider/AuthProvider';
+import useAdmin from '../../hooks/useAdmin';
 
 const initialUserData = {
     imgURL: ''
@@ -20,15 +21,15 @@ const NavBar = () => {
     const [isOpen, setOpen] = useState<boolean>(false);
     const [userData, setUserData] = useState(initialUserData);
     const authContext   = useContext(AuthContext)
-    const isAdmin = true;
-    console.log(isAdmin)
+    const {isAdmin} = useAdmin;
     if (!authContext) {
         return <p>Loading...</p>;
     }
     const { user, logOut } = authContext;
+    
 
     useEffect(() => {
-        fetch(`https://code-stack-server.vercel.app/user?email=${user?.email}`)
+        fetch(`http://localhost:5000/user?email=${user?.email}`)
         .then(res => res.json())
         .then(data => setUserData(data))
     }, [])
@@ -38,7 +39,7 @@ const NavBar = () => {
         <nav className='shadow-md px-2 py-3 md:px-8 lg:px-32 border-t-4 border-[#33B89F] flex items-center gap-4 md:gap-10 bg-transparent bg-white'>
             <div className='flex items-center gap-4'>
                 <span onClick={() => { setOpen(!isOpen) }}><Hamburger size={25}></Hamburger></span>
-                <ul className={`drop-shadow-xl grid font-medium text-gray-600 bg-white px-8 py-6 rounded-md absolute w-60 duration-300 border-2 border-dashed ${isOpen ? 'left-4 lg:left-32 top-20' : 'top-20 -left-60'}`}>
+                <ul className={`drop-shadow-xl grid font-medium text-gray-600 bg-white px-8 py-6 rounded-md absolute w-60 duration-300 border-2 border-dashed z-50 ${isOpen ? 'left-4 lg:left-32 top-20' : 'top-20 -left-60'}`}>
                     <NavLink className={({ isActive }) => isActive ? 'text-color flex items-center gap-2 mb-5' : ' text-gray-500 flex items-center gap-2 mb-5'} to='/'><BiHomeAlt /> Home</NavLink>
                     <NavLink className={({ isActive }) => isActive ? 'text-color flex items-center gap-2 mb-5' : ' text-gray-500 flex items-center gap-2 mb-5'} to='/main/news-feed'><FaRegNewspaper /> News Feed</NavLink>
                     <NavLink className={({ isActive }) => isActive ? 'text-color flex items-center gap-2 mb-5' : ' text-gray-500 flex items-center gap-2 mb-5'} to='/main/ask-question'><TbUserQuestion /> Ask Question</NavLink>
