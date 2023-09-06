@@ -25,9 +25,10 @@ const AddQuestion = () => {
         return <p>Loading...</p>;
     }
     const { user } = authContext;
-    const uploadDate = new Date().toDateString();
-    const uploadTime = new Date().toLocaleTimeString();
-    
+    const currentDate = new Date();
+    const uploadDate = `${(currentDate.getMonth() + 1).toString().padStart(2, '0')}/${currentDate.getDate().toString().padStart(2, '0')}/${currentDate.getFullYear()}`;
+    const uploadTime = new Date().toLocaleTimeString();    
+
     useEffect(() => {
         fetch(`http://localhost:5000/user?email=${user?.email}`)
             .then(res => res.json())
@@ -60,7 +61,7 @@ const AddQuestion = () => {
             title,
             body,
             selected,
-            problemImages:imgURL,
+            problemImages: imgURL,
             username: userData?.username,
             name: userData?.name,
             email: userData?.email,
