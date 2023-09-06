@@ -28,7 +28,9 @@ const NewsFeed = () => {
     const [loading, setLoading] = useState<boolean>(false);
     const authContext = useContext(AuthContext)
     if (!authContext) {
-        return <p>Loading...</p>;
+        return <div className='h-screen flex justify-center items-center'>
+            <div className="w-12 h-12 rounded-full animate-spin border-x-8 border-solid border-[#33B89F] border-t-transparent"></div>
+        </div>;
     }
     const { user } = authContext;
 
@@ -143,7 +145,7 @@ const NewsFeed = () => {
                                     <h2 className="text-xl font-medium hover:text-[#33B89F] cursor-pointer duration-200">{question?.title}</h2>
                                 </Link>
                                 <p className="mt-2 text-gray-500 text-sm" dangerouslySetInnerHTML={{
-                                    __html: question && question?.body ? question?.body.slice(0, 120)+'...' : ""
+                                    __html: question && question?.body ? question?.body.slice(0, 120) + '...' : ""
                                 }} />
                                 <ul className="flex flex-wrap gap-3 my-3 mt-5">
                                     {

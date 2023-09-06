@@ -75,7 +75,6 @@ const AuthProviders: React.FC<AuthProviderProps> = ({ children }) => {
         const unsubscribe = onAuthStateChanged(auth, currentUser => {
             setUser(currentUser);
             setLoading(false);
-            console.log('now user', currentUser);
         });
         return () => {
             return unsubscribe();

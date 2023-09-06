@@ -61,7 +61,6 @@ const EditProfile = () => {
 
         const imgResponse = await response.json();
         const imgURL = imgResponse?.data?.display_url || '';
-        console.log(imgURL);
 
         const personalData = { name, imgURL, age, gender, portfolioURL, country, city, facebookURL, twitterURL, githubURL, selected, aboutMe }
         fetch(`http://localhost:5000/user/${user?.email}`, {

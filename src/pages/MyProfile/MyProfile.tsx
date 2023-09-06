@@ -7,7 +7,6 @@ import { RiProfileLine } from "react-icons/ri";
 import { TbBrandGoogleAnalytics, TbDeviceIpadHorizontalQuestion, TbUserEdit, TbUserQuestion } from "react-icons/tb";
 import { IoChatbubblesOutline } from "react-icons/io5";
 import { BiBookmarkAlt } from "react-icons/bi";
-import { LuTags } from "react-icons/lu";
 import notUser from '../../assets/icons/user-not.png';
 
 const initialUserData = {
@@ -62,7 +61,6 @@ const MyProfile = () => {
                             <li><NavLink className={({ isActive }) => isActive ? 'text-color flex items-center gap-2 font-medium' : 'text-gray-500 flex items-center gap-2 font-medium'} to='/my-profile/summery'><TbBrandGoogleAnalytics size={18} /> Summery</NavLink></li>
                             <li><NavLink className={({ isActive }) => isActive ? 'text-color flex items-center gap-2 font-medium' : 'text-gray-500 flex items-center gap-2 font-medium'} to='/my-profile/'><IoChatbubblesOutline size={18} /> Answers</NavLink></li>
                             <li><NavLink className={({ isActive }) => isActive ? 'text-color flex items-center gap-2 font-medium' : 'text-gray-500 flex items-center gap-2 font-medium'} to='/my-profile/'><TbDeviceIpadHorizontalQuestion size={18} /> Questions</NavLink></li>
-                            <li><NavLink className={({ isActive }) => isActive ? 'text-color flex items-center gap-2 font-medium' : 'text-gray-500 flex items-center gap-2 font-medium'} to='/my-profile/'><LuTags size={18} /> Tags</NavLink></li>
                             <li><NavLink className={({ isActive }) => isActive ? 'text-color flex items-center gap-2 font-medium' : 'text-gray-500 flex items-center gap-2 font-medium'} to='/my-profile/'><BiBookmarkAlt size={18} /> Saves</NavLink></li>
                             <li><NavLink className={({ isActive }) => isActive ? 'text-color flex items-center gap-2 font-medium' : 'text-gray-500 flex items-center gap-2 font-medium'} to={`/my-profile/edit-profile/${user?.email}`}><TbUserEdit size={18} /> Edit Profile</NavLink></li>
                             <li><NavLink className={({ isActive }) => isActive ? 'text-color flex items-center gap-2 font-medium' : 'text-gray-500 flex items-center gap-2 font-medium'} to='/main/news-feed'><FaRegNewspaper size={18} /> News Feed</NavLink></li>

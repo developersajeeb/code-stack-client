@@ -32,7 +32,6 @@ const Register = () => {
         try {
             const response = await fetch(`http://localhost:5000/check-username?username=${newUsername}`);
             const data = await response.json();
-            console.log(data);
 
             setIsUsernameValid(data.message);
         } catch (error) {
@@ -64,11 +63,12 @@ const Register = () => {
                                 const response = await fetch(img_hosting_url, {
                                     method: 'POST',
                                     body: formData
-                                });
+                                });                                
 
                                 const imgResponse = await response.json();
                                 if (imgResponse.success) {
                                     const imgURL = imgResponse.data.display_url;
+                                    console.log(imgURL, role);
                                     const saveUser = { name, username, email, imgURL, password, role }
                                     fetch('http://localhost:5000/users', {
                                         method: 'POST',
@@ -84,7 +84,7 @@ const Register = () => {
                                                 'You have successfully Register.',
                                                 'success'
                                             )
-                                            navigate('/');
+                                            navigate('/main/news-feed');
                                         })
                                 }
                             } catch (error) {
