@@ -64,7 +64,7 @@ const EditProfile = () => {
         console.log(imgURL);
 
         const personalData = { name, imgURL, age, gender, portfolioURL, country, city, facebookURL, twitterURL, githubURL, selected, aboutMe }
-        fetch(`https://code-stack-server.vercel.app/user/${user?.email}`, {
+        fetch(`http://localhost:5000/user/${user?.email}`, {
             method: 'PUT',
             headers: {
                 'content-type': 'application/json'

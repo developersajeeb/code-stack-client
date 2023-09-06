@@ -1,6 +1,6 @@
-import { useEffect, useState } from "react";
+import { MouseEvent, useEffect, useState } from "react";
 import { AiOutlineEye } from "react-icons/ai";
-import { BiLike } from "react-icons/bi";
+import { BiLike, BiSolidLike } from "react-icons/bi";
 import { BsQuestionCircle } from "react-icons/bs";
 import { FiUploadCloud } from "react-icons/fi";
 import { MdUnfoldMore } from "react-icons/md";
@@ -19,6 +19,10 @@ const NewsFeed = () => {
     const allQuestions = useLoaderData() as Question[];
     const [selectedTag, setSelectedTag] = useState<string>('');
     const [filteredQuestions, setFilteredQuestions] = useState<Question[]>([]);
+    const [isLike, setIsLike] = useState(false);
+    const handleClick = (event: MouseEvent<HTMLLIElement>): void => {
+        setIsLike(!isLike);
+      }
 
     const handleTagSelect = (event: React.ChangeEvent<HTMLSelectElement>) => {
         const selected = event.target.value;
@@ -79,7 +83,7 @@ const NewsFeed = () => {
                             <ul className="text-center">
                                 <li>0</li>
                                 <li className="text-gray-600 my-1">votes</li>
-                                <li className="grid justify-center text-gray-600"><BiLike /></li>
+                                <li onClick={handleClick} className="grid justify-center text-gray-600">{isLike? <BiSolidLike/>:<BiLike />}</li>
                             </ul>
                             <ul className="text-center">
                                 <li>0</li>

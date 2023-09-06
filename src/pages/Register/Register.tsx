@@ -30,7 +30,7 @@ const Register = () => {
         const newUsername = event.target.value;
 
         try {
-            const response = await fetch(`https://code-stack-server.vercel.app/check-username?username=${newUsername}`);
+            const response = await fetch(`http://localhost:5000/check-username?username=${newUsername}`);
             const data = await response.json();
             console.log(data);
 
@@ -70,7 +70,7 @@ const Register = () => {
                                 if (imgResponse.success) {
                                     const imgURL = imgResponse.data.display_url;
                                     const saveUser = { name, username, email, imgURL, password, role }
-                                    fetch('https://code-stack-server.vercel.app/users', {
+                                    fetch('http://localhost:5000/users', {
                                         method: 'POST',
                                         headers: {
                                             'content-type': 'application/json'
