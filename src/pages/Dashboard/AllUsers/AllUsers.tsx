@@ -1,10 +1,10 @@
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import { useQuery } from "@tanstack/react-query";
-import { Swal } from "sweetalert2";
+import Swal from 'sweetalert2'
 
 interface User {
   _id: string;
-  image: string;
+  imgURL: string;
   name: string;
   email: string;
 }
