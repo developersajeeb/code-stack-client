@@ -1,78 +1,86 @@
-import { Link, useLoaderData } from "react-router-dom";
-import storage from '../../assets/others/pngwing.com.png'
-import { useEffect, useState } from "react";
-import { RiQuestionAnswerLine } from "react-icons/ri";
-import { MdUnfoldMore } from "react-icons/md";
+import { AiFillTwitterCircle, AiOutlineArrowDown } from "react-icons/ai";
+import { BsFacebook, BsGithub } from "react-icons/bs";
+import { TbWorldLongitude } from "react-icons/tb";
+import { useLoaderData } from "react-router-dom";
 
 interface UserInfo {
     aboutMe: string;
     email: string;
-}
-
-interface QuestionData {
-    _id: '',
-    title: '',
+    age: number;
+    gender: string;
+    country: string;
+    city: string;
+    selected: string[];
+    facebookURL: '';
+    githubURL: '';
+    twitterURL: '';
+    portfolioURL: '';
 }
 
 const ProfileDashboard = () => {
     const userData = useLoaderData() as UserInfo | undefined;
-    const [allQuestions, setAllQuestions] = useState<QuestionData[]>([]);
-    const [questionsToDisplay, setQuestionsToDisplay] = useState<number>(6);
-    const [hasMoreQuestions, setHasMoreQuestions] = useState<boolean>(true);
+    console.log(userData);
 
-    useEffect(() => {
-        fetch(`http://localhost:5000/questions/${userData?.email}`)
-            .then(res => res.json())
-            .then(data => setAllQuestions(data))
-    }, [])
-
-    const handleLoadMore = () => {
-        const nextQuestionsToDisplay = questionsToDisplay + 6;
-        setQuestionsToDisplay(nextQuestionsToDisplay);
-
-        if (nextQuestionsToDisplay >= allQuestions.length) {
-            setHasMoreQuestions(false);
-        }
-    };
 
     return (
         <main>
-            <div className="border p-4 rounded-lg text-2xl font-medium bg-gray-50">
-                <h3>About</h3>
-                <p className="text-sm font-medium mt-4 text-gray-500">
-                    <span className="text-gray-500 font-normal flex justify-center">
+            <section>
+                <h3 className='bg-indigo-50 px-5 py-2 text-gray-600 rounded-md font-medium text-lg inline-block'>About</h3>
+                <p className="mt-4">
+                    <span className="text-gray-500">
                         {
-                            userData?.aboutMe || 'Your about me section is currently blank.'
+                            userData?.aboutMe || <p className="text-center font-medium">Your about me section is currently blank.</p>
                         }
                     </span>
                 </p>
-            </div>
-            <div className="border p-4 rounded-lg bg-gray-50 mt-8">
-                <h3 className="text-2xl font-medium mb-2">Posts</h3>
-                <div className="h-[480px] overflow-y-auto custom-scrollbar">
-                    {allQuestions ? (
-                        allQuestions?.map(question => <Link to={`/main/news-feed/${question._id}`}>
-                            <p className="border-b flex items-center gap-2 py-2 text-lg text-gray-500 hover:text-[#33B89F] cursor-pointer duration-200 font-normal"><RiQuestionAnswerLine size={24} /> {question?.title}</p>
-                        </Link>))
-                        :
-                        <div className="flex justify-center">
-                            <p className="text-sm mt-4 text-gray-500 text-center">
-                                <img className="w-40 mx-auto" src={storage} alt="" />
-                                <span>Just getting started? Try answering a question!</span>
-                                <p className="w-full md:w-96 mt-3">Your most helpful questions, answers and tags will appear here. Start by <Link to='/main/ask-question'><span className="ml-1 text-color-second cursor-pointer">answering a question</span></Link> or selecting tags that match topics you’re interested in.</p>
-                            </p>
-                        </div>
-                    }
-                    {
-                        hasMoreQuestions && (
-                            <div className="mt-6">
-                                <button className="bg-button mx-auto" onClick={handleLoadMore}>
-                                    More <MdUnfoldMore size={20} />
-                                </button>
-                            </div>
-                        )}
+            </section>
+            <div className="divider text-color-second"><AiOutlineArrowDown size={40} /></div>
+            <section className="my-6">
+                <h3 className='bg-indigo-50 px-5 py-2 text-gray-600 rounded-md font-medium text-lg inline-block'>Personal Information</h3>
+                <div className="flex flex-wrap gap-14 mt-6">
+                    <div>
+                        <span className="text-gray-400 text-sm font-normal">Email</span>
+                        <p className="font-medium">{userData?.email}</p>
+                    </div>
+                    <div>
+                        <span className="text-gray-400 text-sm font-normal">Your Age</span>
+                        <p className="font-medium">{userData?.age || 'Age is blank'}</p>
+                    </div>
+                    <div>
+                        <span className="text-gray-400 text-sm font-normal">Gender</span>
+                        <p className="font-medium">{userData?.gender || 'Gender is blank'}</p>
+                    </div>
+                    <div>
+                        <span className="text-gray-400 text-sm font-normal">Country</span>
+                        <p className="font-medium">{userData?.country || 'Country is blank'}</p>
+                    </div>
+                    <div>
+                        <span className="text-gray-400 text-sm font-normal">City</span>
+                        <p className="font-medium">{userData?.city || 'City is blank'}</p>
+                    </div>
                 </div>
-            </div>
+            </section>
+            <div className="divider text-color-second"><AiOutlineArrowDown size={40} /></div>
+            <section className="mb-6">
+                <h3 className='bg-indigo-50 px-5 py-2 text-gray-600 rounded-md font-medium text-lg inline-block'>Skills</h3>
+                <div className="mt-6 flex flex-wrap items-center gap-4">
+                    { userData ?
+                        userData?.selected.map(skill => <p className="border-2 text-gray-500 inline-block py-1 px-3 rounded-full">{skill}</p>)
+                        :
+                        <p className="text-center font-medium">No Data Here!</p>
+                    }
+                </div>
+            </section>
+            <div className="divider text-color-second mb-6"><AiOutlineArrowDown size={40} /></div>
+            <section>
+                <h3 className='bg-indigo-50 px-5 py-2 text-gray-600 rounded-md font-medium text-lg inline-block'>Social Account</h3>
+                <ul className="flex flex-wrap items-center gap-6 mt-4 font-medium">
+                    <li><a className="text-gray-600 hover:text-[#33B89F] duration-300 flex items-center gap-1" href={userData?.facebookURL}><BsFacebook size={25} /> Facebook</a></li>
+                    <li><a className="text-gray-600 hover:text-[#33B89F] duration-300 flex items-center gap-1" href={userData?.githubURL}><BsGithub size={25} /> Github</a></li>
+                    <li><a className="text-gray-600 hover:text-[#33B89F] duration-300 flex items-center gap-1" href={userData?.twitterURL}><AiFillTwitterCircle size={30} /> Twitter</a></li>
+                    <li><a className="text-gray-600 hover:text-[#33B89F] duration-300 flex items-center gap-1" href={userData?.portfolioURL}><TbWorldLongitude size={28} /> Portfolio</a></li>
+                </ul>
+            </section>
         </main>
     );
 };

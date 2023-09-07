@@ -94,7 +94,7 @@ const NewsFeed = () => {
                         onChange={handleTagSelect}
                         value={selectedTag}
                         name="tag"
-                        className="py-2 px-4 pr-9 border border-gray-300 rounded-md text-sm appearance-none relative bg-gray-100"
+                        className="py-2 px-4 pr-9 border border-gray-300 rounded-md text-sm appearance-none relative bg-gray-100 cursor-pointer"
                     >
                         <option value="">All</option>
                         <option value="html">HTML</option>

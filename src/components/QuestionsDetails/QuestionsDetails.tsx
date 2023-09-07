@@ -95,7 +95,7 @@ const QuestionsDetails = () => {
                 reverseOrder={false}
             />
             <section>
-                <Link to='/'>
+                <Link to={questionData?.email == user?.email && `/my-profile/${questionData?.email}` || `/main/user/${questionData?.email}`}>
                     <div className="inline-block mb-6">
                         <div className="flex items-center gap-2 bg-gray-100 px-3 py-2 rounded-md">
                             <img className="w-11 h-11 object-cover rounded-full" src={questionData?.userPhoto || user?.photoURL || notUser} alt="" />

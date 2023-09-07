@@ -41,7 +41,7 @@ const MyProfile = () => {
                             <span className="w-48 h-48 rounded rotate-[-40deg] bg-two absolute bottom-0 left-0 -translate-x-full ease-out duration-500 transition-all translate-y-full mb-9 ml-9 group-hover:ml-0 group-hover:mb-32 group-hover:translate-x-0"></span>
                             <span className="relative w-full text-left text-black transition-colors duration-300 ease-in-out group-hover:text-white flex items-center gap-2"><FaArrowLeft /> Side Menu</span>
                         </label>
-                        <main className="lg:ml-12 mt-8 lg:mt-0">
+                        <main className="mt-8 mb-16 lg:mb-0 lg:ml-12 lg:mt-0">
                             <Outlet></Outlet>
                         </main>
 
@@ -59,8 +59,8 @@ const MyProfile = () => {
                             </figure>
                             <li><NavLink className={({ isActive }) => isActive ? 'text-color flex items-center gap-2 font-medium' : 'text-gray-500 flex items-center gap-2 font-medium'} to={`/my-profile/${user?.email}`}><RiProfileLine size={18} /> User Dashboard</NavLink></li>
                             <li><NavLink className={({ isActive }) => isActive ? 'text-color flex items-center gap-2 font-medium' : 'text-gray-500 flex items-center gap-2 font-medium'} to='/my-profile/summery'><TbBrandGoogleAnalytics size={18} /> Summery</NavLink></li>
-                            <li><NavLink className={({ isActive }) => isActive ? 'text-color flex items-center gap-2 font-medium' : 'text-gray-500 flex items-center gap-2 font-medium'} to='/my-profile/'><IoChatbubblesOutline size={18} /> Answers</NavLink></li>
-                            <li><NavLink className={({ isActive }) => isActive ? 'text-color flex items-center gap-2 font-medium' : 'text-gray-500 flex items-center gap-2 font-medium'} to='/my-profile/'><TbDeviceIpadHorizontalQuestion size={18} /> Questions</NavLink></li>
+                            <li><NavLink className={({ isActive }) => isActive ? 'text-color flex items-center gap-2 font-medium' : 'text-gray-500 flex items-center gap-2 font-medium'} to='/my-profile/answers'><IoChatbubblesOutline size={18} /> Answers</NavLink></li>
+                            <li><NavLink className={({ isActive }) => isActive ? 'text-color flex items-center gap-2 font-medium' : 'text-gray-500 flex items-center gap-2 font-medium'} to='/my-profile/questions'><TbDeviceIpadHorizontalQuestion size={18} /> Questions</NavLink></li>
                             <li><NavLink className={({ isActive }) => isActive ? 'text-color flex items-center gap-2 font-medium' : 'text-gray-500 flex items-center gap-2 font-medium'} to='/my-profile/'><BiBookmarkAlt size={18} /> Saves</NavLink></li>
                             <li><NavLink className={({ isActive }) => isActive ? 'text-color flex items-center gap-2 font-medium' : 'text-gray-500 flex items-center gap-2 font-medium'} to={`/my-profile/edit-profile/${user?.email}`}><TbUserEdit size={18} /> Edit Profile</NavLink></li>
                             <li><NavLink className={({ isActive }) => isActive ? 'text-color flex items-center gap-2 font-medium' : 'text-gray-500 flex items-center gap-2 font-medium'} to='/main/news-feed'><FaRegNewspaper size={18} /> News Feed</NavLink></li>

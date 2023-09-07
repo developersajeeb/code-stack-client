@@ -12,6 +12,7 @@ import b4 from '../../assets/badges/top.png'
 import { useEffect, useState } from "react";
 import { RiQuestionAnswerLine } from "react-icons/ri";
 import { MdUnfoldMore } from "react-icons/md";
+import storage from '../../assets/others/pngwing.com.png'
 
 interface UserInfo {
     imgURL: '',
@@ -36,11 +37,24 @@ const SingleUser = () => {
     const [allQuestions, setAllQuestions] = useState<QuestionData[]>([]);
     const [questionsToDisplay, setQuestionsToDisplay] = useState<number>(6);
     const [hasMoreQuestions, setHasMoreQuestions] = useState<boolean>(true);
+    const [allAnswers, setAllAnswers] = useState([]);
+    const [isLoading, setIsLoading] = useState<boolean>(true);
 
     useEffect(() => {
         fetch(`http://localhost:5000/questions/${userData?.email}`)
             .then(res => res.json())
-            .then(data => setAllQuestions(data))
+            .then(data => {
+                setAllQuestions(data)
+                setTimeout(() => {
+                    setIsLoading(false);
+                }, 1000)
+            })
+    }, [])
+
+    useEffect(() => {
+        fetch(`http://localhost:5000/answers/${userData?.email}`)
+            .then(res => res.json())
+            .then(data => setAllAnswers(data))
     }, [])
 
     const handleLoadMore = () => {
@@ -59,7 +73,7 @@ const SingleUser = () => {
                 <div>
                     <h2 className="text-[22px] md:text-3xl font-medium text-gray-700">{userData?.name}</h2>
                     <p className="text-gray-500 my-1">{userData?.country}</p>
-                    <p className="text-gray-500">Age: {userData?.age}</p>
+                    <p className="text-gray-500">{userData?.age ? 'Age: ' + userData.age : ''}</p>
                 </div>
             </section>
             <section className="mt-8">
@@ -77,8 +91,8 @@ const SingleUser = () => {
                     <h3 className="text-2xl font-medium mb-3">Stats</h3>
                     <ul className="flex justify-between">
                         <h3 className="grid"><BiLike size={24} /><span className="text-sm font-medium text-gray-400 mt-1">Total Votes</span><span className="text-xl font-bold text-gray-700">120</span></h3>
-                        <h3 className="grid"><TbMessageQuestion size={24} /><span className="text-sm font-medium text-gray-400 mt-1">Total Questions</span><span className="text-xl font-bold text-gray-700">120</span></h3>
-                        <h3 className="grid"><IoChatbubbleEllipsesOutline size={24} /><span className="text-sm font-medium text-gray-400 mt-1">Total Answers</span><span className="text-xl font-bold text-gray-700">120</span></h3>
+                        <h3 className="grid"><TbMessageQuestion size={24} /><span className="text-sm font-medium text-gray-400 mt-1">Total Questions</span><span className="text-xl font-bold text-gray-700">{allQuestions?.length}</span></h3>
+                        <h3 className="grid"><IoChatbubbleEllipsesOutline size={24} /><span className="text-sm font-medium text-gray-400 mt-1">Total Answers</span><span className="text-xl font-bold text-gray-700">{allAnswers?.length}</span></h3>
                     </ul>
                 </div>
                 <div className="bg-gray-50 p-4 rounded-lg">
@@ -94,23 +108,59 @@ const SingleUser = () => {
 
             <section>
                 <h2 className="mt-6 text-2xl font-medium mb-2">Questions</h2>
-
-                <div>
+                <div className="h-[450px] overflow-y-auto custom-scrollbar mt-5">
                     {
-                        allQuestions?.slice(0, questionsToDisplay)?.map(question => <p key={question?._id} className="border-b flex items-center gap-2 py-2 text-lg text-gray-500 hover:text-[#33B89F] cursor-pointer duration-200">
-                            <span className="text-color"><RiQuestionAnswerLine size={24} /></span>
-                            <Link key={question?._id} to={`/main/news-feed/${question?._id}}`}>{question?.title}</Link>
-                        </p>)
+                        isLoading ? (
+                            <div>
+                                <div className="animate-pulse mb-4 flex items-center">
+                                    <progress className="progress w-14 h-7 mr-2 rounded-full" value={0} max="100"></progress>
+                                    <progress className="progress h-7 w-4/5 rounded-full" value={0} max="100"></progress>
+                                </div>
+                                <div className="animate-pulse mb-4 flex items-center">
+                                    <progress className="progress w-14 h-7 mr-2 rounded-full" value={0} max="100"></progress>
+                                    <progress className="progress h-7 w-full rounded-full" value={0} max="100"></progress>
+                                </div>
+                                <div className="animate-pulse mb-4 flex items-center">
+                                    <progress className="progress w-14 h-7 mr-2 rounded-full" value={0} max="100"></progress>
+                                    <progress className="progress h-7 w-10/12 rounded-full" value={0} max="100"></progress>
+                                </div>
+                                <div className="animate-pulse mb-4 flex items-center">
+                                    <progress className="progress w-14 h-7 mr-2 rounded-full" value={0} max="100"></progress>
+                                    <progress className="progress h-7 w-8/12 rounded-full" value={0} max="100"></progress>
+                                </div>
+                                <div className="animate-pulse mb-4 flex items-center">
+                                    <progress className="progress w-14 h-7 mr-2 rounded-full" value={0} max="100"></progress>
+                                    <progress className="progress h-7 w-9/12 rounded-full" value={0} max="100"></progress>
+                                </div>
+                                <div className="animate-pulse mb-4 flex items-center">
+                                    <progress className="progress w-14 h-7 mr-2 rounded-full" value={0} max="100"></progress>
+                                    <progress className="progress h-7 w-7/12 rounded-full" value={0} max="100"></progress>
+                                </div>
+                            </div>
+
+                        ) : (
+                            allQuestions ? (
+                                allQuestions?.slice(0, questionsToDisplay).map(question => <Link key={question._id} to={`/main/news-feed/${question._id}`}>
+                                    <p className="border-b flex items-center gap-2 py-2 text-lg text-gray-500 hover:text-[#33B89F] cursor-pointer duration-200 font-normal"><span><RiQuestionAnswerLine size={24} /></span> {question?.title}</p>
+                                </Link>))
+                                :
+                                <div className="flex justify-center">
+                                    <p className="text-sm mt-4 text-gray-500 text-center">
+                                        <img className="w-40 mx-auto" src={storage} alt="" />
+                                        <span>Just getting started? Try answering a question!</span>
+                                        <p className="w-full md:w-96 mt-3">Your most helpful questions, answers and tags will appear here. Start by <Link to='/main/ask-question'><span className="ml-1 text-color-second cursor-pointer">answering a question</span></Link> or selecting tags that match topics you’re interested in.</p>
+                                    </p>
+                                </div>)
                     }
+                    {
+                        hasMoreQuestions && !isLoading && (
+                            <div className="mt-6">
+                                <button className="bg-button mx-auto" onClick={handleLoadMore}>
+                                    More <MdUnfoldMore size={20} />
+                                </button>
+                            </div>
+                        )}
                 </div>
-                {
-                    hasMoreQuestions && (
-                        <div className="mt-6">
-                            <button className="bg-button mx-auto" onClick={handleLoadMore}>
-                                More <MdUnfoldMore size={20} />
-                            </button>
-                        </div>
-                    )}
             </section>
         </main>
     );

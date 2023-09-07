@@ -16,6 +16,7 @@ interface QuestionData {
 
 const Summery = () => {
     const [allQuestions, setAllQuestions] = useState<QuestionData[]>([]);
+    const [allAnswers, setAllAnswers] = useState([]);
     const authContext = useContext(AuthContext)
     if (!authContext) {
         return <p>Loading...</p>;
@@ -27,6 +28,12 @@ const Summery = () => {
             .then(res => res.json())
             .then(data => setAllQuestions(data))
     }, [])
+
+    useEffect(() => {
+        fetch(`http://localhost:5000/answers/${user?.email}`)
+            .then(res => res.json())
+            .then(data => setAllAnswers(data))
+    }, [])    
 
     return (
         <main>
@@ -49,7 +56,7 @@ const Summery = () => {
                     <span className="bg-purple-100 text-gray-700 p-3 rounded-full"><MdOutlineQuestionAnswer size={45} /></span>
                     <div>
                         <h5 className="font-medium text-gray-600">Total Answers</h5>
-                        <p className="text-2xl font-semibold">156</p>
+                        <p className="text-2xl font-semibold">{allAnswers?.length}</p>
                     </div>
                 </div>
             </section>
@@ -57,7 +64,7 @@ const Summery = () => {
                 <div className="md:col-span-2">
                     <img className="w-full shadow" src={chart} alt="" />
                 </div>
-                <div className="bg-gray-50 p-4 rounded-lg">
+                <div className="bg-green-50 p-4 rounded-lg">
                     <h3 className="text-xl font-medium mb-6">Your Badges</h3>
                     <ul className="flex flex-wrap gap-4">
                         <li className="text-center"><img className="w-14 h-14 object-fill" src={b1} alt="" /><small className="font-medium text-gray-400">Entry</small></li>

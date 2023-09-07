@@ -21,6 +21,8 @@ import AllUsers from "../pages/Dashboard/AllUsers/AllUsers";
 import Tag from "../pages/Tags/Tag";
 import SingleUser from "../pages/SingleUser/SingleUser";
 import TagQuestions from "../pages/TagQuestions/TagQuestions";
+import Answers from "../pages/Answers/Answers";
+import Questions from "../pages/Questions/Questions";
 
 export const router = createBrowserRouter([
   {
@@ -59,6 +61,14 @@ export const router = createBrowserRouter([
             element: <EditProfile></EditProfile>,
             loader: ({ params }) => fetch(`http://localhost:5000/user?email=${params.email}`)
           },
+          {
+            path: 'answers',
+            element: <Answers></Answers>
+          },
+          {
+            path: 'questions',
+            element: <Questions></Questions>
+          },
         ]
       },
       {
@@ -93,7 +103,7 @@ export const router = createBrowserRouter([
           {
             path: 'tags',
             element: <Tag></Tag>
-          }
+          },
         ]
       },
       {
