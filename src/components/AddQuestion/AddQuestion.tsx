@@ -68,6 +68,7 @@ const AddQuestion = () => {
             userPhoto: userData?.imgURL,
             uploadDate,
             uploadTime,
+            likes: []
         }
         fetch('http://localhost:5000/questions', {
             method: 'POST',

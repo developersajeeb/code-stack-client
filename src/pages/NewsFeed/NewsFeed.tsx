@@ -1,7 +1,5 @@
 import { useEffect, useState, useContext } from "react";
-import { MouseEvent, useEffect, useState } from "react";
-import { AiOutlineEye } from "react-icons/ai";
-import { BiLike, BiSolidLike } from "react-icons/bi";
+
 import { BsQuestionCircle } from "react-icons/bs";
 import { MdUnfoldMore } from "react-icons/md";
 import { PiArrowCircleDownLight } from "react-icons/pi";
@@ -20,6 +18,7 @@ interface Question {
     selected: string[];
     uploadTime: '';
     uploadDate: '';
+    likes: [];
 }
 
 const NewsFeed = () => {
@@ -34,10 +33,6 @@ const NewsFeed = () => {
         return <p>Loading...</p>;
     }
     const { user } = authContext;
-    const [isLike, setIsLike] = useState(false);
-    const handleClick = (event: MouseEvent<HTMLLIElement>): void => {
-        setIsLike(!isLike);
-      }
 
     const handleTagSelect = (event: React.ChangeEvent<HTMLSelectElement>) => {
         const selected = event.target.value;
@@ -169,7 +164,7 @@ const NewsFeed = () => {
                                     </Link>
                                 </p>
                             </div>
-                            <VavDetails questionId={question?._id}></VavDetails>
+                            <VavDetails question={question}></VavDetails>
                         </div>)
                     )}
 
