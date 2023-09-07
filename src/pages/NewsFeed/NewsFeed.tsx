@@ -1,4 +1,5 @@
 import { useEffect, useState, useContext } from "react";
+
 import { BsQuestionCircle } from "react-icons/bs";
 import { MdUnfoldMore } from "react-icons/md";
 import { PiArrowCircleDownLight } from "react-icons/pi";
@@ -17,6 +18,7 @@ interface Question {
     selected: string[];
     uploadTime: '';
     uploadDate: '';
+    likes: [];
 }
 
 const NewsFeed = () => {
@@ -164,7 +166,7 @@ const NewsFeed = () => {
                                     </Link>
                                 </p>
                             </div>
-                            <VavDetails questionId={question?._id}></VavDetails>
+                            <VavDetails question={question}></VavDetails>
                         </div>)
                     )}
 

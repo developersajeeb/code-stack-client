@@ -60,7 +60,8 @@ const AddQuestion = () => {
             email: userData?.email,
             userPhoto: userData?.imgURL,
             uploadDate,
-            uploadTime
+            uploadTime,
+            likes: []
         }
         fetch('http://localhost:5000/questions', {
             method: 'POST',
