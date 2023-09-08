@@ -6,7 +6,7 @@ import { FaArrowRight } from "react-icons/fa";
 import { Toaster, toast } from "react-hot-toast";
 import { AuthContext } from "../../Provider/AuthProvider";
 import AnswerDetails from "./AnswerDetails";
-import { BiLike } from "react-icons/bi";
+import { BiLike, BiSolidLike } from "react-icons/bi";
 import notUser from '../../assets/icons/user-not.png';
 import { useQuery } from "@tanstack/react-query";
 
@@ -31,7 +31,12 @@ const QuestionsDetails = () => {
         return <p>Loading...</p>;
     }
     const { user } = authContext;
-    const [isQuillValid, setIsQuillValid] = useState(false);     
+    const [isQuillValid, setIsQuillValid] = useState(false); 
+    const [isLike, setIsLike] = useState<boolean>(false);
+    
+    const handleLike = async () => {
+          setIsLike(true);
+      };    
 
     const handleQuill = (value: string) => {
         setBody(value);
@@ -101,14 +106,14 @@ const QuestionsDetails = () => {
                             <img className="w-11 h-11 object-cover rounded-full" src={questionData?.userPhoto || user?.photoURL || notUser} alt="" />
                             <div>
                                 <p className="font-medium">{questionData?.name}</p>
-                                <p className="text-sm text-color-second">Total Badges: 10</p>
+                                <p className="text-sm text-color-second">Top Level</p>
                             </div>
                         </div>
                     </div>
                 </Link>
                 <div className="flex gap-4 items-center">
                     <div className="border border-gray-300 p-2 rounded-full text-center">
-                        <p className="cursor-pointer text-gray-500"><BiLike size={25} /> <span className="text-sm font-medium">11</span></p>
+                        <p onClick={()=>handleLike()} className="cursor-pointer text-gray-500">{isLike ? <BiSolidLike size={25} />:<BiLike size={25} />} <span className="text-sm font-medium">11</span></p>
                     </div>
                     <h1 className="text-3xl font-medium text-gray-700">{questionData?.title}</h1>
                 </div>
