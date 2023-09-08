@@ -187,7 +187,7 @@ const NavBar = () => {
             Admin
           </NavLink>
         )}
-        {user ? ( !isAdmin &&
+        {user ? ( !isAdmin && 
           <div className="hidden md:block">
             <div className="flex items-center gap-3 border-2 p-2 bg-white shadow-sm rounded-full">
               <figure className="w-9 h-9">

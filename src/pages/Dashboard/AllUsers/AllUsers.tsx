@@ -76,7 +76,7 @@ const AllUsers = () => {
   }
 
   return (
-    <div className="overflow-x-auto md:ml-20 my-10 w-full">
+    <div className="overflow-x-auto md:ml-20 my-10 md:w-full">
       <h1 className="text-3xl lg:text-5xl font-bold uppercase text-center p-10">
         All Users
       </h1>
