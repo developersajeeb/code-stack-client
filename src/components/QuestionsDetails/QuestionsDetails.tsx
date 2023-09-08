@@ -1,12 +1,14 @@
 import { Link, useLoaderData } from "react-router-dom";
-import notUser from '../../assets/icons/user-not.png';
+import { useState, useContext } from "react";
 import ReactQuill from "react-quill";
-import { useState, useContext, useEffect } from "react";
+import 'react-quill/dist/quill.snow.css';
 import { FaArrowRight } from "react-icons/fa";
 import { Toaster, toast } from "react-hot-toast";
 import { AuthContext } from "../../Provider/AuthProvider";
 import AnswerDetails from "./AnswerDetails";
 import { BiLike } from "react-icons/bi";
+import notUser from '../../assets/icons/user-not.png';
+import { useQuery } from "@tanstack/react-query";
 
 interface QuestionInfo {
     _id: '',
@@ -19,14 +21,9 @@ interface QuestionInfo {
     username: ''
 }
 
-interface UserInfo {
-    username: ''
-}
-
 const QuestionsDetails = () => {
     const questionData = useLoaderData() as QuestionInfo | undefined;
     const [body, setBody] = useState('');
-    const [userData, setUserData] = useState<UserInfo | null>(null);
     const uploadDate = new Date().toDateString();
     const uploadTime = new Date().toLocaleTimeString();
     const authContext = useContext(AuthContext)
@@ -34,22 +31,31 @@ const QuestionsDetails = () => {
         return <p>Loading...</p>;
     }
     const { user } = authContext;
-    const [isQuillValid, setIsQuillValid] = useState(false);
+    const [isQuillValid, setIsQuillValid] = useState(false);     
 
     const handleQuill = (value: string) => {
         setBody(value);
         setIsQuillValid(value.trim() !== '');
     }
 
-    useEffect(() => {
-        fetch(`http://localhost:5000/user?email=${user?.email}`)
-            .then(res => res.json())
-            .then(data => setUserData(data))
-    }, [])
+    const {data:userData = null} = useQuery({
+        queryKey: [''],
+        queryFn: async () => {
+            const res = await fetch(`http://localhost:5000/user?email=${user?.email}`)
+            const data = res.json()
+            return data
+        }
+    })  
+    
+    const { data: answerFullData = [], refetch } = useQuery([questionData?._id], async () => {
+        const res = await fetch(`http://localhost:5000/answer/${questionData?._id}`);
+        const data = await res.json();
+        return data;
+    });
 
     const handlePostAnswer = (event: { preventDefault: () => void; target: any; }) => {
         event.preventDefault();
-        if (!isQuillValid) {
+        if (!isQuillValid || body == '<p><br></p>') {
             toast.error("Please enter your answer!");
             return;
         }
@@ -72,6 +78,7 @@ const QuestionsDetails = () => {
             .then(result => result.json())
             .then((data) => {
                 if (data.insertedId) {
+                    refetch();
                     toast.success('Post your answer!');
                     setBody('');
                 } else {
@@ -88,7 +95,7 @@ const QuestionsDetails = () => {
                 reverseOrder={false}
             />
             <section>
-                <Link to='/'>
+                <Link to={questionData?.email == user?.email && `/my-profile/${questionData?.email}` || `/main/user/${questionData?.email}`}>
                     <div className="inline-block mb-6">
                         <div className="flex items-center gap-2 bg-gray-100 px-3 py-2 rounded-md">
                             <img className="w-11 h-11 object-cover rounded-full" src={questionData?.userPhoto || user?.photoURL || notUser} alt="" />
@@ -131,7 +138,7 @@ const QuestionsDetails = () => {
 
             <section>
                 <h2 className="text-2xl font-semibold text-gray-700 mb-4">Answers</h2>
-                <AnswerDetails questionId={questionData?._id}></AnswerDetails>
+                <AnswerDetails answerFullData={answerFullData}></AnswerDetails>
             </section>
 
             <form className="mt-8" onSubmit={handlePostAnswer}>

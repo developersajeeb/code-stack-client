@@ -17,7 +17,7 @@ const Login = () => {
     const location = useLocation();
     const emailRef = useRef<HTMLInputElement>(null);
     const [resetError, setResetError] = useState('');
-    const from = location.state?.from?.pathname;
+    const from = location.state?.from?.pathname || '/main/news-feed';
     const [showPassword, setShowPassword] = useState(false);
 
     const authContext = useContext(AuthContext)

@@ -19,7 +19,7 @@ const PrivateRoute: React.FC<PrivateRouteProps> = ({ children }) => {
 
     if (loading) {
         return <div className='h-screen flex justify-center items-center'>
-            <div className="w-12 h-12 rounded-full animate-spin border-x-8 border-solid border-purple-500 border-t-transparent"></div>
+            <div className="w-12 h-12 rounded-full animate-spin border-x-8 border-solid border-[#33B89F] border-t-transparent"></div>
         </div>
     }
 

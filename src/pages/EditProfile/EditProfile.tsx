@@ -61,7 +61,6 @@ const EditProfile = () => {
 
         const imgResponse = await response.json();
         const imgURL = imgResponse?.data?.display_url || '';
-        console.log(imgURL);
 
         const personalData = { name, imgURL, age, gender, portfolioURL, country, city, facebookURL, twitterURL, githubURL, selected, aboutMe }
         fetch(`http://localhost:5000/user/${user?.email}`, {
@@ -88,7 +87,7 @@ const EditProfile = () => {
                 reverseOrder={false}
             />
             <div>
-                <span className='bg-indigo-50 px-5 py-2 text-color rounded-md font-medium'>Edit Profile</span>
+                <span className='bg-indigo-50 px-5 py-2 text-color-second rounded-md font-medium'>Edit Profile</span>
                 <h2 className='text-3xl font-semibold text-gray-800 leading-snug mb-2 mt-4 w-full md:w-80'>Enhance Your Account With Perfect Details</h2>
             </div>
             <form onSubmit={handleUpdateDetails} className="mt-10">

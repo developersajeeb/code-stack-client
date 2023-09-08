@@ -1,38 +1,32 @@
-import { SetStateAction, useState, useEffect, useContext } from "react";
+import { SetStateAction, useState, useContext } from "react";
 import ReactQuill from "react-quill";
 import 'react-quill/dist/quill.snow.css';
 import { TagsInput } from "react-tag-input-component";
 import { toast, Toaster } from "react-hot-toast";
 import { FaArrowRight } from "react-icons/fa";
 import { AuthContext } from "../../Provider/AuthProvider";
+import { useQuery } from "@tanstack/react-query";
 
 const image_hosting_name = 'ml_default';
-
-interface UserInfo {
-    name: string,
-    username: string,
-    imgURL: '',
-    email: ''
-}
 
 const AddQuestion = () => {
     const [selected, setSelected] = useState(["Web Development"]);
     const [body, setBody] = useState('');
     const [image, setImage] = useState<File | null>(null);
-    const [userData, setUserData] = useState<UserInfo | null>(null);
     const authContext = useContext(AuthContext)
     if (!authContext) {
         return <p>Loading...</p>;
     }
     const { user } = authContext;
-    const uploadDate = new Date().toDateString();
+    const currentDate = new Date();
+    const uploadDate = `${(currentDate.getMonth() + 1).toString().padStart(2, '0')}/${currentDate.getDate().toString().padStart(2, '0')}/${currentDate.getFullYear()}`;
     const uploadTime = new Date().toLocaleTimeString();
-    
-    useEffect(() => {
-        fetch(`http://localhost:5000/user?email=${user?.email}`)
-            .then(res => res.json())
-            .then(data => setUserData(data))
-    }, [])
+
+    const { data: userData = [], refetch } = useQuery([user?.email], async () => {
+        const res = await fetch(`http://localhost:5000/user?email=${user?.email}`);
+        const data = await res.json();
+        return data;
+    });    
 
     const handleQuill = (value: SetStateAction<string>) => {
         setBody(value)
@@ -60,13 +54,14 @@ const AddQuestion = () => {
             title,
             body,
             selected,
-            problemImages:imgURL,
+            problemImages: imgURL,
             username: userData?.username,
             name: userData?.name,
             email: userData?.email,
             userPhoto: userData?.imgURL,
             uploadDate,
-            uploadTime
+            uploadTime,
+            likes: []
         }
         fetch('http://localhost:5000/questions', {
             method: 'POST',
@@ -78,6 +73,7 @@ const AddQuestion = () => {
             .then(result => result.json())
             .then((data) => {
                 if (data.insertedId) {
+                    refetch()
                     form.reset()
                     toast.success('Added Successfully!');
                 } else {
