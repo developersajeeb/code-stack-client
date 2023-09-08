@@ -16,13 +16,24 @@ const useAdmin = () => {
 
   const { user, loading } = authContext;
 
+  if (!user || !user.email || loading) {
+    return {
+      isAdmin: false,
+      isAdminLoading: true,
+    };
+  }
+
   const { data: isAdmin, isLoading: isAdminLoading } = useQuery({
-    queryKey: ["isAdmin", user?.email],
     enabled: !loading,
+    queryKey: ["isAdmin", user?.email],
     queryFn: async () => {
-      const res = await axiosSecure.get(`/users/admin/${user?.email}`);
-      console.log(res)
-      return res.data.admin;
+      try {
+        const res = await axiosSecure.get(`/users/admin/${user.email}`);
+        return res.data.admin;
+      } catch (error) {
+        console.error("Error fetching isAdmin:", error);
+        return false;
+      }
     },
   });
 

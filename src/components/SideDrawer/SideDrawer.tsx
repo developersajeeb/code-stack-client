@@ -11,7 +11,7 @@ const SideDrawer = () => {
 
   return (
     <div
-      className={`relative py-4 h-[100vh] bg-gray-400 transition-all duration-300 ease-in ${isOpen ? "w-32 px-5" : "w-80 px-4"
+      className={`relative py-5 bg-gray-400 transition-all duration-300 ease-in ${isOpen ? "w-32 px-5" : "w-80 px-4"
         }`}
     >
       <button className="absolute top-3 right-2" onClick={toggleDrawer}>

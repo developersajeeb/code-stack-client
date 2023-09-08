@@ -1,11 +1,12 @@
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import { useQuery } from "@tanstack/react-query";
-// import { Swal as Swale } from "sweetalert2";
+import Swal from 'sweetalert2'
+
 
 interface User {
+  role: string;
   imgURL: string | undefined;
   _id: string;
-  image: string;
   name: string;
   email: string;
 }
@@ -33,24 +34,49 @@ const AllUsers = () => {
     return <div>Error: {error.toString()}</div>;
   }
 
-  // Explicitly specify the types for the parameters user and index
   const handleUpdateRole = (user: User, role: string) => {
     axiosSecure.patch(`users/admin/${user._id}`, { role }).then((res) => {
       if (res.data.modifiedCount > 0) {
         refetch();
-        // Swale.fire({
-        //   position: "top-end",
-        //   icon: "success",
-        //   title: `${user.name} is an ${role}`,
-        //   showConfirmButton: false,
-        //   timer: 1500,
-        // });
+        Swal.fire({
+          position: "top-end",
+          icon: "success",
+          title: `${user.name} is an ${role}`,
+          showConfirmButton: false,
+          timer: 1500,
+        });
       }
     });
   };
 
+  const handleRemoveAdmin = (user: User, role: string) => {
+    Swal.fire({
+      title: 'Are you sure?',
+      text: "You want to remove the role?",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, remove it!'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        
+        axiosSecure.patch(`users/normalUser/${user._id}`, { role: "normalUser" }).then((res) => {
+          if (res.data.modifiedCount > 0) {
+            refetch();
+            Swal.fire(
+              'Removed!',
+              `${user.name} is a ${role}`,
+              'success'
+            )
+          }
+        });
+      }
+    })
+  }
+
   return (
-    <div className="overflow-x-auto md:ml-20 w-full">
+    <div className="overflow-x-auto md:ml-20 my-10 md:w-full">
       <h1 className="text-3xl lg:text-5xl font-bold uppercase text-center p-10">
         All Users
       </h1>
@@ -61,6 +87,7 @@ const AllUsers = () => {
             <th>User Image</th>
             <th>Name</th>
             <th>Email</th>
+            <th>Action</th>
             <th>Action</th>
           </tr>
         </thead>
@@ -83,8 +110,18 @@ const AllUsers = () => {
                 <button
                   onClick={() => handleUpdateRole(user, "admin")}
                   className="btn btn-accent btn-sm"
+                  disabled={user?.role === "admin"}
                 >
                   Make Admin
+                </button>
+              </td>
+              <td>
+                <button
+                  onClick={() => handleRemoveAdmin(user, "normalUser")}
+                  className="btn btn-error btn-sm"
+                  disabled={user?.role === "normalUser"}
+                >
+                  Remove Admin
                 </button>
               </td>
             </tr>
