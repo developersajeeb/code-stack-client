@@ -36,14 +36,13 @@ const TagQuestions = () => {
         setTimeout(() => {
             if (paramValue !== null) {
                 const filtered = allQuestions.filter((question) =>
-                    question.selected.includes(paramValue)
+                    question?.selected?.includes(paramValue)
                 );
                 setTagQuestions(filtered);
                 setIsLoading(false);
             }
         }, 1000);
-    }, [paramValue, allQuestions]);
-
+    }, [paramValue, allQuestions]); 
 
     const loadMore = () => {
         setVisibleQuestions((prevVisibleQuestions) => prevVisibleQuestions + 8);
@@ -87,7 +86,7 @@ const TagQuestions = () => {
                             </div>
                         </div>
 
-                    ) : (tagQuestions?.slice(0, visibleQuestions).map((question) => <div className="py-4 border-b md:flex justify-between gap-6 items-center">
+                    ) : (tagQuestions?.slice(0, visibleQuestions).map((question) => <div key={question?._id} className="py-4 border-b md:flex justify-between gap-6 items-center">
                         <div>
                             <Link to={`/main/news-feed/${question?._id}`}>
                                 <h2 className="text-xl font-medium hover:text-[#33B89F] cursor-pointer duration-200">{question?.title}</h2>

@@ -23,6 +23,7 @@ import SingleUser from "../pages/SingleUser/SingleUser";
 import TagQuestions from "../pages/TagQuestions/TagQuestions";
 import Answers from "../pages/Answers/Answers";
 import Questions from "../pages/Questions/Questions";
+import Users from "../pages/Users/Users";
 
 export const router = createBrowserRouter([
   {
@@ -48,18 +49,16 @@ export const router = createBrowserRouter([
         errorElement: <ErrorPage></ErrorPage>,
         children: [
           {
-            path: '/my-profile/:email',
+            path: '/my-profile',
             element: <ProfileDashboard></ProfileDashboard>,
-            loader: ({ params }) => fetch(`http://localhost:5000/user?email=${params.email}`)
           },
           {
             path: 'summery',
             element: <Summery></Summery>
           },
           {
-            path: 'edit-profile/:email',
+            path: 'edit-profile',
             element: <EditProfile></EditProfile>,
-            loader: ({ params }) => fetch(`http://localhost:5000/user?email=${params.email}`)
           },
           {
             path: 'answers',
@@ -93,7 +92,7 @@ export const router = createBrowserRouter([
           {
             path: 'tagged',
             element: <TagQuestions></TagQuestions>,
-            loader: () => fetch('https://code-stack-server.vercel.app/questions')
+            loader: () => fetch('http://localhost:5000/questions')
           },
           {
             path: 'user/:email',
@@ -102,7 +101,12 @@ export const router = createBrowserRouter([
           },
           {
             path: 'tags',
-            element: <Tag></Tag>
+            element: <Tag></Tag>,
+            loader: () => fetch('http://localhost:5000/questions')
+          },
+          {
+            path: 'users',
+            element: <Users></Users>,
           },
         ]
       },

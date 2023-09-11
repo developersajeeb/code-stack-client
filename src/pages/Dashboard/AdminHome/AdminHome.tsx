@@ -13,7 +13,6 @@ const AdminHome = () => {
     data: stats = [],
     isLoading,
     error,
-    refetch,
   } = useQuery(["stats"], fetchStats);
 
   console.log(stats)

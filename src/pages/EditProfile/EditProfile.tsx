@@ -1,31 +1,14 @@
 import { FaArrowRight } from "react-icons/fa";
-import { useLoaderData } from "react-router-dom";
 import { TagsInput } from "react-tag-input-component";
 import { useState, useContext } from "react";
 import { Toaster, toast } from "react-hot-toast";
 import { AuthContext } from "../../Provider/AuthProvider";
+import { useQuery } from "@tanstack/react-query";
 
 const image_hosting_token = import.meta.env.VITE_Image_API;
 
-interface UserInfo {
-    _id: string;
-    name: string;
-    email: string;
-    aboutMe: string;
-    age: number;
-    city: string;
-    country: string;
-    facebookURL: URL;
-    gender: string;
-    githubURL: URL;
-    portfolioURL: URL;
-    twitterURL: URL;
-    selected: string[];
-}
-
 const EditProfile = () => {
     const image_hosting_url = `https://api.imgbb.com/1/upload?key=${image_hosting_token}`
-    const userData = useLoaderData() as UserInfo | undefined;
     const [image, setImage] = useState<File | null>(null);
     const authContext = useContext(AuthContext)
     if (!authContext) {
@@ -33,6 +16,12 @@ const EditProfile = () => {
     }
     const { user } = authContext;
     const [selected, setSelected] = useState(["Web Development"]);
+
+    const { data: userData = [], refetch } = useQuery([user?.email], async () => {
+        const res = await fetch(`http://localhost:5000/user?email=${user?.email}`);
+        const data = await res.json();
+        return data;
+    });
 
     const handleUpdateDetails = async (event: { preventDefault: () => void; target: any; }) => {
 
@@ -73,6 +62,7 @@ const EditProfile = () => {
             .then(res => res.json())
             .then(data => {
                 if (data.modifiedCount) {
+                    refetch()
                     toast.success('Update Successfully!');
                 } else {
                     toast.error("Error, Please try again!")

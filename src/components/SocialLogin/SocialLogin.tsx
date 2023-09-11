@@ -13,7 +13,7 @@ const SocialLogin = () => {
     }
     const { googleSignIn, githubSignIn } = authContext;
 
-    const from = location.state?.from?.pathname || '/';
+    const from = location.state?.from?.pathname || '/main/news-feed';
 
     const handleGoogleSingIn = () => {
         googleSignIn()
