@@ -11,6 +11,7 @@ import notUser from '../../assets/icons/user-not.png';
 import { useQuery } from "@tanstack/react-query";
 import { BsBookmarks, BsThreeDotsVertical } from "react-icons/bs";
 import { FiShare2 } from "react-icons/fi";
+import { FaRegTrashCan } from "react-icons/fa6";
 
 interface QuestionInfo {
     _id: '',
@@ -20,7 +21,8 @@ interface QuestionInfo {
     selected: string[],
     name: '',
     email: '',
-    username: ''
+    username: '',
+    QuestionsVote: ''
 }
 
 const QuestionsDetails = () => {
@@ -35,19 +37,6 @@ const QuestionsDetails = () => {
     const { user } = authContext;
     const [isQuillValid, setIsQuillValid] = useState(false);
     const [isLike, setIsLike] = useState<boolean>(false);
-
-    const handleLike = () => {
-        setIsLike(true);
-
-        const email = user?.email;
-        fetch(`http://localhost:5000/vote/${questionData?._id}`,{
-            method: 'POST',
-            headers: {
-                'content-type': 'application/json'
-            },
-            body: JSON.stringify({email})
-        })
-    };
 
     const handleQuill = (value: string) => {
         setBody(value);
@@ -104,6 +93,34 @@ const QuestionsDetails = () => {
 
     }
 
+    const handleLike = () => {
+        setIsLike(true);
+        const email = user?.email;
+        fetch(`http://localhost:5000/vote/${questionData?._id}`, {
+            method: 'POST',
+            headers: {
+                'content-type': 'application/json'
+            },
+            body: JSON.stringify({ email })
+        })
+            .then(result => result.json())
+            .then((data) => {
+                if (data.insertedId) {
+                    refetch();
+                }
+            })
+    };
+
+    const handleCopyClick = (postLink: string) => {
+        navigator.clipboard.writeText(postLink)
+            .then(() => {
+                toast.success("Copied question link!");
+            })
+            .catch(() => {
+                toast.error("Copy failed");
+            });
+    };
+
     return (
         <main>
             <Toaster
@@ -124,26 +141,40 @@ const QuestionsDetails = () => {
                 </Link>
                 <div className="flex gap-3">
                     <div>
-                        <p onClick={() => handleLike()} className="cursor-pointer text-gray-500 rounded-full grid justify-center text-center">{isLike ? <BiSolidLike size={25} /> : <BiLike size={25} />} <span className="text-sm font-medium">11</span></p>
+                        <p onClick={() => handleLike()} className="cursor-pointer text-gray-500 rounded-full grid justify-center text-center relative">
+                            {isLike ? <BiSolidLike size={25} /> : <BiLike size={25} />}
+                            {
+                                questionData?.QuestionsVote?.length && <span className="text-[10px] text-white p-1 rounded-full font-medium absolute primary-bg -right-3 -top-3">{questionData?.QuestionsVote?.length}</span>
+                            }
+                        </p>
                         <p className="cursor-pointer text-gray-500 flex justify-center mb-5 mt-4"><BsBookmarks size={22} /></p>
                         <div className="dropdown">
                             <label tabIndex={0} className="cursor-pointer">
-                                <div className="indicator ml-1 border py-1 rounded-full border-gray-400">
+                                <div className="indicator ml-1 border py-1 rounded-full border-gray-400" >
                                     <p><BsThreeDotsVertical /></p>
                                 </div>
                             </label>
                             <div tabIndex={0} className="mt-3 z-[1] card card-compact dropdown-content bg-gray-100 shadow">
                                 <ul className=" bg-base-200 rounded-lg flex p-2">
-                                    <li className="hover:bg-gray-200 p-2 rounded-md cursor-pointer">
+                                    <li className="hover:bg-gray-200 p-2 rounded-md cursor-pointer" onClick={() => handleCopyClick(`/main/news-feed/${questionData?._id}`)}>
                                         <a>
                                             <FiShare2 size={20} />
                                         </a>
-                                    </li>           
-                                    <li className="hover:bg-gray-200 p-2 rounded-md cursor-pointer">
-                                        <a>
-                                            <BiEditAlt size={24} />
-                                        </a>
-                                    </li>           
+                                    </li>
+                                    {
+                                        questionData?.email == user?.email && <>
+                                            <li className="hover:bg-gray-200 p-2 rounded-md cursor-pointer">
+                                                <a>
+                                                    <BiEditAlt size={24} />
+                                                </a>
+                                            </li>
+                                            <li className="hover:bg-gray-200 p-2 rounded-md cursor-pointer">
+                                                <a>
+                                                    <FaRegTrashCan size={20} />
+                                                </a>
+                                            </li>
+                                        </>
+                                    }
                                 </ul>
                             </div>
                         </div>
@@ -157,7 +188,7 @@ const QuestionsDetails = () => {
                         }} />
                     </div>
                 </div>
-                <div className="grid grid-cols-2 md:grid-cols-3 gap-2">
+                <div className="grid grid-cols-2 md:grid-cols-3 gap-2 mt-4">
                     <img className="w-full" src="https://cdn.pixabay.com/photo/2016/11/19/14/00/code-1839406_1280.jpg" alt="" />
                     <img className="w-full" src="https://images.unsplash.com/photo-1542831371-29b0f74f9713?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8cHJvZ3JhbW1pbmd8ZW58MHx8MHx8fDA%3D&w=1000&q=80" alt="" />
                     <img className="w-full" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSHvnK5D7DVtokGFJusppQNeLZdnaQlvwn6SFkkoyKLqvI4i67Z_5JLHQmIR-61GX9Rf_Y&usqp=CAU" alt="" />
