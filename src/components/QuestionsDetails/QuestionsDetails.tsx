@@ -9,7 +9,7 @@ import AnswerDetails from "./AnswerDetails";
 import { BiEditAlt, BiLike, BiSolidLike } from "react-icons/bi";
 import notUser from '../../assets/icons/user-not.png';
 import { useQuery } from "@tanstack/react-query";
-import { BsBookmarks, BsThreeDotsVertical } from "react-icons/bs";
+import { BsBookmarks, BsThreeDots } from "react-icons/bs";
 import { FiShare2 } from "react-icons/fi";
 import { FaRegTrashCan } from "react-icons/fa6";
 
@@ -128,31 +128,30 @@ const QuestionsDetails = () => {
                 reverseOrder={false}
             />
             <section>
-                <Link to={questionData?.email == user?.email && `/my-profile/${questionData?.email}` || `/main/user/${questionData?.email}`}>
-                    <div className="inline-block mb-6">
-                        <div className="flex items-center gap-2 bg-gray-100 px-3 py-2 rounded-md">
-                            <img className="w-11 h-11 object-cover rounded-full" src={questionData?.userPhoto || notUser} alt="" />
-                            <div>
-                                <p className="font-medium">{questionData?.name}</p>
-                                <p className="text-sm text-color-second">Top Level</p>
+                <div className="flex justify-between items-end">
+                    <Link to={questionData?.email == user?.email && `/my-profile/${questionData?.email}` || `/main/user/${questionData?.email}`}>
+                        <div className="inline-block">
+                            <div className="flex items-center gap-2 bg-gray-100 px-3 py-2 rounded-md">
+                                <img className="w-11 h-11 object-cover rounded-full" src={questionData?.userPhoto || notUser} alt="" />
+                                <div>
+                                    <p className="font-medium">{questionData?.name}</p>
+                                    <p className="text-sm text-color-second">Top Level</p>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                </Link>
-                <div className="flex gap-3">
-                    <div>
-                        <p onClick={() => handleLike()} className="cursor-pointer text-gray-500 rounded-full grid justify-center text-center relative">
-                            {isLike ? <BiSolidLike size={25} /> : <BiLike size={25} />}
+                    </Link>
+                    <div className="flex items-center gap-3">
+                        <p onClick={() => handleLike()} className="cursor-pointer bg-gray-100 text-gray-500 rounded-full flex items-center gap-1 px-2 py-1 border-gray-400">
+                            <span>
+                                {isLike || questionData?.QuestionsVote?.length ? <BiSolidLike size={25} /> : <BiLike size={25} />}
+                            </span>
                             {
-                                questionData?.QuestionsVote?.length && <span className="text-[10px] text-white p-1 rounded-full font-medium absolute primary-bg -right-3 -top-3">{questionData?.QuestionsVote?.length}</span>
+                                questionData?.QuestionsVote?.length && <span className="text-white p-1 rounded-full font-medium badge primary-bg">{questionData?.QuestionsVote?.length}</span>
                             }
                         </p>
-                        <p className="cursor-pointer text-gray-500 flex justify-center mb-5 mt-4"><BsBookmarks size={22} /></p>
-                        <div className="dropdown">
+                        <div className="dropdown dropdown-end">
                             <label tabIndex={0} className="cursor-pointer">
-                                <div className="indicator ml-1 border py-1 rounded-full border-gray-400" >
-                                    <p><BsThreeDotsVertical /></p>
-                                </div>
+                                <p><BsThreeDots size={22} /></p>
                             </label>
                             <div tabIndex={0} className="mt-3 z-[1] card card-compact dropdown-content bg-gray-100 shadow">
                                 <ul className=" bg-base-200 rounded-lg flex p-2">
@@ -161,14 +160,19 @@ const QuestionsDetails = () => {
                                             <FiShare2 size={20} />
                                         </a>
                                     </li>
+                                    <li className="hover:bg-gray-200 p-2 rounded-md cursor-pointer" onClick={() => handleCopyClick(`/main/news-feed/${questionData?._id}`)}>
+                                        <a>
+                                            <BsBookmarks size={20} />
+                                        </a>
+                                    </li>
                                     {
                                         questionData?.email == user?.email && <>
-                                            <li className="hover:bg-gray-200 p-2 rounded-md cursor-pointer">
+                                            <li className="hover:bg-gray-200 p-2 rounded-md cursor-pointer duration-300">
                                                 <a>
                                                     <BiEditAlt size={24} />
                                                 </a>
                                             </li>
-                                            <li className="hover:bg-gray-200 p-2 rounded-md cursor-pointer">
+                                            <li className="hover:bg-gray-200 p-2 rounded-md cursor-pointer duration-300">
                                                 <a>
                                                     <FaRegTrashCan size={20} />
                                                 </a>
@@ -179,16 +183,16 @@ const QuestionsDetails = () => {
                             </div>
                         </div>
                     </div>
-                    <div>
-                        <div className="flex gap-4 items-center">
-                            <h1 className="text-3xl font-medium text-gray-700">{questionData?.title}</h1>
-                        </div>
-                        <div className="my-4" dangerouslySetInnerHTML={{
-                            __html: questionData && questionData.body ? questionData.body : ""
-                        }} />
-                    </div>
                 </div>
-                <div className="grid grid-cols-2 md:grid-cols-3 gap-2 mt-4">
+                <div className="mt-4">
+                    <div className="flex gap-4 items-center">
+                        <h1 className="text-3xl font-medium text-gray-700">{questionData?.title}</h1>
+                    </div>
+                    <div className="my-4" dangerouslySetInnerHTML={{
+                        __html: questionData && questionData.body ? questionData.body : ""
+                    }} />
+                </div>
+                <div className="grid grid-cols-2 md:grid-cols-3 gap-2">
                     <img className="w-full" src="https://cdn.pixabay.com/photo/2016/11/19/14/00/code-1839406_1280.jpg" alt="" />
                     <img className="w-full" src="https://images.unsplash.com/photo-1542831371-29b0f74f9713?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8cHJvZ3JhbW1pbmd8ZW58MHx8MHx8fDA%3D&w=1000&q=80" alt="" />
                     <img className="w-full" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSHvnK5D7DVtokGFJusppQNeLZdnaQlvwn6SFkkoyKLqvI4i67Z_5JLHQmIR-61GX9Rf_Y&usqp=CAU" alt="" />
