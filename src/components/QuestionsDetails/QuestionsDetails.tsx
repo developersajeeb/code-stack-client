@@ -1,5 +1,5 @@
 import { Link, useLoaderData } from "react-router-dom";
-import { useState, useContext } from "react";
+import { useState, useContext, useEffect } from "react";
 import ReactQuill from "react-quill";
 import 'react-quill/dist/quill.snow.css';
 import { FaArrowRight } from "react-icons/fa";
@@ -25,18 +25,23 @@ interface QuestionInfo {
     QuestionsVote: ''
 }
 
+interface Likes {
+    QuestionsVote: any[]; 
+  }
+
 const QuestionsDetails = () => {
     const questionData = useLoaderData() as QuestionInfo | undefined;
     const [body, setBody] = useState('');
     const uploadDate = new Date().toDateString();
     const uploadTime = new Date().toLocaleTimeString();
-    const authContext = useContext(AuthContext)
+    const authContext = useContext(AuthContext);
     if (!authContext) {
         return <p>Loading...</p>;
     }
     const { user } = authContext;
     const [isQuillValid, setIsQuillValid] = useState(false);
     const [isLike, setIsLike] = useState<boolean>(false);
+    const [likes, setLikes] = useState<Likes | undefined>(undefined);
 
     const handleQuill = (value: string) => {
         setBody(value);
@@ -121,6 +126,22 @@ const QuestionsDetails = () => {
             });
     };
 
+    const { data: questionLike } = useQuery(
+        ["questionLike", questionData?._id],
+        async () => {
+            const res = await fetch(`http://localhost:5000/question-details/${questionData?._id}`);
+            const data = await res.json();
+            return data;
+        },
+    );
+
+    useEffect(() => {
+        setLikes(questionLike);
+    }, [questionLike]);
+
+    console.log(likes?.QuestionsVote?.length);
+    
+
     return (
         <main>
             <Toaster
@@ -143,10 +164,10 @@ const QuestionsDetails = () => {
                     <div className="flex items-center gap-3">
                         <p onClick={() => handleLike()} className="cursor-pointer bg-gray-100 text-gray-500 rounded-full flex items-center gap-1 px-2 py-1 border-gray-400">
                             <span>
-                                {isLike || questionData?.QuestionsVote?.length ? <BiSolidLike size={25} /> : <BiLike size={25} />}
+                                {isLike || likes?.QuestionsVote?.length ? <BiSolidLike size={25} /> : <BiLike size={25} />}
                             </span>
                             {
-                                questionData?.QuestionsVote?.length && <span className="text-white p-1 rounded-full font-medium badge primary-bg">{questionData?.QuestionsVote?.length}</span>
+                                likes?.QuestionsVote?.length && <span className="text-white p-1 rounded-full font-medium badge primary-bg">{likes?.QuestionsVote?.length}</span>
                             }
                         </p>
                         <div className="dropdown dropdown-end">

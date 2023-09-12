@@ -24,6 +24,9 @@ import TagQuestions from "../pages/TagQuestions/TagQuestions";
 import Answers from "../pages/Answers/Answers";
 import Questions from "../pages/Questions/Questions";
 import Users from "../pages/Users/Users";
+import Disclaimer from "../pages/Disclaimer/Disclaimer";
+import TramsConditions from "../pages/TramsConditions/TramsConditions";
+import ContactUs from "../pages/ContactUs/ContactUs";
 
 export const router = createBrowserRouter([
   {
@@ -42,6 +45,18 @@ export const router = createBrowserRouter([
       {
         path: 'register',
         element: <Register></Register>
+      },
+      {
+        path: 'disclaimer',
+        element: <Disclaimer></Disclaimer>
+      },
+      {
+        path: 'trams-and-conditions',
+        element: <TramsConditions></TramsConditions>
+      },
+      {
+        path: 'contact-us',
+        element: <ContactUs></ContactUs>
       },
       {
         path: 'my-profile',

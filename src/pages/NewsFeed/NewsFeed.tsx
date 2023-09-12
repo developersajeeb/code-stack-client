@@ -36,7 +36,7 @@ const NewsFeed = () => {
         </div>;
     }
     const { user } = authContext;
-    const [clickCount, setClickCount] = useState<number>(1);
+    // const [clickCount, setClickCount] = useState<number>(1);
 
     const handleTagSelect = (event: React.ChangeEvent<HTMLSelectElement>) => {
         const selected = event.target.value;
@@ -80,23 +80,23 @@ const NewsFeed = () => {
         }, 1000);
     }, [selectedTag, allQuestions]);
 
-    const handleQuestionTitleClick = (questionId: string) => {
-        setClickCount(clickCount + 1);
+    // const handleQuestionTitleClick = (questionId: string) => {
+    //     setClickCount(clickCount + 1);
 
-        fetch(`http://localhost:5000/question-detail/${questionId}`, {
-            method: 'PUT',
-            headers: {
-                'content-type': 'application/json'
-            },
-            body: JSON.stringify({ clickCount })
-        })
-            .then(result => result.json())
-            .then((data) => {
-                if (data.insertedId) {
-                    // refetch()
-                }
-            })
-    };
+    //     fetch(`http://localhost:5000/question-detail/${questionId}`, {
+    //         method: 'PUT',
+    //         headers: {
+    //             'content-type': 'application/json'
+    //         },
+    //         body: JSON.stringify({ clickCount })
+    //     })
+    //         .then(result => result.json())
+    //         .then((data) => {
+    //             if (data.insertedId) {
+    //                 // refetch()
+    //             }
+    //         })
+    // };
 
     return (
         <main className="px-0 lg:pl-6">
@@ -163,7 +163,7 @@ const NewsFeed = () => {
                     ) : (
                         filteredQuestions?.slice(0, questionsToShow).map(question => <div key={question?._id} className="py-4 border-b md:flex justify-between gap-6 items-center">
                             <div>
-                                <Link onClick={() => {handleQuestionTitleClick(question?._id)}} to={`/main/news-feed/${question?._id}`}>
+                                <Link to={`/main/news-feed/${question?._id}`}>
                                     <h2 className="text-xl font-medium hover:text-[#33B89F] cursor-pointer duration-200">{question?.title}</h2>
                                 </Link>
                                 <p className="mt-2 text-gray-500 text-sm" dangerouslySetInnerHTML={{
