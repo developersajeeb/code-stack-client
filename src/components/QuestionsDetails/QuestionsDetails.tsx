@@ -1,5 +1,5 @@
-import { Link, useLoaderData } from "react-router-dom";
-import { useState, useContext, useEffect } from "react";
+import { Link, useLoaderData, useNavigate } from "react-router-dom";
+import { useState, useContext } from "react";
 import ReactQuill from "react-quill";
 import 'react-quill/dist/quill.snow.css';
 import { FaArrowRight } from "react-icons/fa";
@@ -12,6 +12,7 @@ import { useQuery } from "@tanstack/react-query";
 import { BsBookmarks, BsThreeDots } from "react-icons/bs";
 import { FiShare2 } from "react-icons/fi";
 import { FaRegTrashCan } from "react-icons/fa6";
+import Swal from "sweetalert2";
 
 interface QuestionInfo {
     _id: '',
@@ -25,11 +26,8 @@ interface QuestionInfo {
     QuestionsVote: ''
 }
 
-interface Likes {
-    QuestionsVote: any[]; 
-  }
-
 const QuestionsDetails = () => {
+    const navigate = useNavigate();
     const questionData = useLoaderData() as QuestionInfo | undefined;
     const [body, setBody] = useState('');
     const uploadDate = new Date().toDateString();
@@ -41,7 +39,6 @@ const QuestionsDetails = () => {
     const { user } = authContext;
     const [isQuillValid, setIsQuillValid] = useState(false);
     const [isLike, setIsLike] = useState<boolean>(false);
-    const [likes, setLikes] = useState<Likes | undefined>(undefined);
 
     const handleQuill = (value: string) => {
         setBody(value);
@@ -126,21 +123,63 @@ const QuestionsDetails = () => {
             });
     };
 
-    const { data: questionLike } = useQuery(
-        ["questionLike", questionData?._id],
-        async () => {
-            const res = await fetch(`http://localhost:5000/question-details/${questionData?._id}`);
-            const data = await res.json();
-            return data;
-        },
-    );
+    const { data: questionLike = null } = useQuery(['questionLike', questionData?._id], async () => {
+        const res = await fetch(`http://localhost:5000/question-details/${questionData?._id}`);
+        const data = await res.json();
+        return data;
+    });
 
-    useEffect(() => {
-        setLikes(questionLike);
-    }, [questionLike]);
+    const handleSaves = (questionID: string | undefined) => {
+        const savesData = { questionID, userEmail: user?.email, questionTitle: questionData?.title };
 
-    console.log(likes?.QuestionsVote?.length);
-    
+        fetch('http://localhost:5000/saves', {
+            method: 'POST',
+            headers: {
+                'content-type': 'application/json'
+            },
+            body: JSON.stringify(savesData)
+        })
+            .then(result => result.json())
+            .then((data) => {
+                if (data.insertedId) {
+                    refetch();
+                    toast.success('Saved this question!');
+                } else {
+                    toast.error("Error, Please try again!");
+                }
+            })
+    }
+
+    const handleDeleteQuestion = (id: any) => {
+
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#33B89F',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, delete it!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                fetch(`http://localhost:5000/delete-question/${id}`, {
+                    method: 'DELETE'
+                })
+                    .then(res => res.json())
+                    .then(data => {
+                        if (data.deletedCount) {
+                            refetch();
+                            Swal.fire(
+                                'Deleted!',
+                                'Your file has been deleted.',
+                                'success'
+                            )
+                            navigate('/main/news-feed')
+                        }
+                    })
+            }
+        })
+    }
 
     return (
         <main>
@@ -164,10 +203,10 @@ const QuestionsDetails = () => {
                     <div className="flex items-center gap-3">
                         <p onClick={() => handleLike()} className="cursor-pointer bg-gray-100 text-gray-500 rounded-full flex items-center gap-1 px-2 py-1 border-gray-400">
                             <span>
-                                {isLike || likes?.QuestionsVote?.length ? <BiSolidLike size={25} /> : <BiLike size={25} />}
+                                {isLike ? <BiSolidLike size={25} /> : <BiLike size={25} />}
                             </span>
                             {
-                                likes?.QuestionsVote?.length && <span className="text-white p-1 rounded-full font-medium badge primary-bg">{likes?.QuestionsVote?.length}</span>
+                                questionLike?.QuestionsVote?.length && <span className="text-white p-1 rounded-full font-medium badge primary-bg">{questionLike?.QuestionsVote?.length}</span>
                             }
                         </p>
                         <div className="dropdown dropdown-end">
@@ -176,24 +215,26 @@ const QuestionsDetails = () => {
                             </label>
                             <div tabIndex={0} className="mt-3 z-[1] card card-compact dropdown-content bg-gray-100 shadow">
                                 <ul className=" bg-base-200 rounded-lg flex p-2">
-                                    <li className="hover:bg-gray-200 p-2 rounded-md cursor-pointer" onClick={() => handleCopyClick(`/main/news-feed/${questionData?._id}`)}>
+                                    <li className="hover:bg-gray-200 p-2 rounded-md cursor-pointer tooltip tooltip-bottom" data-tip="share" onClick={() => handleCopyClick(`/main/news-feed/${questionData?._id}`)}>
                                         <a>
                                             <FiShare2 size={20} />
                                         </a>
                                     </li>
-                                    <li className="hover:bg-gray-200 p-2 rounded-md cursor-pointer" onClick={() => handleCopyClick(`/main/news-feed/${questionData?._id}`)}>
+                                    <li className="hover:bg-gray-200 p-2 rounded-md cursor-pointer tooltip tooltip-bottom" data-tip="save" onClick={() => handleSaves(questionData?._id)}>
                                         <a>
                                             <BsBookmarks size={20} />
                                         </a>
                                     </li>
                                     {
                                         questionData?.email == user?.email && <>
-                                            <li className="hover:bg-gray-200 p-2 rounded-md cursor-pointer duration-300">
-                                                <a>
-                                                    <BiEditAlt size={24} />
-                                                </a>
-                                            </li>
-                                            <li className="hover:bg-gray-200 p-2 rounded-md cursor-pointer duration-300">
+                                            <Link to={`/main/edit-question/${questionData?._id}`}>
+                                                <li className="hover:bg-gray-200 p-2 rounded-md cursor-pointer duration-300 tooltip tooltip-bottom" data-tip="edit">
+                                                    <a>
+                                                        <BiEditAlt size={24} />
+                                                    </a>
+                                                </li>
+                                            </Link>
+                                            <li className="hover:bg-gray-200 p-2 rounded-md cursor-pointer duration-300 tooltip tooltip-bottom" data-tip="delete" onClick={() => handleDeleteQuestion(questionData?._id)}>
                                                 <a>
                                                     <FaRegTrashCan size={20} />
                                                 </a>

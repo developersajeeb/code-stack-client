@@ -35,6 +35,9 @@ const Answers = () => {
         setVisibleAnswers((prevVisibleAnswers) => prevVisibleAnswers + 8);
     };
 
+    console.log(allAnswers);
+    
+
     return (
         <main>
             <div>

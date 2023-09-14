@@ -27,6 +27,8 @@ import Users from "../pages/Users/Users";
 import Disclaimer from "../pages/Disclaimer/Disclaimer";
 import TramsConditions from "../pages/TramsConditions/TramsConditions";
 import ContactUs from "../pages/ContactUs/ContactUs";
+import Saves from "../pages/Saves/Saves";
+import EditQuestion from "../pages/EditQuestion/EditQuestion";
 
 export const router = createBrowserRouter([
   {
@@ -83,6 +85,10 @@ export const router = createBrowserRouter([
             path: 'questions',
             element: <Questions></Questions>
           },
+          {
+            path: 'saves',
+            element: <Saves></Saves>
+          },
         ]
       },
       {
@@ -121,6 +127,11 @@ export const router = createBrowserRouter([
           {
             path: 'users',
             element: <Users></Users>,
+          },
+          {
+            path: 'edit-question/:id',
+            element: <EditQuestion></EditQuestion>,
+            loader: ({ params }) => fetch(`http://localhost:5000/question-details/${params.id}`)
           },
         ]
       },
