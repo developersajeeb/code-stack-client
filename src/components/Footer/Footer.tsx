@@ -1,6 +1,7 @@
 import logo from '../../assets/logo-codeStack-white.png';
 import { AiOutlineArrowRight, AiOutlineHome, AiOutlineMail, AiOutlinePhone } from "react-icons/ai";
 import { FaAngleRight } from "react-icons/fa";
+import { Link } from 'react-router-dom';
 
 const Footer = () => {
     return (
@@ -20,7 +21,7 @@ const Footer = () => {
                             <h3 className='text-white text-2xl font-normal'>Quick LInk</h3>
                             <ul className='text-gray-400 mt-6 grid gap-3'>
                                 <li className='flex items-center hover:text-white duration-300 cursor-pointer'><FaAngleRight /> Home</li>
-                                <li className='flex items-center hover:text-white duration-300 cursor-pointer'><FaAngleRight /> About Us</li>
+                                <Link to="/aboutus"> <li className='flex items-center hover:text-white duration-300 cursor-pointer'><FaAngleRight /> About Us</li></Link>
                                 <li className='flex items-center hover:text-white duration-300 cursor-pointer'><FaAngleRight /> Company History</li>
                                 <li className='flex items-center hover:text-white duration-300 cursor-pointer'><FaAngleRight /> Features</li>
                                 <li className='flex items-center hover:text-white duration-300 cursor-pointer'><FaAngleRight /> Blog Page</li>
@@ -32,9 +33,11 @@ const Footer = () => {
                             <ul className='text-gray-400 mt-6 grid gap-3'>
                                 <li className='flex items-center hover:text-white duration-300 cursor-pointer'><FaAngleRight /> Profile</li>
                                 <li className='flex items-center hover:text-white duration-300 cursor-pointer'><FaAngleRight /> Dynamic Feed</li>
-                                <li className='flex items-center hover:text-white duration-300 cursor-pointer'><FaAngleRight /> Trams & Conditions</li>
-                                <li className='flex items-center hover:text-white duration-300 cursor-pointer'><FaAngleRight /> Disclaimer</li>
-                                <li className='flex items-center hover:text-white duration-300 cursor-pointer'><FaAngleRight /> Contact Us</li>
+                                <Link to="/trams-and-conditions"><li className='flex items-center hover:text-white duration-300 cursor-pointer'><FaAngleRight /> Trams & Conditions</li></Link>
+                                <Link to="/disclaimer">
+                                    <li className='flex items-center hover:text-white duration-300 cursor-pointer'><FaAngleRight /> Disclaimer</li>
+                                </Link>
+                                <Link to="/contact-us">  <li className='flex items-center hover:text-white duration-300 cursor-pointer'><FaAngleRight /> Contact Us</li></Link>
                                 <li className='flex items-center hover:text-white duration-300 cursor-pointer'><FaAngleRight /> Sing Up</li>
                             </ul>
                         </div>
