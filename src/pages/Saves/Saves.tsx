@@ -16,7 +16,7 @@ const Saves = () => {
     const { user } = authContext;
 
     useEffect(() => {
-        fetch(`http://localhost:5000/saves/${user?.email}`)
+        fetch(`http://localhost:5000/save/${user?.email}`)
             .then(res => res.json())
             .then(data => {
                 setAllSaves(data)

@@ -12,7 +12,7 @@ const image_hosting_name = 'ml_default';
 const AddQuestion = () => {
     const [selected, setSelected] = useState(["Web Development"]);
     const [body, setBody] = useState('');
-    const [image, setImage] = useState<File | null>(null);
+    const [imageLinks, setImageLinks] = useState<string[]>([]);
     const authContext = useContext(AuthContext)
     if (!authContext) {
         return <p>Loading...</p>;
@@ -37,24 +37,28 @@ const AddQuestion = () => {
         const form = event.target;
         const title: string = form.title.value;
 
-        const formData = new FormData();
-        if (image) {
-            formData.append('file', image);
-            formData.append('upload_preset', image_hosting_name);
-        }
+        const imageUrls: string[] = [];
 
-        const response = await fetch('https://api.cloudinary.com/v1_1/dunqmumwl/image/upload', {
-            method: 'POST',
-            body: formData
-        });
-        const imgResponse = await response.json();
-        const imgURL = imgResponse?.secure_url || '';
+        for (let i = 0; i < imageLinks.length; i++) {
+            const formData = new FormData();
+            formData.append('file', imageLinks[i]);
+            formData.append('upload_preset', image_hosting_name);
+
+            const response = await fetch('https://api.cloudinary.com/v1_1/dunqmumwl/image/upload', {
+                method: 'POST',
+                body: formData
+            });
+
+            const imgResponse = await response.json();
+            const imgURL = imgResponse?.secure_url || '';
+            imageUrls.push(imgURL);
+        }
 
         const question = {
             title,
             body,
             selected,
-            problemImages: imgURL,
+            problemImages: imageUrls,
             username: userData?.username,
             name: userData?.name,
             email: userData?.email,
@@ -123,11 +127,21 @@ const AddQuestion = () => {
                             <label htmlFor="problemImage" className="block text-xl font-semibold mb-2">Upload Code/Problem Images</label>
                             <input className="cursor-pointer file:cursor-pointer relative m-0 block w-full min-w-0 rounded-md border py-3 px-5 transition duration-300 ease-in-out file:-mx-3 file:-my-[0.32rem] file:overflow-hidden file:border-0 file:border-solid file:border-inherit file:px-3 file:py-[0.32rem] file:text-neutral-700 file:transition file:duration-150 file:ease-in-out file:[margin-inline-end:0.75rem] hover:file:bg-[#02B1FC] hover:file:text-white border-gray-300 file:bg-indigo-50 file:font-medium file:rounded-md" type="file" name="problemImage" multiple id="problemImage"
                                 accept="image/*"
-                                onChange={(e) => {
-                                    const selectedFile = e.target.files?.[0];
-                                    if (selectedFile) {
-                                        setImage(selectedFile);
-                                    }
+                                onChange={async (e) => {
+                                    const selectedFiles = Array.from(e.target.files || []);
+                                    const fileDataUrls = await Promise.all(selectedFiles.map(async (file) => {
+                                        return new Promise<string>((resolve) => {
+                                            const reader = new FileReader();
+                                            reader.onload = (event) => {
+                                                if (event.target) {
+                                                    resolve(event.target.result as string);
+                                                }
+                                            };
+                                            reader.readAsDataURL(file);
+                                        });
+                                    }));
+    
+                                    setImageLinks(fileDataUrls);
                                 }} />
                         </div>
 

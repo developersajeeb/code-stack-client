@@ -13,6 +13,7 @@ import { BsBookmarks, BsThreeDots } from "react-icons/bs";
 import { FiShare2 } from "react-icons/fi";
 import { FaRegTrashCan } from "react-icons/fa6";
 import Swal from "sweetalert2";
+import ImageGallery from "../ImageGallery/ImageGallery";
 
 interface QuestionInfo {
     _id: '',
@@ -24,6 +25,7 @@ interface QuestionInfo {
     email: '',
     username: '',
     QuestionsVote: ''
+    problemImages: string[],
 }
 
 const QuestionsDetails = () => {
@@ -181,6 +183,7 @@ const QuestionsDetails = () => {
         })
     }
 
+
     return (
         <main>
             <Toaster
@@ -220,8 +223,12 @@ const QuestionsDetails = () => {
                                             <FiShare2 size={20} />
                                         </a>
                                     </li>
-                                    <li className="hover:bg-gray-200 p-2 rounded-md cursor-pointer tooltip tooltip-bottom" data-tip="save" onClick={() => handleSaves(questionData?._id)}>
-                                        <a>
+                                    <li>
+                                        {/* <a className="p-2 rounded-md tooltip tooltip-bottom" data-tip="saved">
+                                            <BsBookmarksFill size={20} />
+                                        </a> */}
+
+                                        <a className="hover:bg-gray-200 p-2 rounded-md cursor-pointer tooltip tooltip-bottom" data-tip="save" onClick={() => handleSaves(questionData?._id)}>
                                             <BsBookmarks size={20} />
                                         </a>
                                     </li>
@@ -254,14 +261,7 @@ const QuestionsDetails = () => {
                         __html: questionData && questionData.body ? questionData.body : ""
                     }} />
                 </div>
-                <div className="grid grid-cols-2 md:grid-cols-3 gap-2">
-                    <img className="w-full" src="https://cdn.pixabay.com/photo/2016/11/19/14/00/code-1839406_1280.jpg" alt="" />
-                    <img className="w-full" src="https://images.unsplash.com/photo-1542831371-29b0f74f9713?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8cHJvZ3JhbW1pbmd8ZW58MHx8MHx8fDA%3D&w=1000&q=80" alt="" />
-                    <img className="w-full" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSHvnK5D7DVtokGFJusppQNeLZdnaQlvwn6SFkkoyKLqvI4i67Z_5JLHQmIR-61GX9Rf_Y&usqp=CAU" alt="" />
-                    <img className="w-full" src="https://cdn.pixabay.com/photo/2016/11/24/20/48/programming-1857236_640.jpg" alt="" />
-                    <img className="w-full" src="https://images.unsplash.com/photo-1516259762381-22954d7d3ad2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8Y29kZXxlbnwwfHwwfHx8MA%3D%3D&w=1000&q=80" alt="" />
-                    <img className="w-full" src="https://as2.ftcdn.net/v2/jpg/02/18/72/77/1000_F_218727724_ogFtvbGlr92YNwnCMmthutcwcWJ2Lfxz.jpg" alt="" />
-                </div>
+                <ImageGallery images={questionData?.problemImages || []}></ImageGallery>
 
                 <div className="my-6">
                     <ul className="flex gap-2 flex-wrap">
