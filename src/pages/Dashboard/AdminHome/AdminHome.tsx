@@ -3,7 +3,6 @@ import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import { TbMessageCircleQuestion } from "react-icons/tb";
 import { MdOutlineQuestionAnswer } from "react-icons/md";
 import { PiUsersThree } from "react-icons/pi";
-// import ChartDetails from "./ChartDetails";
 
 
 const AdminHome = () => {
@@ -55,7 +54,7 @@ const AdminHome = () => {
       </section>
       
       <section>
-        {/* <ChartDetails></ChartDetails> */}
+        
       </section>
     </main>
   );
