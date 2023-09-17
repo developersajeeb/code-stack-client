@@ -2,19 +2,6 @@ import {
   createBrowserRouter,
 } from "react-router-dom";
 import MainLayouts from "../Layouts/MainLayouts";
-<<<<<<< HEAD
-import NewsProtal from "../components/NewsProtral/NewsProtal";
-import Footer from "../components/Footer/Footer";
-
-export const router = createBrowserRouter([
-    {
-      path: "/",
-      element: <MainLayouts></MainLayouts>,
-    
-    },
-
-  ]);
-=======
 import Home from "../pages/Home/Home";
 import Login from "../pages/Login/Login";
 import Register from "../pages/Register/Register";
@@ -166,4 +153,3 @@ export const router = createBrowserRouter([
     ]
   },
 ])
->>>>>>> 76e8e2b8879a6af9ac1aee0726ecfbfd9a9e367e
