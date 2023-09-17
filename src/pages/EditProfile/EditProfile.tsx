@@ -12,7 +12,7 @@ const EditProfile = () => {
     const [image, setImage] = useState<File | null>(null);
     const authContext = useContext(AuthContext)
     if (!authContext) {
-        return <p>Loading....</p>;
+        return <p>Loading...</p>;
     }
     const { user } = authContext;
 
