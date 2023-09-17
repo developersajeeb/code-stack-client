@@ -3,6 +3,7 @@ import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import { TbMessageCircleQuestion } from "react-icons/tb";
 import { MdOutlineQuestionAnswer } from "react-icons/md";
 import { PiUsersThree } from "react-icons/pi";
+import ChartDetails from "./ChartDetails";
 
 
 const AdminHome = () => {
@@ -51,6 +52,10 @@ const AdminHome = () => {
             <p className="text-2xl font-semibold">{stats?.answersCount}</p>
           </div>
         </div>
+      </section>
+      
+      <section>
+        {/* <ChartDetails></ChartDetails> */}
       </section>
     </main>
   );

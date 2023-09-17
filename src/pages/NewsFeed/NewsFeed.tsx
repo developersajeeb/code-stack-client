@@ -7,6 +7,7 @@ import { Link, useLoaderData } from "react-router-dom";
 import { AuthContext } from "../../Provider/AuthProvider";
 import { FiUploadCloud } from "react-icons/fi";
 import VavDetails from "../../components/VavDetails/VavDetails";
+import useAdmin from "../../hooks/useAdmin";
 
 interface Question {
     email: any;
@@ -36,7 +37,9 @@ const NewsFeed = () => {
         </div>;
     }
     const { user } = authContext;
-    // const [clickCount, setClickCount] = useState<number>(1);
+    const { isAdmin } = useAdmin();
+    console.log(isAdmin);
+    
 
     const handleTagSelect = (event: React.ChangeEvent<HTMLSelectElement>) => {
         const selected = event.target.value;
@@ -181,7 +184,7 @@ const NewsFeed = () => {
                                 <p className="flex items-center gap-2 mt-5">
                                     <span className="border rounded-full p-1.5 border-gray-400 text-color-second"><FiUploadCloud /></span>
                                     <span className="text-gray-400 text-sm">{question?.uploadDate} | {question?.uploadTime}</span>
-                                    <Link to={question?.email == user?.email && `/my-profile/${question?.email}` || `/main/user/${question?.email}`}>
+                                    <Link to={question?.email == user?.email ? `/my-profile` : `/main/user/${question?.email}`}>
                                         <span className="hover:text-[#02B1FC] text-gray-700 duration-200 cursor-pointer underline">{question?.username || question?.name?.slice(0, 6) + '...'}</span>
                                     </Link>
                                 </p>

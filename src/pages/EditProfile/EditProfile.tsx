@@ -15,13 +15,14 @@ const EditProfile = () => {
         return <p>Loading...</p>;
     }
     const { user } = authContext;
-    const [selected, setSelected] = useState(["Web Development"]);
 
     const { data: userData = [], refetch } = useQuery([user?.email], async () => {
         const res = await fetch(`http://localhost:5000/user?email=${user?.email}`);
         const data = await res.json();
         return data;
     });
+    
+    const [selected, setSelected] = useState(userData?.selected);
 
     const handleUpdateDetails = async (event: { preventDefault: () => void; target: any; }) => {
 
