@@ -1,5 +1,9 @@
 {
   "projects": {
-    "default": "code-stack-programming"
-  }
+    "default": "code-stack-dev",
+    "n": "code-stack-dev",
+    "staging": "code-stack-dev"
+  },
+  "targets": {},
+  "etags": {}
 }

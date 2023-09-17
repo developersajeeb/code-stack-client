@@ -6,7 +6,7 @@ const DashboardLayout = () => {
     <html lang="en">
       <body className="flex w-full">
         <SideDrawer></SideDrawer>
-        <section className="m-4 md:m-14 w-full">
+        <section className="m-4.5 md:m-14 lg:mx-28 w-full">
             <Outlet></Outlet>
         </section>
       </body>
