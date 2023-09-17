@@ -150,7 +150,7 @@ export const router = createBrowserRouter([
           {
             path: 'edit-profile',
             element: <EditProfile></EditProfile>,
-          },
+          }
         ]
       },
     ]
