@@ -5,4 +5,9 @@ export default {
     extend: {},
   },
   plugins: [require("daisyui")],
+<<<<<<< HEAD
 };
+=======
+}
+
+>>>>>>> 76e8e2b8879a6af9ac1aee0726ecfbfd9a9e367e

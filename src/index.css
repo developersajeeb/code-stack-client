@@ -9,9 +9,65 @@
 }
 
 .primary-bg {
+<<<<<<< HEAD
   background-color: #0278ae;
 }
 
 .small-btn {
   @apply bg-[#0278AE] text-white px-3 py-1 rounded-full hover:bg-[#319ac6] duration-200;
 }
+=======
+    background-color: #33B89F;
+}
+
+.second-bg {
+    background-color: #02B1FC;
+}
+
+.text-color {
+    color: #33B89F;
+}
+
+.text-color-second {
+    color: #02B1FC;
+}
+
+.content{
+    min-height: calc(100vh - 88px - 72px);
+  }
+
+.bg-button {
+    @apply primary-bg px-6 py-3 text-white font-medium rounded-md border-2 border-[#33B89F] hover:bg-white duration-200 hover:text-[#33B89F] flex items-center gap-2 shadow-md hover:shadow-sm
+}
+
+.bg-button-small {
+    @apply primary-bg px-3 py-1 text-white font-medium rounded-md border-2 border-[#33B89F] hover:bg-white duration-200 hover:text-[#33B89F] flex items-center gap-2 shadow-md hover:shadow-sm
+}
+
+.transparent-button {
+    @apply bg-white hover:bg-[#33B89F] px-6 py-3 hover:text-white font-medium rounded-md border-2 border-[#33B89F] duration-200 text-color flex items-center gap-2 shadow-sm hover:shadow-md
+}
+
+.transparent-button-small {
+    @apply bg-white hover:bg-[#33B89F] px-3 py-1 hover:text-white font-medium rounded-md border-2 border-[#33B89F] duration-200 text-color flex items-center gap-2 shadow-sm hover:shadow-md
+}
+
+/* Custom scrollbar styling */
+::-webkit-scrollbar {
+    width: 10px; /* Adjust the width as needed */
+  }
+  
+  ::-webkit-scrollbar-track {
+    background: #f1f1f1; /* Track color */
+  }
+  
+  ::-webkit-scrollbar-thumb {
+    background: #33B89F; /* Thumb color */
+    border-radius: 8px; /* Rounded corners */
+  }
+  
+  ::-webkit-scrollbar-thumb:hover {
+    background: #555; /* Thumb color on hover */
+  }
+  
+>>>>>>> 76e8e2b8879a6af9ac1aee0726ecfbfd9a9e367e
