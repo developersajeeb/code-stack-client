@@ -60,7 +60,7 @@ const AllUsers = () => {
       confirmButtonText: 'Yes, remove it!'
     }).then((result) => {
       if (result.isConfirmed) {
-        
+
         axiosSecure.patch(`users/normalUser/${user._id}`, { role: "normalUser" }).then((res) => {
           if (res.data.modifiedCount > 0) {
             refetch();
@@ -76,59 +76,61 @@ const AllUsers = () => {
   }
 
   return (
-    <div className="overflow-x-auto md:ml-20 my-10 md:w-full">
+    <main>
       <h1 className="text-3xl lg:text-5xl font-bold uppercase text-center p-10">
         All Users
       </h1>
-      <table className="table">
-        <thead>
-          <tr>
-            <th>#</th>
-            <th>User Image</th>
-            <th>Name</th>
-            <th>Email</th>
-            <th>Action</th>
-            <th>Action</th>
-          </tr>
-        </thead>
-        <tbody>
-          {users?.map((user: User, index: number) => (
-            <tr key={user._id}>
-              <td>{index + 1}</td>
-              <td>
-                <div className="flex items-center space-x-3">
-                  <div className="avatar">
-                    <div className="mask mask-squircle w-12 h-12">
-                      <img src={user?.imgURL} alt="" />
+      <div className="overflow-x-auto">
+        <table className="table">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>User Image</th>
+              <th>Name</th>
+              <th>Email</th>
+              <th>Action</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            {users?.map((user: User, index: number) => (
+              <tr key={user._id}>
+                <td>{index + 1}</td>
+                <td>
+                  <div className="flex items-center">
+                    <div className="avatar">
+                      <div className="mask rounded-full w-12 h-12">
+                        <img src={user?.imgURL} alt="" />
+                      </div>
                     </div>
                   </div>
-                </div>
-              </td>
-              <td>{user.name}</td>
-              <td>{user.email}</td>
-              <td>
-                <button
-                  onClick={() => handleUpdateRole(user, "admin")}
-                  className="btn btn-accent btn-sm"
-                  disabled={user?.role === "admin"}
-                >
-                  Make Admin
-                </button>
-              </td>
-              <td>
-                <button
-                  onClick={() => handleRemoveAdmin(user, "normalUser")}
-                  className="btn btn-error btn-sm"
-                  disabled={user?.role === "normalUser"}
-                >
-                  Remove Admin
-                </button>
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-    </div>
+                </td>
+                <td>{user.name}</td>
+                <td>{user.email}</td>
+                <td>
+                  <button
+                    onClick={() => handleUpdateRole(user, "admin")}
+                    className="btn btn-accent btn-sm"
+                    disabled={user?.role === "admin"}
+                  >
+                    Make Admin
+                  </button>
+                </td>
+                <td>
+                  <button
+                    onClick={() => handleRemoveAdmin(user, "normalUser")}
+                    className="btn btn-error btn-sm"
+                    disabled={user?.role === "normalUser"}
+                  >
+                    Remove Admin
+                  </button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </main>
   );
 };
 

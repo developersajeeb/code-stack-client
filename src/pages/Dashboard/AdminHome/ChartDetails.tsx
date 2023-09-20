@@ -67,7 +67,7 @@ export default function VerticalBarDemo() {
     }, []);
     
     return (
-        <div className="card">
+        <div className="card bg-gray-50 p-4">
             <Chart type="bar" data={chartData} options={chartOptions} />
         </div>
     )

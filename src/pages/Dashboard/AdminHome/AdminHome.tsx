@@ -4,7 +4,14 @@ import { TbMessageCircleQuestion } from "react-icons/tb";
 import { MdOutlineQuestionAnswer } from "react-icons/md";
 import { PiUsersThree } from "react-icons/pi";
 import ChartDetails from "./ChartDetails";
+import noUserImage from "../../../assets/icons/user-not.png";
 
+interface UserType {
+  _id: '';
+  imgURL: '';
+  name: '';
+  email: '';
+}
 
 const AdminHome = () => {
   const [axiosSecure] = useAxiosSecure();
@@ -19,7 +26,11 @@ const AdminHome = () => {
     error,
   } = useQuery(["stats"], fetchStats);
 
-  console.log(stats)
+  const { data: allUsers = [] } = useQuery([], async () => {
+    const res = await fetch(`http://localhost:5000/users`);
+    const data = await res.json();
+    return data;
+  });
 
   if (isLoading) {
     return <div>Loading...</div>;
@@ -53,9 +64,27 @@ const AdminHome = () => {
           </div>
         </div>
       </section>
-      
-      <section>
-        <ChartDetails></ChartDetails>
+
+      <section className="grid md:grid-cols-3 gap-8 mt-10">
+        <div className="md:col-span-2">
+          <ChartDetails></ChartDetails>
+        </div>
+        <div>
+          <h3 className="font-medium bg-indigo-50 px-5 py-2 text-color rounded-md inline-block">New Users</h3>
+          <ul className="grid gap-3 mt-6">
+            {
+              allUsers?.slice(0,6).map((user: UserType) => <li key={user?._id} className="flex items-center gap-2">
+                <figure>
+                  <img className="rounded-full w-12 h-12 object-cover" src={user?.imgURL || noUserImage} alt="user image" />
+                </figure>
+                <figure>
+                  <h4>{user?.name}</h4>
+                  <small className="text-gray-500">{user?.email}</small>
+                </figure>
+              </li>)
+            }
+          </ul>
+        </div>
       </section>
     </main>
   );
