@@ -39,7 +39,7 @@ const NewsFeed = () => {
     const { user } = authContext;
     const { isAdmin } = useAdmin();
     console.log(isAdmin);
-    
+
 
     const handleTagSelect = (event: React.ChangeEvent<HTMLSelectElement>) => {
         const selected = event.target.value;
@@ -184,9 +184,16 @@ const NewsFeed = () => {
                                 <p className="flex items-center gap-2 mt-5">
                                     <span className="border rounded-full p-1.5 border-gray-400 text-color-second"><FiUploadCloud /></span>
                                     <span className="text-gray-400 text-sm">{question?.uploadDate} | {question?.uploadTime}</span>
-                                    <Link to={question?.email == user?.email ? `/my-profile` : `/main/user/${question?.email}`}>
-                                        <span className="hover:text-[#02B1FC] text-gray-700 duration-200 cursor-pointer underline">{question?.username || question?.name?.slice(0, 6) + '...'}</span>
-                                    </Link>
+                                    {
+                                        isAdmin ?
+                                            <Link to={question?.email == user?.email ? `/dashboard` : `/main/user/${question?.email}`}>
+                                                <span className="hover:text-[#02B1FC] text-gray-700 duration-200 cursor-pointer underline">{question?.username || question?.name?.slice(0, 6) + '...'}</span>
+                                            </Link>
+                                            :
+                                            <Link to={question?.email == user?.email ? `/my-profile` : `/main/user/${question?.email}`}>
+                                                <span className="hover:text-[#02B1FC] text-gray-700 duration-200 cursor-pointer underline">{question?.username || question?.name?.slice(0, 6) + '...'}</span>
+                                            </Link>
+                                    }
                                 </p>
                             </div>
                             <VavDetails question={question}></VavDetails>

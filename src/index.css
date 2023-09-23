@@ -32,6 +32,10 @@
   @apply primary-bg px-6 py-3 text-white font-medium rounded-md border-2 border-[#33B89F] hover:bg-white duration-200 hover:text-[#33B89F] flex items-center gap-2 shadow-md hover:shadow-sm;
 }
 
+.bg-button-small-red {
+  @apply bg-red-500 px-3 py-1 text-white font-medium rounded-md border-2 border-red-500 hover:bg-white duration-200 hover:text-red-500 flex items-center gap-2 shadow-md hover:shadow-sm;
+}
+
 .bg-button-small {
   @apply primary-bg px-3 py-1 text-white font-medium rounded-md border-2 border-[#33B89F] hover:bg-white duration-200 hover:text-[#33B89F] flex items-center gap-2 shadow-md hover:shadow-sm;
 }
