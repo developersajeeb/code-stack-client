@@ -1,5 +1,4 @@
 import { useEffect, useState, useContext } from "react";
-
 import { BsQuestionCircle } from "react-icons/bs";
 import { MdUnfoldMore } from "react-icons/md";
 import { PiArrowCircleDownLight } from "react-icons/pi";
@@ -30,7 +29,7 @@ const NewsFeed = () => {
     const [questionsToShow, setQuestionsToShow] = useState<number>(10);
     const [showLoadMore, setShowLoadMore] = useState<boolean>(true);
     const [loading, setLoading] = useState<boolean>(false);
-    const authContext = useContext(AuthContext)
+    const authContext = useContext(AuthContext);
     if (!authContext) {
         return <div className='h-screen flex justify-center items-center'>
             <div className="w-12 h-12 rounded-full animate-spin border-x-8 border-solid border-[#33B89F] border-t-transparent"></div>
@@ -38,8 +37,6 @@ const NewsFeed = () => {
     }
     const { user } = authContext;
     const { isAdmin } = useAdmin();
-    console.log(isAdmin);
-
 
     const handleTagSelect = (event: React.ChangeEvent<HTMLSelectElement>) => {
         const selected = event.target.value;
@@ -83,24 +80,6 @@ const NewsFeed = () => {
         }, 1000);
     }, [selectedTag, allQuestions]);
 
-    // const handleQuestionTitleClick = (questionId: string) => {
-    //     setClickCount(clickCount + 1);
-
-    //     fetch(`http://localhost:5000/question-detail/${questionId}`, {
-    //         method: 'PUT',
-    //         headers: {
-    //             'content-type': 'application/json'
-    //         },
-    //         body: JSON.stringify({ clickCount })
-    //     })
-    //         .then(result => result.json())
-    //         .then((data) => {
-    //             if (data.insertedId) {
-    //                 // refetch()
-    //             }
-    //         })
-    // };
-
     return (
         <main className="px-0 lg:pl-6">
             <section className="md:flex justify-between items-end bg-purple-50 p-5 rounded-lg">
@@ -137,7 +116,7 @@ const NewsFeed = () => {
                             <div className="animate-pulse mb-8">
                                 <progress className="progress h-7 rounded-full md:w-5/6" value={0} max="100"></progress>
                                 <progress className="progress h-7 w-1/2 rounded-full" value={0} max="100"></progress>
-                                <ul className="flex flex-wrap gap-3 my-3">
+                                <ul className="flex flex-wrap gap-2 my-3">
                                     <progress className="progress w-14 h-6 rounded-full" value={0} max="100"></progress>
                                     <progress className="progress w-20 h-6 rounded-full" value={0} max="100"></progress>
                                     <progress className="progress w-14 h-6 rounded-full" value={0} max="100"></progress>
@@ -170,9 +149,9 @@ const NewsFeed = () => {
                                     <h2 className="text-xl font-medium hover:text-[#33B89F] cursor-pointer duration-200">{question?.title}</h2>
                                 </Link>
                                 <p className="mt-2 text-gray-500 text-sm" dangerouslySetInnerHTML={{
-                                    __html: question && question?.body ? question?.body.slice(0, 120) + '...' : ""
+                                    __html: question && question?.body ? question?.body.slice(0, 120)+"..." : ""
                                 }} />
-                                <ul className="flex flex-wrap gap-3 my-3 mt-5">
+                                <ul className="flex flex-wrap gap-2 my-3 mt-5">
                                     {
                                         question?.selected?.map((tag: string, index: number) => <Link
                                             key={index}

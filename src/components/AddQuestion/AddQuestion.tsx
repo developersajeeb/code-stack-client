@@ -6,6 +6,8 @@ import { toast, Toaster } from "react-hot-toast";
 import { FaArrowRight } from "react-icons/fa";
 import { AuthContext } from "../../Provider/AuthProvider";
 import { useQuery } from "@tanstack/react-query";
+import { useNavigate } from "react-router-dom";
+import { ImSpinner10 } from "react-icons/im";
 
 const image_hosting_name = 'ml_default';
 
@@ -21,6 +23,8 @@ const AddQuestion = () => {
     const currentDate = new Date();
     const uploadDate = `${(currentDate.getMonth() + 1).toString().padStart(2, '0')}/${currentDate.getDate().toString().padStart(2, '0')}/${currentDate.getFullYear()}`;
     const uploadTime = new Date().toLocaleTimeString();
+    const navigate = useNavigate();
+    const [loading, setLoading] = useState<boolean>(false);
 
     const { data: userData = [], refetch } = useQuery([user?.email], async () => {
         const res = await fetch(`http://localhost:5000/user?email=${user?.email}`);
@@ -37,6 +41,7 @@ const AddQuestion = () => {
         const form = event.target;
         const title: string = form.title.value;
 
+        setLoading(true);
         const imageUrls: string[] = [];
 
         for (let i = 0; i < imageLinks.length; i++) {
@@ -76,10 +81,12 @@ const AddQuestion = () => {
         })
             .then(result => result.json())
             .then((data) => {
+                setLoading(false);
                 if (data.insertedId) {
                     refetch()
                     form.reset()
                     toast.success('Added Successfully!');
+                    navigate('/main/news-feed');
                 } else {
                     toast.error("Error, Please try again!")
                 }
@@ -157,14 +164,17 @@ const AddQuestion = () => {
                                 placeHolder="Enter tags"
                             />
                         </div>
-                        <button className="bg-button">Add Now <FaArrowRight size={15} /></button>
+                        {
+                            loading ? 
+                            <button disabled className="hover:bg-[#33B89F] hover:text-white bg-button w-[139px]"><ImSpinner10 className='m-auto animate-spin' size={24} /></button>
+                            :
+                            <button className="bg-button">Add Now <FaArrowRight size={15} /></button>
+                        }
                     </form>
                 </section>
             </main>
         </>
     )
 };
-
-
 
 export default AddQuestion;

@@ -73,7 +73,7 @@ const AnswerDetails: React.FC<AnswerDetailsProps> = ({ answerFullData }) => {
         <>
             {
                 answerFullData?.map(answer => <div key={answer?._id} className="border-b py-4">
-                    <p dangerouslySetInnerHTML={{
+                    <div dangerouslySetInnerHTML={{
                         __html: answer && answer?.body ? answer?.body : ""
                     }} />
                     <div className="mt-6 flex items-end justify-between">

@@ -29,6 +29,8 @@ import TramsConditions from "../pages/TramsConditions/TramsConditions";
 import ContactUs from "../pages/ContactUs/ContactUs";
 import Saves from "../pages/Saves/Saves";
 import EditQuestion from "../pages/EditQuestion/EditQuestion";
+import AddPost from "../pages/Dashboard/AddPost/AddPost";
+import AdminRoute from "./AdminRoute";
 
 export const router = createBrowserRouter([
   {
@@ -137,7 +139,7 @@ export const router = createBrowserRouter([
       },
       {
         path: 'dashboard',
-        element: <PrivateRoute><DashboardLayout></DashboardLayout></PrivateRoute>,
+        element: <PrivateRoute><AdminRoute><DashboardLayout></DashboardLayout></AdminRoute></PrivateRoute>,
         children: [
           {
             path: '/dashboard',
@@ -150,6 +152,10 @@ export const router = createBrowserRouter([
           {
             path: 'edit-profile',
             element: <EditProfile></EditProfile>,
+          },
+          {
+            path: 'add-post',
+            element: <AddPost></AddPost>,
           }
         ]
       },

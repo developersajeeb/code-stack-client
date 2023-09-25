@@ -3,6 +3,7 @@ import { BiHome } from "react-icons/bi";
 import { CiCircleChevLeft, CiCircleChevRight } from "react-icons/ci";
 import { FaRegNewspaper } from "react-icons/fa";
 import { FiUsers } from "react-icons/fi";
+import { MdPostAdd } from "react-icons/md";
 import { TbUserEdit } from "react-icons/tb";
 import { Link } from "react-router-dom";
 
@@ -42,6 +43,12 @@ const SideDrawer = () => {
             <TbUserEdit className="text-lg" />
           </Link>
           <Link
+            to="/dashboard/add-post"
+            className="w-full flex items-center gap-2"
+          >
+            <MdPostAdd className="text-lg" />
+          </Link>
+          <Link
             to="/main/news-feed"
             className="w-full flex items-center gap-2"
           >
@@ -63,6 +70,11 @@ const SideDrawer = () => {
             to="/dashboard/edit-profile"
             className="w-full flex items-center gap-2 font-medium">
             <TbUserEdit className="text-lg" /> Edit Profile
+          </Link>
+          <Link
+            to="/dashboard/add-post"
+            className="w-full flex items-center gap-2 font-medium">
+            <MdPostAdd className="text-lg" /> Add Post
           </Link>
           <Link
             to="/main/news-feed"

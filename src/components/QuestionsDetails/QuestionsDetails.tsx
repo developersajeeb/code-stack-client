@@ -13,7 +13,7 @@ import { BsBookmarks, BsThreeDots } from "react-icons/bs";
 import { FiShare2 } from "react-icons/fi";
 import { FaRegTrashCan } from "react-icons/fa6";
 import Swal from "sweetalert2";
-import ImageGallery from "../ImageGallery/ImageGallery";
+import { Image } from 'primereact/image';
 
 interface QuestionInfo {
     _id: '',
@@ -261,7 +261,11 @@ const QuestionsDetails = () => {
                         __html: questionData && questionData.body ? questionData.body : ""
                     }} />
                 </div>
-                <ImageGallery images={questionData?.problemImages || []}></ImageGallery>
+                <div className="flex flex-wrap gap-2">
+                    {
+                        questionData?.problemImages?.map(image => <Image className="w-36 md:w-44" src={image} alt="Image" preview />)
+                    }
+                </div>
 
                 <div className="my-6">
                     <ul className="flex gap-2 flex-wrap">

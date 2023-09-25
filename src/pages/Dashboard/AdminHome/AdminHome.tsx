@@ -1,10 +1,10 @@
 import { useQuery } from "@tanstack/react-query";
-import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import { TbMessageCircleQuestion } from "react-icons/tb";
 import { MdOutlineQuestionAnswer } from "react-icons/md";
 import { PiUsersThree } from "react-icons/pi";
 import ChartDetails from "./ChartDetails";
 import noUserImage from "../../../assets/icons/user-not.png";
+import {useEffect,useState} from 'react'
 
 interface UserType {
   _id: '';
@@ -14,31 +14,27 @@ interface UserType {
 }
 
 const AdminHome = () => {
-  const [axiosSecure] = useAxiosSecure();
+  const [allUsers, setAllUsers] = useState([]);
+  const [allAnswers, setAllAnswers] = useState([]);
 
-  const fetchStats = async () => {
-    const res = await axiosSecure.get("/statistics");
-    return res.data;
-  };
-  const {
-    data: stats = [],
-    isLoading,
-    error,
-  } = useQuery(["stats"], fetchStats);
-
-  const { data: allUsers = [] } = useQuery([], async () => {
-    const res = await fetch(`http://localhost:5000/users`);
+  const { data: allQuestions = [] } = useQuery([], async () => {
+    const res = await fetch(`http://localhost:5000/questions`);
     const data = await res.json();
     return data;
   });
 
-  if (isLoading) {
-    return <div>Loading...</div>;
-  }
+  useEffect(() => {
+    fetch(`http://localhost:5000/users`)
+    .then(res => res.json())
+    .then(data => setAllUsers(data))
+  },[]);
 
-  if (error) {
-    return <div>Error: {error.toString()}</div>;
-  }
+  useEffect(() => {
+    fetch(`http://localhost:5000/answers`)
+    .then(res => res.json())
+    .then(data => setAllAnswers(data))
+  },[]);
+
   return (
     <main>
       <section className="grid md:grid-cols-3 gap-8">
@@ -46,21 +42,21 @@ const AdminHome = () => {
           <span className="bg-indigo-100 text-gray-700 p-3 rounded-full"><PiUsersThree size={45} /></span>
           <div>
             <h5 className="font-medium text-gray-600">All Registered User</h5>
-            <p className="text-2xl font-semibold">{stats?.usersCount}</p>
+            <p className="text-2xl font-semibold">{allUsers?.length}</p>
           </div>
         </div>
         <div className=" rounded-lg p-6 flex gap-3 items-center bg-yellow-50">
           <span className="bg-orange-100 text-gray-700 p-3 rounded-full"><TbMessageCircleQuestion size={45} /></span>
           <div>
             <h5 className="font-medium text-gray-600">Total Questions Posted</h5>
-            <p className="text-2xl font-semibold">{stats?.questionsCount}</p>
+            <p className="text-2xl font-semibold">{allQuestions?.length}</p>
           </div>
         </div>
         <div className="rounded-lg p-6 flex gap-3 items-center bg-purple-50">
           <span className="bg-purple-100 text-gray-700 p-3 rounded-full"><MdOutlineQuestionAnswer size={45} /></span>
           <div>
             <h5 className="font-medium text-gray-600">All Answers Given</h5>
-            <p className="text-2xl font-semibold">{stats?.answersCount}</p>
+            <p className="text-2xl font-semibold">{allAnswers?.length}</p>
           </div>
         </div>
       </section>
