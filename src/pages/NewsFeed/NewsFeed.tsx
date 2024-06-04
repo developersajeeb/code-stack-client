@@ -88,7 +88,7 @@ const NewsFeed = () => {
                     <h2 className='text-2xl font-medium text-gray-800 mt-4 mb-4 md:mb-0'>Ask A Public Question For Solve Your Issus</h2>
                 </div>
                 <div>
-                    <Link to='/main/ask-question'><button className="bg-button">Ask Question <BsQuestionCircle /></button></Link>
+                    <Link to='/ ask-question'><button className="bg-button">Ask Question <BsQuestionCircle /></button></Link>
                 </div>
             </section>
             <div id="box" className="mt-8 flex items-center gap-3">
@@ -145,7 +145,7 @@ const NewsFeed = () => {
                     ) : (
                         filteredQuestions?.slice(0, questionsToShow).map(question => <div key={question?._id} className="py-4 border-b md:flex justify-between gap-6 items-center">
                             <div>
-                                <Link to={`/main/news-feed/${question?._id}`}>
+                                <Link to={`/ news-feed/${question?._id}`}>
                                     <h2 className="text-xl font-medium hover:text-[#33B89F] cursor-pointer duration-200">{question?.title}</h2>
                                 </Link>
                                 <p className="mt-2 text-gray-500 text-sm" dangerouslySetInnerHTML={{
@@ -155,7 +155,7 @@ const NewsFeed = () => {
                                     {
                                         question?.selected?.map((tag: string, index: number) => <Link
                                             key={index}
-                                            to={`/main/tagged?tag=${tag}`}>
+                                            to={`/ tagged?tag=${tag}`}>
                                             <li className="hover:bg-indigo-50 hover:border-[#02B1FC] hover:text-[#33B89F] duration-200 bg-white border border-gray-400 px-3 text-sm py-1 text-gray-400 rounded-full font-medium cursor-pointer">{tag}</li>
                                         </Link>)
                                     }
@@ -165,11 +165,11 @@ const NewsFeed = () => {
                                     <span className="text-gray-400 text-sm">{question?.uploadDate} | {question?.uploadTime}</span>
                                     {
                                         isAdmin ?
-                                            <Link to={question?.email == user?.email ? `/dashboard` : `/main/user/${question?.email}`}>
+                                            <Link to={question?.email == user?.email ? `/dashboard` : `/ user/${question?.email}`}>
                                                 <span className="hover:text-[#02B1FC] text-gray-700 duration-200 cursor-pointer underline">{question?.username || question?.name?.slice(0, 6) + '...'}</span>
                                             </Link>
                                             :
-                                            <Link to={question?.email == user?.email ? `/my-profile` : `/main/user/${question?.email}`}>
+                                            <Link to={question?.email == user?.email ? `/my-profile` : `/ user/${question?.email}`}>
                                                 <span className="hover:text-[#02B1FC] text-gray-700 duration-200 cursor-pointer underline">{question?.username || question?.name?.slice(0, 6) + '...'}</span>
                                             </Link>
                                     }

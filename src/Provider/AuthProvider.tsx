@@ -15,9 +15,6 @@ import {
 } from "firebase/auth";
 import app from "../firebase/firebase.config";
 import axios from "axios";
-import "primereact/resources/primereact.min.css";
-import 'primereact/resources/themes/lara-light-indigo/theme.css';
-import 'primereact/resources/primereact.css';
 
 interface AuthContextType {
   user: User | null;
@@ -92,6 +89,7 @@ const AuthProviders: React.FC<AuthProviderProps> = ({ children }) => {
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+      
       setUser(currentUser);
       setLoading(false);
       if (currentUser) {
@@ -101,7 +99,7 @@ const AuthProviders: React.FC<AuthProviderProps> = ({ children }) => {
             localStorage.setItem("access-token", data.data.token);
           });
       } else {
-        localStorage.removeItem("access-token");
+        // localStorage.removeItem("access-token");
       }
     });
     return () => {

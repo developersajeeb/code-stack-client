@@ -84,7 +84,7 @@ const Register = () => {
                                                 'You have successfully Register.',
                                                 'success'
                                             )
-                                            navigate('/main/news-feed');
+                                            navigate('/ news-feed');
                                         })
                                 }
                             } catch (error) {
@@ -151,7 +151,7 @@ const Register = () => {
                             <p className='flex items-center gap-2'>Register to your account <BsPersonAdd size={18} /></p>
                         )}
                     </button>
-                    <h4 className='text-center text-lg font-semibold text-gray-700'>Or SingUp With</h4>
+                    <h4 className='text-center text-lg font-semibold text-gray-700'>Or SignUp With</h4>
                     <SocialLogin></SocialLogin>
                     <Link to='/login'>
                         <div className="font-medium text-gray-500 dark:text-gray-300 mt-4 text-center text-sm">

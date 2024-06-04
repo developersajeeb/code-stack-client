@@ -1,5 +1,8 @@
 import { Outlet } from "react-router-dom";
 import SideDrawer from "../components/SideDrawer/SideDrawer";
+import "primereact/resources/primereact.min.css";
+import 'primereact/resources/themes/lara-light-indigo/theme.css';
+import 'primereact/resources/primereact.css';
 
 const DashboardLayout = () => {
   return (

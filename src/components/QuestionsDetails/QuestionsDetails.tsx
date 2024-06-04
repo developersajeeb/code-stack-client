@@ -14,6 +14,7 @@ import { FiShare2 } from "react-icons/fi";
 import { FaRegTrashCan } from "react-icons/fa6";
 import Swal from "sweetalert2";
 import { Image } from 'primereact/image';
+import { Editor, EditorTextChangeEvent } from "primereact/editor";
 
 interface QuestionInfo {
     _id: '',
@@ -176,7 +177,7 @@ const QuestionsDetails = () => {
                                 'Your file has been deleted.',
                                 'success'
                             )
-                            navigate('/main/news-feed')
+                            navigate('/ news-feed')
                         }
                     })
             }
@@ -192,7 +193,7 @@ const QuestionsDetails = () => {
             />
             <section>
                 <div className="flex justify-between items-end">
-                    <Link to={questionData?.email == user?.email && `/my-profile/${questionData?.email}` || `/main/user/${questionData?.email}`}>
+                    <Link to={questionData?.email == user?.email && `/my-profile/${questionData?.email}` || `/ user/${questionData?.email}`}>
                         <div className="inline-block">
                             <div className="flex items-center gap-2 bg-gray-100 px-3 py-2 rounded-md">
                                 <img className="w-11 h-11 object-cover rounded-full" src={questionData?.userPhoto || notUser} alt="" />
@@ -218,7 +219,7 @@ const QuestionsDetails = () => {
                             </label>
                             <div tabIndex={0} className="mt-3 z-[1] card card-compact dropdown-content bg-gray-100 shadow">
                                 <ul className=" bg-base-200 rounded-lg flex p-2">
-                                    <li className="hover:bg-gray-200 p-2 rounded-md cursor-pointer tooltip tooltip-bottom" data-tip="share" onClick={() => handleCopyClick(`/main/news-feed/${questionData?._id}`)}>
+                                    <li className="hover:bg-gray-200 p-2 rounded-md cursor-pointer tooltip tooltip-bottom" data-tip="share" onClick={() => handleCopyClick(`/ news-feed/${questionData?._id}`)}>
                                         <a>
                                             <FiShare2 size={20} />
                                         </a>
@@ -234,7 +235,7 @@ const QuestionsDetails = () => {
                                     </li>
                                     {
                                         questionData?.email == user?.email && <>
-                                            <Link to={`/main/edit-question/${questionData?._id}`}>
+                                            <Link to={`/ edit-question/${questionData?._id}`}>
                                                 <li className="hover:bg-gray-200 p-2 rounded-md cursor-pointer duration-300 tooltip tooltip-bottom" data-tip="edit">
                                                     <a>
                                                         <BiEditAlt size={24} />
@@ -257,7 +258,7 @@ const QuestionsDetails = () => {
                     <div className="flex gap-4 items-center">
                         <h1 className="text-3xl font-medium text-gray-700">{questionData?.title}</h1>
                     </div>
-                    <div className="my-4" dangerouslySetInnerHTML={{
+                    <div className="my-4 overflow-x-auto" dangerouslySetInnerHTML={{
                         __html: questionData && questionData.body ? questionData.body : ""
                     }} />
                 </div>
@@ -272,7 +273,7 @@ const QuestionsDetails = () => {
                         {
                             questionData?.selected?.map((tag, index) => <Link
                                 key={index}
-                                to={`/main/tagged?tag=${tag}`}>
+                                to={`/ tagged?tag=${tag}`}>
                                 <li className="hover:bg-indigo-50 hover:border-[#02B1FC] hover:text-[#33B89F] duration-200 bg-white border border-gray-400 px-3 text-sm py-1 text-gray-400 rounded-full font-medium cursor-pointer">{tag}</li>
                             </Link>)
                         }
@@ -291,13 +292,8 @@ const QuestionsDetails = () => {
             <form className="mt-8" onSubmit={handlePostAnswer}>
                 <h3 className="text-lg font-medium text-gray-700">Do you know someone who can answer? Please share this question via Email, Twitter, or Facebook.</h3>
                 <h2 className="font-medium text-gray-700 text-2xl mt-4">Your Answer</h2>
-                <ReactQuill
-                    value={body}
-                    onChange={handleQuill}
-                    className="react-quill block w-full rounded-md mt-3 h-56"
-                    theme="snow"
-                />
-                <button className="bg-button mt-20 md:mt-16">Post Answer <FaArrowRight size={15} /></button>
+                <Editor className="mt-3" value={body} onTextChange={(e: EditorTextChangeEvent) => setBody(e.htmlValue || '')} style={{ height: '300px' }} />
+                <button className="bg-button mt-4">Post Answer <FaArrowRight size={15} /></button>
             </form>
         </main>
     );

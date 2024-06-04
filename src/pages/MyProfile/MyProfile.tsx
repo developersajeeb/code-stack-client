@@ -56,8 +56,8 @@ const MyProfile = () => {
                             <li><NavLink className={({ isActive }) => isActive ? 'text-color flex items-center gap-2 font-medium' : 'text-gray-500 flex items-center gap-2 font-medium'} to='/my-profile/questions'><TbDeviceIpadHorizontalQuestion size={18} /> Questions</NavLink></li>
                             <li><NavLink className={({ isActive }) => isActive ? 'text-color flex items-center gap-2 font-medium' : 'text-gray-500 flex items-center gap-2 font-medium'} to='/my-profile/saves'><BiBookmarkAlt size={18} /> Saves</NavLink></li>
                             <li><NavLink className={({ isActive }) => isActive ? 'text-color flex items-center gap-2 font-medium' : 'text-gray-500 flex items-center gap-2 font-medium'} to={`/my-profile/edit-profile`}><TbUserEdit size={18} /> Edit Profile</NavLink></li>
-                            <li><NavLink className={({ isActive }) => isActive ? 'text-color flex items-center gap-2 font-medium' : 'text-gray-500 flex items-center gap-2 font-medium'} to='/main/news-feed'><FaRegNewspaper size={18} /> News Feed</NavLink></li>
-                            <li><NavLink className={({ isActive }) => isActive ? 'text-color flex items-center gap-2 font-medium' : 'text-gray-500 flex items-center gap-2 font-medium'} to='/main/ask-question'><TbUserQuestion size={18} /> Ask Question</NavLink></li>
+                            <li><NavLink className={({ isActive }) => isActive ? 'text-color flex items-center gap-2 font-medium' : 'text-gray-500 flex items-center gap-2 font-medium'} to='/ news-feed'><FaRegNewspaper size={18} /> News Feed</NavLink></li>
+                            <li><NavLink className={({ isActive }) => isActive ? 'text-color flex items-center gap-2 font-medium' : 'text-gray-500 flex items-center gap-2 font-medium'} to='/ ask-question'><TbUserQuestion size={18} /> Ask Question</NavLink></li>
                         </ul>
                     </div>
                 </div>

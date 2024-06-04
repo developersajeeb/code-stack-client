@@ -72,25 +72,54 @@ const AnswerDetails: React.FC<AnswerDetailsProps> = ({ answerFullData }) => {
     return (
         <>
             {
-                answerFullData?.map(answer => <div key={answer?._id} className="border-b py-4">
-                    <div dangerouslySetInnerHTML={{
-                        __html: answer && answer?.body ? answer?.body : ""
-                    }} />
-                    <div className="mt-6 flex items-end justify-between">
-                        <ul>
-                            <li className="inline-block mb-3 md:mb-0"><p className="cursor-pointer border border-gray-400 flex items-center gap-1 px-2 py-1 rounded-full"><BiLike size={22} /> <span className="text-sm">14 votes</span></p></li>
-                            <li className="inline-block mx-3"><p className="cursor-pointer border border-gray-400 flex items-center gap-1 px-2 py-1 rounded-full"><BiDislike size={22} /> <span className="text-sm">-13 votes</span></p></li>
-                            <li className="inline-block"><p className="cursor-pointer border border-gray-400 flex items-center gap-1 px-2 py-1 rounded-full"><BiCommentDetail size={22} /> <span className="text-sm">8 reply</span></p></li>
-                        </ul>
-                        <div>
-                            <p className="text-sm text-end">Answered by
-                                <Link to={answer?.email == user?.email && `/my-profile/${answer?.email}` || `/main/user/${answer?.email}`}>
-                                    <span className="text-[#02B1FC] duration-200 underline hover:text-black cursor-pointer ml-1">{answer?.username}</span>
-                                </Link>
-                            </p>
+                answerFullData?.length > 0 ? (
+                    answerFullData.map((answer) => (
+                        <div key={answer?._id} className="border-b py-4">
+                            <div
+                                dangerouslySetInnerHTML={{
+                                    __html: answer && answer?.body ? answer?.body : "",
+                                }}
+                            />
+                            <div className="mt-6 flex items-end justify-between">
+                                <ul>
+                                    <li className="inline-block mb-3 md:mb-0">
+                                        <p className="cursor-pointer border border-gray-400 flex items-center gap-1 px-2 py-1 rounded-full">
+                                            <BiLike size={22} /> <span className="text-sm">14 votes</span>
+                                        </p>
+                                    </li>
+                                    <li className="inline-block mx-3">
+                                        <p className="cursor-pointer border border-gray-400 flex items-center gap-1 px-2 py-1 rounded-full">
+                                            <BiDislike size={22} /> <span className="text-sm">-13 votes</span>
+                                        </p>
+                                    </li>
+                                    <li className="inline-block">
+                                        <p className="cursor-pointer border border-gray-400 flex items-center gap-1 px-2 py-1 rounded-full">
+                                            <BiCommentDetail size={22} /> <span className="text-sm">8 reply</span>
+                                        </p>
+                                    </li>
+                                </ul>
+                                <div>
+                                    <p className="text-sm text-end">
+                                        Answered by
+                                        <Link
+                                            to={
+                                                answer?.email == user?.email
+                                                    ? `/my-profile/${answer?.email}`
+                                                    : `/ user/${answer?.email}`
+                                            }
+                                        >
+                                            <span className="text-[#02B1FC] duration-200 underline hover:text-black cursor-pointer ml-1">
+                                                {answer?.username}
+                                            </span>
+                                        </Link>
+                                    </p>
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                </div>)
+                    ))
+                ) : (
+                    <div className="text-center text-lg font-medium text-gray-400">No answers</div>
+                )
             }
         </>
     );

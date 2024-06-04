@@ -1,9 +1,23 @@
 import { useState, useEffect } from 'react';
 import { Chart } from 'primereact/chart';
+import { useQuery } from '@tanstack/react-query';
 
 export default function VerticalBarDemo() {
     const [chartData, setChartData] = useState({});
     const [chartOptions, setChartOptions] = useState({});
+    const [allUsers, setAllUsers] = useState([]);
+
+    const { data: allQuestions = [] } = useQuery([], async () => {
+        const res = await fetch(`http://localhost:5000/questions`);
+        const data = await res.json();
+        return data;
+    });
+
+    useEffect(() => {
+        fetch(`http://localhost:5000/users`)
+            .then(res => res.json())
+            .then(data => setAllUsers(data))
+    }, []);
 
     useEffect(() => {
         const documentStyle = getComputedStyle(document.documentElement);
@@ -11,43 +25,41 @@ export default function VerticalBarDemo() {
         const textColorSecondary = documentStyle.getPropertyValue('--text-color-secondary');
         const surfaceBorder = documentStyle.getPropertyValue('--surface-border');
         const data = {
-            labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
+            labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
             datasets: [
                 {
-                    label: 'My First dataset',
-                    backgroundColor: documentStyle.getPropertyValue('--blue-500'),
-                    borderColor: documentStyle.getPropertyValue('--blue-500'),
-                    data: [65, 59, 80, 81, 56, 55, 40]
+                    label: 'Questions Dataset',
+                    data: [65, 59, 80, 81, 56, 55, 40],
+                    fill: false,
+                    borderColor: documentStyle.getPropertyValue('--teal-500'),
+                    tension: 0.4
                 },
                 {
-                    label: 'My Second dataset',
-                    backgroundColor: documentStyle.getPropertyValue('--pink-500'),
-                    borderColor: documentStyle.getPropertyValue('--pink-500'),
-                    data: [28, 48, 40, 19, 86, 27, 90]
+                    label: 'Users Dataset',
+                    data: [28, 48, 40, 19, 86, 27, 90],
+                    fill: false,
+                    borderColor: documentStyle.getPropertyValue('--blue-500'),
+                    tension: 0.4
                 }
             ]
         };
         const options = {
             maintainAspectRatio: false,
-            aspectRatio: 0.8,
+            aspectRatio: 0.6,
             plugins: {
                 legend: {
                     labels: {
-                        fontColor: textColor
+                        color: textColor
                     }
                 }
             },
             scales: {
                 x: {
                     ticks: {
-                        color: textColorSecondary,
-                        font: {
-                            weight: 500
-                        }
+                        color: textColorSecondary
                     },
                     grid: {
-                        display: false,
-                        drawBorder: false
+                        color: surfaceBorder
                     }
                 },
                 y: {
@@ -55,8 +67,7 @@ export default function VerticalBarDemo() {
                         color: textColorSecondary
                     },
                     grid: {
-                        color: surfaceBorder,
-                        drawBorder: false
+                        color: surfaceBorder
                     }
                 }
             }
@@ -65,10 +76,10 @@ export default function VerticalBarDemo() {
         setChartData(data);
         setChartOptions(options);
     }, []);
-    
+
     return (
         <div className="card bg-gray-50 p-4">
-            <Chart type="bar" data={chartData} options={chartOptions} />
+            <Chart type="line" data={chartData} options={chartOptions} />
         </div>
     )
 }

@@ -48,6 +48,26 @@
   @apply bg-white hover:bg-[#33B89F] px-3 py-1 hover:text-white font-medium rounded-md border-2 border-[#33B89F] duration-200 text-color flex items-center gap-2 shadow-sm hover:shadow-md;
 }
 
+pre.ql-syntax {
+  background-color: #f1f1f1;
+  border-radius: 6px;
+  overflow-x: auto;
+  margin-bottom: 15px;
+  padding: 8px;
+}
+
+pre.ql-syntax::-webkit-scrollbar {
+  height: 8px;
+}
+
+pre.ql-syntax::-webkit-scrollbar-thumb {
+  border-radius: 30px;
+}
+
+.ql-image {
+  display: none !important;
+}
+
 /* Custom scrollbar styling */
 ::-webkit-scrollbar {
   width: 10px; /* Adjust the width as needed */
@@ -59,7 +79,7 @@
 
 ::-webkit-scrollbar-thumb {
   background: #33b89f; /* Thumb color */
-  border-radius: 8px; /* Rounded corners */
+  border-radius: 30px; /* Rounded corners */
 }
 
 ::-webkit-scrollbar-thumb:hover {

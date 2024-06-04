@@ -58,11 +58,11 @@ const Main = () => {
                         <label htmlFor="my-drawer-2" className="drawer-overlay"></label>
                         <ul className="menu text-base px-4 py-8 lg:py-0 h-full text-base-content text-center bg-white font-medium">
                             {/* Sidebar content here */}
-                            <li><NavLink className={({ isActive }) => isActive ? 'text-color flex items-center gap-2' : ' text-gray-500 flex items-center gap-2'} to='/main/news-feed'><FaRegNewspaper /> News Feed</NavLink></li>
-                            <li><NavLink className={({ isActive }) => isActive ? 'text-color flex items-center gap-2' : ' text-gray-500 flex items-center gap-2'} to='/main/ask-question'><TbUserQuestion /> Ask Question</NavLink></li>
-                            <li><NavLink className={({ isActive }) => isActive ? 'text-color flex items-center gap-2' : ' text-gray-500 flex items-center gap-2'} to='/main/tags'><TbTags /> Tags</NavLink></li>
-                            <li><NavLink className={({ isActive }) => isActive ? 'text-color flex items-center gap-2' : ' text-gray-500 flex items-center gap-2'} to='/main/users'><FiUsers /> Users</NavLink></li>
-                            <li><NavLink className={({ isActive }) => isActive ? 'text-color flex items-center gap-2' : ' text-gray-500 flex items-center gap-2'} to='/main/badges'><BiBookmarkAlt /> Badges</NavLink></li>
+                            <li><NavLink className={({ isActive }) => isActive ? 'text-color flex items-center gap-2' : ' text-gray-500 flex items-center gap-2'} to='/news-feed'><FaRegNewspaper /> News Feed</NavLink></li>
+                            <li><NavLink className={({ isActive }) => isActive ? 'text-color flex items-center gap-2' : ' text-gray-500 flex items-center gap-2'} to='/ask-question'><TbUserQuestion /> Ask Question</NavLink></li>
+                            <li><NavLink className={({ isActive }) => isActive ? 'text-color flex items-center gap-2' : ' text-gray-500 flex items-center gap-2'} to='/tags'><TbTags /> Tags</NavLink></li>
+                            <li><NavLink className={({ isActive }) => isActive ? 'text-color flex items-center gap-2' : ' text-gray-500 flex items-center gap-2'} to='/users'><FiUsers /> Users</NavLink></li>
+                            <li><NavLink className={({ isActive }) => isActive ? 'text-color flex items-center gap-2' : ' text-gray-500 flex items-center gap-2'} to='/badges'><BiBookmarkAlt /> Badges</NavLink></li>
                         </ul>
                     </div>
                 </div>

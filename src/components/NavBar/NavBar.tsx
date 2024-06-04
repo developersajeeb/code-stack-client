@@ -43,7 +43,7 @@ const NavBar = () => {
             isActive
               ? "text-color flex items-center gap-2 mb-5"
               : " text-gray-500 flex items-center gap-2 mb-5"
-          } to="/main/news-feed"
+          } to="/news-feed"
           >
             <FaRegNewspaper /> News Feed
           </NavLink>
@@ -52,7 +52,7 @@ const NavBar = () => {
               isActive
                 ? "text-color flex items-center gap-2 mb-5"
                 : " text-gray-500 flex items-center gap-2 mb-5"
-            } to="/main/ask-question"
+            } to="/ask-question"
           >
             <TbUserQuestion /> Ask Question
           </NavLink>
@@ -61,7 +61,7 @@ const NavBar = () => {
               isActive
                 ? "text-color flex items-center gap-2 mb-5"
                 : " text-gray-500 flex items-center gap-2 mb-5"
-            } to="/main/tags"
+            } to="/tags"
           >
             <TbTags /> Tags
           </NavLink>
@@ -70,7 +70,7 @@ const NavBar = () => {
               isActive
                 ? "text-color flex items-center gap-2 mb-5"
                 : " text-gray-500 flex items-center gap-2 mb-5"
-            } to="/main/users"
+            } to="/users"
           >
             <FiUsers /> Users
           </NavLink>
@@ -79,7 +79,7 @@ const NavBar = () => {
               isActive
                 ? "text-color flex items-center gap-2 mb-5"
                 : " text-gray-500 flex items-center gap-2 mb-5"
-            } to="/main/badges"
+            } to="/badges"
           >
             <BiBookmarkAlt /> Badges
           </NavLink>
@@ -127,7 +127,7 @@ const NavBar = () => {
           )}
         </ul>
         <figure>
-          <Link to={user?.email ? '/main/news-feed' : '/'}>
+          <Link to={user?.email ? '/news-feed' : '/'}>
             <img className="w-96 md:w-60" src={logo} alt="" />
           </Link>
         </figure>

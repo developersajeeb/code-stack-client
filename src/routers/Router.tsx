@@ -13,7 +13,6 @@ import ProfileDashboard from "../pages/ProfileDashboard/ProfileDashboard";
 import Summery from "../pages/Summery/Summery";
 import EditProfile from "../pages/EditProfile/EditProfile";
 import ErrorPage from "../pages/ErrorPage/ErrorPage";
-import Main from "../pages/Main/Main";
 import QuestionsDetails from "../components/QuestionsDetails/QuestionsDetails";
 import DashboardLayout from "../Layouts/DashboardLayout";
 import AdminHome from "../pages/Dashboard/AdminHome/AdminHome";
@@ -31,6 +30,7 @@ import Saves from "../pages/Saves/Saves";
 import EditQuestion from "../pages/EditQuestion/EditQuestion";
 import AddPost from "../pages/Dashboard/AddPost/AddPost";
 import AdminRoute from "./AdminRoute";
+import Main from "../pages/Main/Main";
 
 export const router = createBrowserRouter([
   {
@@ -94,7 +94,7 @@ export const router = createBrowserRouter([
         ]
       },
       {
-        path: 'main',
+        path: '/',
         element: <PrivateRoute><Main></Main></PrivateRoute>,
         children: [
           {

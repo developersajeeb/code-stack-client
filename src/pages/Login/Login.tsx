@@ -17,7 +17,7 @@ const Login = () => {
     const location = useLocation();
     const emailRef = useRef<HTMLInputElement>(null);
     const [resetError, setResetError] = useState('');
-    const from = location.state?.from?.pathname || '/main/news-feed';
+    const from = location.state?.from?.pathname || '/ news-feed';
     const [showPassword, setShowPassword] = useState(false);
 
     const authContext = useContext(AuthContext)
@@ -111,7 +111,7 @@ const Login = () => {
                             <p className='flex items-center gap-2'>Login to your account <BiLogInCircle size={20} /></p>
                         )}
                     </button>
-                    <h4 className='text-center text-lg font-semibold text-gray-700'>Or sing In with</h4>
+                    <h4 className='text-center text-lg font-semibold text-gray-700'>Or SignIn with</h4>
                     <SocialLogin></SocialLogin>
                     <Link to='/register'>
                         <div className="font-medium text-gray-400 mt-4 text-center text-sm">

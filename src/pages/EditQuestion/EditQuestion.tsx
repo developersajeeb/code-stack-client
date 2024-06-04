@@ -5,6 +5,7 @@ import 'react-quill/dist/quill.snow.css';
 import { TagsInput } from "react-tag-input-component";
 import { toast, Toaster } from "react-hot-toast";
 import { FaArrowRight } from "react-icons/fa";
+import { Editor, EditorTextChangeEvent } from "primereact/editor";
 
 interface QuestionData {
     _id: '';
@@ -72,7 +73,7 @@ const EditQuestion = () => {
             .then((data) => {
                 if (data.acknowledged) {
                     toast.success('Updated Successfully!');
-                    navigate(`/main/news-feed/${questionData?._id}`)
+                    navigate(`/ news-feed/${questionData?._id}`)
                 } else {
                     toast.error("Error, Please try again!")
                 }
@@ -106,12 +107,7 @@ const EditQuestion = () => {
                             Include all the information someone would need to answer your
                             question
                         </small>
-                        <ReactQuill
-                            value={body}
-                            onChange={handleQuill}
-                            className="react-quill block w-full rounded-md mt-3 h-56"
-                            theme="snow"
-                        />
+                        <Editor className="mt-3" value={body} onTextChange={(e: EditorTextChangeEvent) => setBody(e.htmlValue || '')} style={{ height: '300px' }} />
                     </div>
 
                     <div className="my-6 bg-white border p-4 border-dashed rounded-md shadow">

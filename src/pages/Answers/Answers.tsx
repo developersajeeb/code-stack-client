@@ -87,12 +87,12 @@ const Answers = () => {
                             <div className="flex justify-center">
                                 <p className="text-sm mt-4 text-gray-500 text-center">
                                     <span>Just getting started? Try answering a question!</span>
-                                    <p className="w-full md:w-96 mt-3">Your most helpful questions, answers and tags will appear here. Start by <Link to='/main/ask-question'><span className="ml-1 text-color-second cursor-pointer">answering a question</span></Link> or selecting tags that match topics you’re interested in.</p>
+                                    <p className="w-full md:w-96 mt-3">Your most helpful questions, answers and tags will appear here. Start by <Link to='/ ask-question'><span className="ml-1 text-color-second cursor-pointer">answering a question</span></Link> or selecting tags that match topics you’re interested in.</p>
                                 </p>
                             </div>)
                             :
                             (
-                                allAnswers?.slice(0, visibleAnswers).map(answer => <Link key={answer?._id} to={`/main/news-feed/${answer?.questionID}`}>
+                                allAnswers?.slice(0, visibleAnswers).map(answer => <Link key={answer?._id} to={`/ news-feed/${answer?.questionID}`}>
                                     <p className="border-b flex gap-2 py-2 text-lg text-gray-500 hover:text-[#33B89F] cursor-pointer duration-200 font-normal"><span><IoChatbubblesOutline size={24} /></span> <span dangerouslySetInnerHTML={{
                                         __html: answer && answer.body ? answer.body : ""
                                     }} ></span></p>

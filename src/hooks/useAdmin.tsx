@@ -14,8 +14,8 @@ const useAdmin = () => {
   const { user, loading } = authContext;
   const [axiosSecure] = useAxiosSecure();
   const { data: isAdmin, isLoading: isAdminLoading } = useQuery<boolean>({
-    enabled: !loading && !!user,
     queryKey: ['isAdmin', user?.email],
+    enabled: !loading && !!user,
     queryFn: async () => {
       const res = await axiosSecure.get(`/users/admin/${user?.email}`);
       return res.data.admin;

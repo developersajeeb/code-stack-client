@@ -41,7 +41,7 @@ const Users = () => {
                             <img className="w-14 h-14 object-cover rounded-md" src={member?.imgURL || notUser} alt="user image" />
                         </figure>
                         <div>
-                            <Link to={member?.email == user?.email && `/my-profile/${member?.email}` || `/main/user/${member?.email}`}>
+                            <Link to={member?.email == user?.email && `/my-profile/${member?.email}` || `/ user/${member?.email}`}>
                                 <h3 className="font-medium hover:text-[#33B89F] cursor-pointer text-gray-600 duration-300">{member?.name}</h3>
                             </Link>
                             <p className="text-sm text-gray-400">{member?.country}</p>

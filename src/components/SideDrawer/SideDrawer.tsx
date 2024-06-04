@@ -49,7 +49,7 @@ const SideDrawer = () => {
             <MdPostAdd className="text-lg" />
           </Link>
           <Link
-            to="/main/news-feed"
+            to="/news-feed"
             className="w-full flex items-center gap-2"
           >
             <FaRegNewspaper className="text-lg" />
@@ -77,7 +77,7 @@ const SideDrawer = () => {
             <MdPostAdd className="text-lg" /> Add Post
           </Link>
           <Link
-            to="/main/news-feed"
+            to="/news-feed"
             className="w-full flex items-center gap-2 font-medium">
             <FaRegNewspaper className="text-lg" /> Main Home
           </Link>

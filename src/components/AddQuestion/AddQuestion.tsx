@@ -1,5 +1,4 @@
-import { SetStateAction, useState, useContext } from "react";
-import ReactQuill from "react-quill";
+import { useState, useContext } from "react";
 import 'react-quill/dist/quill.snow.css';
 import { TagsInput } from "react-tag-input-component";
 import { toast, Toaster } from "react-hot-toast";
@@ -8,6 +7,7 @@ import { AuthContext } from "../../Provider/AuthProvider";
 import { useQuery } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
 import { ImSpinner10 } from "react-icons/im";
+import { Editor, EditorTextChangeEvent } from "primereact/editor";
 
 const image_hosting_name = 'ml_default';
 
@@ -31,10 +31,6 @@ const AddQuestion = () => {
         const data = await res.json();
         return data;
     });    
-
-    const handleQuill = (value: SetStateAction<string>) => {
-        setBody(value)
-    }
 
     const questionField = async (event: { preventDefault: () => void; target: any; }) => {
         event.preventDefault();
@@ -72,6 +68,8 @@ const AddQuestion = () => {
             uploadTime,
             likes: []
         }
+        console.log(question);
+        
         fetch('http://localhost:5000/questions', {
             method: 'POST',
             headers: {
@@ -86,7 +84,7 @@ const AddQuestion = () => {
                     refetch()
                     form.reset()
                     toast.success('Added Successfully!');
-                    navigate('/main/news-feed');
+                    navigate('/news-feed');
                 } else {
                     toast.error("Error, Please try again!")
                 }
@@ -116,18 +114,13 @@ const AddQuestion = () => {
                             <input required className="block border-2 w-full px-4 py-2 rounded-md mt-3" type="text" name="title" id="" placeholder="e.g Is there an R function for finding teh index of an element in a vector?" />
                         </div>
 
-                        <div className="bg-white border p-4 pb-16 border-dashed rounded-md shadow">
+                        <div className="bg-white border p-4 border-dashed rounded-md shadow">
                             <h3 className="text-xl font-semibold">Body</h3>
                             <small className="text-gray-400">
                                 Include all the information someone would need to answer your
                                 question
                             </small>
-                            <ReactQuill
-                                value={body}
-                                onChange={handleQuill}
-                                className="react-quill block w-full rounded-md mt-3 h-56"
-                                theme="snow"
-                            />
+                            <Editor className="mt-3" value={body} onTextChange={(e: EditorTextChangeEvent) => setBody(e.htmlValue || '')} style={{ height: '300px' }} />
                         </div>
 
                         <div className="my-6 bg-white border p-4 border-dashed rounded-md shadow">
