@@ -17,14 +17,14 @@ const Login = () => {
     const location = useLocation();
     const emailRef = useRef<HTMLInputElement>(null);
     const [resetError, setResetError] = useState('');
-    const from = location.state?.from?.pathname || '/ news-feed';
+    const from = location.state?.from?.pathname || '/news-feed';
     const [showPassword, setShowPassword] = useState(false);
 
-    const authContext = useContext(AuthContext)
+    const authContext = useContext(AuthContext);
     if (!authContext) {
         return <p>Loading...</p>;
     }
-    const { loading, signIn, ResetPassword } = authContext;
+    const { loading, signIn, ResetPassword, setLoading } = authContext;
 
     const handleLoginUser = (event: { preventDefault: () => void; target: any; }) => {
         event.preventDefault();
@@ -57,14 +57,20 @@ const Login = () => {
             setResetError('Please provide your email for reset!')
             return;
         }
+        setLoading(true);
         ResetPassword(email)
             .then(() => {
-                console.log('done');
+                setLoading(false);
+                Swal.fire(
+                    'Password Reset Email Sent!',
+                    'Please check your email for instructions.',
+                    'success'
+                );
             })
-            .catch(error => {
-                console.log(error);
+            .catch(() => {
+                setLoading(false);
             })
-    }
+    }    
 
     const handleTogglePassword = () => {
         setShowPassword(!showPassword);
@@ -104,13 +110,18 @@ const Login = () => {
                         </div>
                         <a href="#" className="ml-auto text-sm color-one hover:underline" onClick={handleResetPass}>Lost Password?</a>
                     </div>
-                    <button type="submit" className="bg-button w-full flex justify-center">
+                    {loading ? (
+                        <button className="bg-button hover:!bg-[#33B89F] hover:!text-white w-full flex justify-center cursor-default" disabled><ImSpinner10 className='m-auto animate-spin' size={24} /></button>
+                    ):(
+                        <button className="bg-button w-full flex justify-center">Login to your account <BiLogInCircle size={20} /></button>
+                    )}
+                    {/* <button type="submit" className="bg-button w-full flex justify-center">
                         {loading ? (
                             <ImSpinner10 className='m-auto animate-spin' size={24} />
                         ) : (
                             <p className='flex items-center gap-2'>Login to your account <BiLogInCircle size={20} /></p>
                         )}
-                    </button>
+                    </button> */}
                     <h4 className='text-center text-lg font-semibold text-gray-700'>Or SignIn with</h4>
                     <SocialLogin></SocialLogin>
                     <Link to='/register'>

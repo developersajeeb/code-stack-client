@@ -27,10 +27,22 @@ const NavBar = () => {
   const { user, logOut } = authContext;
 
   const { data: userData = [] } = useQuery([user?.email], async () => {
+    if (!user?.email) return [];
     const res = await fetch(`http://localhost:5000/user?email=${user?.email}`);
-    const data = await res.json();
-    return data;
-  });
+    if (!res.ok) {
+      throw new Error('Network response was not ok');
+    }
+    const text = await res.text();
+    if (!text) {
+      return [];
+    }
+    try {
+      const data = JSON.parse(text);
+      return data;
+    } catch (error) {
+      throw new Error('Failed to parse JSON');
+    }
+  });  
 
   return (
     <nav className="shadow-md px-2 py-3 md:px-8 lg:px-32 border-t-4 border-[#33B89F] flex items-center gap-4 md:gap-10 bg-transparent bg-white">

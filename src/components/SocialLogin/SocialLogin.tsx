@@ -2,6 +2,8 @@ import { useContext } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import { AuthContext } from "../../Provider/AuthProvider";
+import googleLogo from '../../assets/icons/google-logo.png';
+import githubLogo from '../../assets/icons/github-logo.png';
 
 
 const SocialLogin = () => {
@@ -11,15 +13,16 @@ const SocialLogin = () => {
     if (!authContext) {
         return <p>Loading...</p>;
     }
-    const { googleSignIn, githubSignIn } = authContext;
+    const { googleSignIn, githubSignIn, setLoading } = authContext;
 
-    const from = location.state?.from?.pathname || '/ news-feed';
+    const from = location.state?.from?.pathname || '/news-feed';
 
     const handleGoogleSingIn = () => {
+        setLoading(true);
         googleSignIn()
             .then((result: { user: any; }) => {
                 console.log(result.user);
-
+    
                 const loggedInUser = result.user;
                 const saveUser = { name: loggedInUser.displayName, email: loggedInUser.email, role: 'normalUser', imgURL: loggedInUser.photoURL }
                 fetch('http://localhost:5000/users', {
@@ -37,15 +40,29 @@ const SocialLogin = () => {
                             'success'
                         )
                         navigate(from, { replace: true });
+                        setLoading(false);
                     })
+                    .catch((error) => {
+                        console.error("Error saving user:", error);
+                        setLoading(false);
+                    });
             })
+            .catch((error) => {
+                // if (error.code === 'auth/popup-closed-by-user') {
+                    
+                // } else {
+                //     console.error("Error during Google sign-in:", error);
+                // }
+                setLoading(false);
+            });
     }
-
+    
     const handleGithubSingIn = () => {
+        setLoading(true);
         githubSignIn()
             .then((result: { user: any; }) => {
                 console.log(result.user);
-
+    
                 const loggedInUser = result.user;
                 const saveUser = { name: loggedInUser.displayName, email: loggedInUser?.email, role: 'user', photo: loggedInUser.photoURL }
                 
@@ -65,13 +82,27 @@ const SocialLogin = () => {
                             'success'
                         )
                         navigate(from, { replace: true });
+                        setLoading(false);
                     })
+                    .catch((error) => {
+                        console.error("Error saving user:", error);
+                        setLoading(false);
+                    });
             })
+            .catch((error) => {
+                // if (error.code === 'auth/popup-closed-by-user') {
+                //     console.log("Popup closed by user");
+                // } else {
+                //     console.error("Error during GitHub sign-in:", error);
+                // }
+                setLoading(false);
+            });
     }
+    
     return (
         <div className='flex gap-5 justify-center'>
-            <img onClick={handleGoogleSingIn} className='w-8 cursor-pointer' src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Google_%22G%22_Logo.svg/2008px-Google_%22G%22_Logo.svg.png" alt="" />
-            <img onClick={handleGithubSingIn} className='w-8 cursor-pointer' src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/91/Octicons-mark-github.svg/2048px-Octicons-mark-github.svg.png" alt="" />
+            <img onClick={handleGoogleSingIn} className='w-8 cursor-pointer' src={googleLogo} alt="" />
+            <img onClick={handleGithubSingIn} className='w-8 cursor-pointer' src={githubLogo} alt="" />
         </div>
     );
 };

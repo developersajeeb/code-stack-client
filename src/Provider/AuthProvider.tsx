@@ -19,6 +19,7 @@ import axios from "axios";
 interface AuthContextType {
   user: User | null;
   loading: boolean;
+  setLoading: (loading: boolean) => void;
   createUser: (email: string, password: string) => Promise<UserCredential>;
   signIn: (email: string, password: string) => Promise<UserCredential>;
   logOut: () => Promise<void>;
@@ -39,7 +40,7 @@ const auth = getAuth(app);
 
 const AuthProviders: React.FC<AuthProviderProps> = ({ children }) => {
   const [user, setUser] = useState<User | null>(null);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState<boolean>(true);
 
   const googleProvider = new GoogleAuthProvider();
   const githubProvider = new GithubAuthProvider();
@@ -110,6 +111,7 @@ const AuthProviders: React.FC<AuthProviderProps> = ({ children }) => {
   const authInfo: AuthContextType = {
     user,
     loading,
+    setLoading,
     createUser,
     signIn,
     logOut,
