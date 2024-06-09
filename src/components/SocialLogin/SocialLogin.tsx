@@ -24,7 +24,7 @@ const SocialLogin = () => {
                 console.log(result.user);
     
                 const loggedInUser = result.user;
-                const saveUser = { name: loggedInUser.displayName, email: loggedInUser.email, role: 'normalUser', imgURL: loggedInUser.photoURL }
+                const saveUser = { name: loggedInUser.displayName, email: loggedInUser.email, role: 'normalUser', imgURL: loggedInUser.photoURL, entryPoint: 'google' }
                 fetch('http://localhost:5000/users', {
                     method: 'POST',
                     headers: {
@@ -64,7 +64,7 @@ const SocialLogin = () => {
                 console.log(result.user);
     
                 const loggedInUser = result.user;
-                const saveUser = { name: loggedInUser.displayName, email: loggedInUser?.email, role: 'user', photo: loggedInUser.photoURL }
+                const saveUser = { name: loggedInUser.displayName, email: loggedInUser?.email, role: 'user', photo: loggedInUser.photoURL, entryPoint: 'google' }
                 
                 fetch('http://localhost:5000/users', {
                     method: 'POST',

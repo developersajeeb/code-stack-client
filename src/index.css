@@ -85,3 +85,37 @@ pre.ql-syntax::-webkit-scrollbar-thumb {
 ::-webkit-scrollbar-thumb:hover {
   background: #555; /* Thumb color on hover */
 }
+
+.cs-button {
+  @apply !bg-[#33B89F] !duration-300 !border-none !px-9 !py-[10px] !rounded-md !font-normal; 
+  box-shadow: none !important;
+}
+
+
+/* Prime React Input */
+.p-inputtext {
+  padding: 8px 15px 8px 15px !important;
+}
+
+.p-inputwrapper {
+  width: 100% !important;
+}
+
+.p-password.p-input-icon-right i{
+  top: 16px !important;
+  cursor: pointer !important;
+}
+
+.p-password-input {
+  width: 100% !important;
+  padding: 8px 35px 8px 15px !important;
+}
+
+.p-inputtext:enabled:hover {
+    border-color: #33B89F !important;
+}
+
+.p-inputtext:enabled:focus {
+    box-shadow: none !important;
+    border-color: #33B89F !important;
+}

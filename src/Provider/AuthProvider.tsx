@@ -100,7 +100,7 @@ const AuthProviders: React.FC<AuthProviderProps> = ({ children }) => {
             localStorage.setItem("access-token", data.data.token);
           });
       } else {
-        // localStorage.removeItem("access-token");
+        localStorage.removeItem("access-token");
       }
     });
     return () => {

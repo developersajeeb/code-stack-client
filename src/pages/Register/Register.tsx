@@ -11,6 +11,8 @@ import { BsPersonAdd } from "react-icons/bs";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import Lottie from 'lottie-react'
 import animation from '../../assets/animation/reg.json'
+import { InputText } from "primereact/inputtext";
+import { Controller } from "react-hook-form";
 
 const image_hosting_token = import.meta.env.VITE_Problem_Image_Name;
 
@@ -23,6 +25,7 @@ const Register = () => {
     const { createUser, updateUserProfile, loading } = authContext;
     const navigate = useNavigate();
     const [isUsernameValid, setIsUsernameValid] = useState('');
+    const [message, setMessage] = useState('');
     const [image, setImage] = useState<File | null>(null);
     const img_hosting_url = `https://api.imgbb.com/1/upload?key=${image_hosting_token}`;
 
@@ -33,6 +36,7 @@ const Register = () => {
             const response = await fetch(`http://localhost:5000/check-username?username=${newUsername}`);
             const data = await response.json();
 
+            setMessage(data.message);
             setIsUsernameValid(data.message);
         } catch (error) {
             console.error("Error checking username:", error);
@@ -47,6 +51,7 @@ const Register = () => {
         const email = form.email.value;
         const password = form.password.value;
         const role = 'normalUser';
+        const entryPoint = 'manually';
 
 
         createUser(email, password)
@@ -63,13 +68,13 @@ const Register = () => {
                                 const response = await fetch(img_hosting_url, {
                                     method: 'POST',
                                     body: formData
-                                });                                
+                                });
 
                                 const imgResponse = await response.json();
                                 if (imgResponse.success) {
                                     const imgURL = imgResponse.data.display_url;
                                     console.log(imgURL, role);
-                                    const saveUser = { name, username, email, imgURL, password, role }
+                                    const saveUser = { name, username, email, imgURL, password, role, entryPoint }
                                     fetch('http://localhost:5000/users', {
                                         method: 'POST',
                                         headers: {
@@ -114,7 +119,27 @@ const Register = () => {
                         <div>
                             <label htmlFor="username" className="block mb-2 font-medium text-gray-900">Username<span className="text-red-500"> *</span></label>
                             <input onChange={handleUsernameChange} type="text" name="username" id="username" className="border border-gray-300 text-gray-900 text-sm rounded-md block w-full p-3" placeholder="your username" required></input>
-                            <p className="text-sm ml-0.5">{isUsernameValid}</p>
+                            <p className={`${isUsernameValid ? 'text-green-500' : 'text-red-500'} text-sm ml-0.5`}>{message}</p>
+
+                            {/* <Controller
+                                name="username"
+                                control={control}
+                                defaultValue=""
+                                render={({ field }) => (
+                                    <InputText
+                                        {...field}
+                                        onChange={(e) => {
+                                            field.onChange(e);
+                                            handleUsernameChange(e.target.value);
+                                        }}
+                                        id="username"
+                                        className={`border border-gray-300 text-gray-900 text-sm rounded-md block w-full p-3 ${errors.username ? 'p-invalid' : ''
+                                            }`}
+                                        placeholder="your username"
+                                        required
+                                    />
+                                )}
+                            /> */}
                         </div>
                         <div>
                             <label htmlFor="name" className="block mb-2 font-medium text-gray-900">Your Name<span className="text-red-500"> *</span></label>
