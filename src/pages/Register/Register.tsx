@@ -1,6 +1,6 @@
 //TODO: Implement Formik Form Validation
 
-import { useContext, useState } from "react";
+import { useContext, useRef, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import { AuthContext } from "../../Provider/AuthProvider";
@@ -12,12 +12,21 @@ import { FaEye, FaEyeSlash } from "react-icons/fa";
 import Lottie from 'lottie-react'
 import animation from '../../assets/animation/reg.json'
 import { InputText } from "primereact/inputtext";
-import { Controller } from "react-hook-form";
+import { Controller, SubmitHandler, useForm } from "react-hook-form";
+import { Password } from "primereact/password";
+import { ErrorMessage } from "@hookform/error-message";
+import { Button } from "primereact/button";
+
+interface IFormInput {
+    username: string;
+    name: string;
+    email: string;
+    password: string;
+}
 
 const image_hosting_token = import.meta.env.VITE_Problem_Image_Name;
 
 const Register = () => {
-    const [showPassword, setShowPassword] = useState(false);
     const authContext = useContext(AuthContext)
     if (!authContext) {
         return <p>Loading...</p>;
@@ -28,10 +37,12 @@ const Register = () => {
     const [message, setMessage] = useState('');
     const [image, setImage] = useState<File | null>(null);
     const img_hosting_url = `https://api.imgbb.com/1/upload?key=${image_hosting_token}`;
+    const [isFormBtnLoading, setIsFormBtnLoading] = useState<boolean>(false);
+    const [loginError, setLoginError] = useState<string>('');
+    const [isTyping, setIsTyping] = useState<boolean>(false);
+    const typingTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
-    const handleUsernameChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
-        const newUsername = event.target.value;
-
+    const handleUsernameChange = async (newUsername: string) => {
         try {
             const response = await fetch(`http://localhost:5000/check-username?username=${newUsername}`);
             const data = await response.json();
@@ -43,74 +54,144 @@ const Register = () => {
         }
     };
 
-    const handleRegister = (event: { preventDefault: () => void; target: any; }) => {
-        event.preventDefault();
-        const form = event.target;
-        const username = form.username.value;
-        const name = form.name.value;
-        const email = form.email.value;
-        const password = form.password.value;
+    const onUsernameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const newUsername = e.target.value;
+        setIsTyping(true);
+
+        if (typingTimeoutRef.current) {
+            clearTimeout(typingTimeoutRef.current);
+        }
+
+        typingTimeoutRef.current = setTimeout(() => {
+            handleUsernameChange(newUsername);
+            setIsTyping(false);
+        }, 500)
+    };
+
+    const { register, control, handleSubmit, formState: { errors } } = useForm<IFormInput>();
+
+    const onSubmit: SubmitHandler<IFormInput> = async (data) => {
+        setIsFormBtnLoading(true);
+        setLoginError('');
+
+        const { username, name, email, password } = data;
         const role = 'normalUser';
         const entryPoint = 'manually';
 
+        try {
+            await createUser(email, password);
+            await updateUserProfile(email, password);
 
-        createUser(email, password)
-            .then(() => {
+            if (image) {
+                const formData = new FormData();
+                formData.append('image', image);
 
-                updateUserProfile(email, password)
-                    .then(async () => {
+                const response = await fetch(img_hosting_url, {
+                    method: 'POST',
+                    body: formData
+                });
 
-                        if (image) {
-                            const formData = new FormData();
-                            formData.append('image', image);
+                const imgResponse = await response.json();
+                if (imgResponse.success) {
+                    const imgURL = imgResponse.data.display_url;
+                    const saveUser = { name, username, email, imgURL, password, role, entryPoint };
 
-                            try {
-                                const response = await fetch(img_hosting_url, {
-                                    method: 'POST',
-                                    body: formData
-                                });
+                    const result = await fetch('http://localhost:5000/users', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify(saveUser)
+                    });
 
-                                const imgResponse = await response.json();
-                                if (imgResponse.success) {
-                                    const imgURL = imgResponse.data.display_url;
-                                    console.log(imgURL, role);
-                                    const saveUser = { name, username, email, imgURL, password, role, entryPoint }
-                                    fetch('http://localhost:5000/users', {
-                                        method: 'POST',
-                                        headers: {
-                                            'content-type': 'application/json'
-                                        },
-                                        body: JSON.stringify(saveUser)
-                                    })
-                                        .then(result => result.json())
-                                        .then(() => {
-                                            Swal.fire(
-                                                'Successful Register!',
-                                                'You have successfully Register.',
-                                                'success'
-                                            )
-                                            navigate('/ news-feed');
-                                        })
-                                }
-                            } catch (error) {
-                                console.error("Error uploading image:", error);
-                            }
-                        }
-                    })
-            })
-            .catch(() => {
-
-            })
-    }
-
-    const handleTogglePassword = () => {
-        setShowPassword(!showPassword);
+                    await result.json();
+                    Swal.fire(
+                        'Successful Register!',
+                        'You have successfully registered.',
+                        'success'
+                    );
+                    navigate('/news-feed');
+                }
+            } else {
+                Swal.fire(
+                    'Successful Register!',
+                    'You have successfully registered.',
+                    'success'
+                );
+                navigate('/news-feed');
+            }
+        } catch (error) {
+            console.error('Error:', error);
+            setLoginError('Registration failed');
+        } finally {
+            setIsFormBtnLoading(false);
+        }
     };
+
+    // const handleRegister = (event: { preventDefault: () => void; target: any; }) => {
+    //     event.preventDefault();
+    //     const form = event.target;
+    //     const username = form.username.value;
+    //     const name = form.name.value;
+    //     const email = form.email.value;
+    //     const password = form.password.value;
+    //     const role = 'normalUser';
+    //     const entryPoint = 'manually';
+
+
+    //     createUser(email, password)
+    //         .then(() => {
+
+    //             updateUserProfile(email, password)
+    //                 .then(async () => {
+
+    //                     if (image) {
+    //                         const formData = new FormData();
+    //                         formData.append('image', image);
+
+    //                         try {
+    //                             const response = await fetch(img_hosting_url, {
+    //                                 method: 'POST',
+    //                                 body: formData
+    //                             });
+
+    //                             const imgResponse = await response.json();
+    //                             if (imgResponse.success) {
+    //                                 const imgURL = imgResponse.data.display_url;
+    //                                 console.log(imgURL, role);
+    //                                 const saveUser = { name, username, email, imgURL, password, role, entryPoint }
+    //                                 fetch('http://localhost:5000/users', {
+    //                                     method: 'POST',
+    //                                     headers: {
+    //                                         'content-type': 'application/json'
+    //                                     },
+    //                                     body: JSON.stringify(saveUser)
+    //                                 })
+    //                                     .then(result => result.json())
+    //                                     .then(() => {
+    //                                         Swal.fire(
+    //                                             'Successful Register!',
+    //                                             'You have successfully Register.',
+    //                                             'success'
+    //                                         )
+    //                                         navigate('/ news-feed');
+    //                                     })
+    //                             }
+    //                         } catch (error) {
+    //                             console.error("Error uploading image:", error);
+    //                         }
+    //                     }
+    //                 })
+    //         })
+    //         .catch(() => {
+
+    //         })
+    // }
 
     return (
         <main className='grid md:grid-cols-2' data-aos="fade-up">
             <div className="py-16 lg:py-28 px-4 lg:px-32">
-                <form className="space-y-6" onSubmit={handleRegister}>
+                <form className="space-y-6" onSubmit={handleSubmit(onSubmit)}>
                     <div>
                         <h5 className="text-3xl font-semibold text-gray-900">Registration</h5>
                         <p className='text-gray-500 mt-1'>Solve your problems and errors from this beautiful community!</p>
@@ -118,41 +199,51 @@ const Register = () => {
                     <div className="grid grid-cols-2 gap-6">
                         <div>
                             <label htmlFor="username" className="block mb-2 font-medium text-gray-900">Username<span className="text-red-500"> *</span></label>
-                            <input onChange={handleUsernameChange} type="text" name="username" id="username" className="border border-gray-300 text-gray-900 text-sm rounded-md block w-full p-3" placeholder="your username" required></input>
-                            <p className={`${isUsernameValid ? 'text-green-500' : 'text-red-500'} text-sm ml-0.5`}>{message}</p>
-
-                            {/* <Controller
+                            <Controller
                                 name="username"
                                 control={control}
-                                defaultValue=""
+                                rules={{ required: 'Username is required' }}
                                 render={({ field }) => (
-                                    <InputText
-                                        {...field}
-                                        onChange={(e) => {
-                                            field.onChange(e);
-                                            handleUsernameChange(e.target.value);
-                                        }}
-                                        id="username"
-                                        className={`border border-gray-300 text-gray-900 text-sm rounded-md block w-full p-3 ${errors.username ? 'p-invalid' : ''
-                                            }`}
-                                        placeholder="your username"
-                                        required
-                                    />
+                                    <>
+                                        <InputText
+                                            {...field}
+                                            onChange={(e) => {
+                                                field.onChange(e);
+                                                onUsernameChange(e);
+                                            }}
+                                            id="username"
+                                            className={`!border !border-gray-300 !text-gray-900 !text-sm !rounded-md !block !w-full !px-3 !py-4 !h-[41px]`}
+                                            placeholder="Your username"
+                                        />
+                                        {!isTyping && field.value && (
+                                            <p className={`${isUsernameValid ? 'text-green-500' : 'text-red-500'} text-sm ml-0.5`}>{message}</p>
+                                        )}
+                                        <ErrorMessage errors={errors} name="username" as={<p className="text-red-500 text-sm" />} />
+                                    </>
                                 )}
-                            /> */}
+                            />
                         </div>
                         <div>
                             <label htmlFor="name" className="block mb-2 font-medium text-gray-900">Your Name<span className="text-red-500"> *</span></label>
-                            <input type="text" name="name" id="name" className="border border-gray-300 text-gray-900 text-sm rounded-md block w-full p-3" placeholder="your name" required></input>
+                            <InputText
+                                {...register('name', { required: 'Your name is required' })} placeholder="Name"
+                                className='!w-full'
+                            />
+                            <ErrorMessage errors={errors} name="name" as={<p className="text-red-500 text-sm" />} />
                         </div>
                     </div>
                     <div>
                         <label htmlFor="email" className="block mb-2 font-medium text-gray-900">Your Email<span className="text-red-500"> *</span></label>
-                        <input type="email" name="email" id="email" className="border border-gray-300 text-gray-900 text-sm rounded-md block w-full p-3" placeholder="name@mail.com" required></input>
+                        <InputText
+                            {...register('email', { required: 'Email is required', pattern: { value: /^\S+@\S+$/i, message: 'Invalid email address' } })}
+                            className='!w-full'
+                        />
+                        <ErrorMessage errors={errors} name="email" as={<p className="text-red-500 text-sm" />} />
                     </div>
                     <div>
                         <label htmlFor="profilePhoto" className="block mb-2 font-medium text-gray-900">Upload Your Photo</label>
                         <input className="cursor-pointer file:cursor-pointer relative m-0 block w-full min-w-0 rounded-md border py-3 px-5 transition duration-300 ease-in-out file:-mx-3 file:-my-[0.32rem] file:overflow-hidden file:border-0 file:border-solid file:border-inherit file:px-3 file:py-[0.32rem] file:text-neutral-700 file:transition file:duration-150 file:ease-in-out file:[margin-inline-end:0.75rem] hover:file:bg-[#5138EE] hover:file:text-white border-gray-300 file:bg-indigo-50 file:font-medium file:rounded-md" type="file" name="profilePhoto" id="profilePhoto"
+                            accept="image/*"
                             onChange={(e) => {
                                 const selectedFile = e.target.files?.[0];
                                 if (selectedFile) {
@@ -162,20 +253,33 @@ const Register = () => {
                     </div>
                     <div>
                         <label htmlFor="password" className="block mb-2 font-medium text-gray-900">Your Password<span className="text-red-500"> *</span></label>
-                        <div className='flex items-center'>
-                            <input type={showPassword ? "text" : "password"} name="password" id="password" placeholder="••••••••" className="border border-gray-300 text-gray-900 text-sm rounded-md block w-full p-3" required></input>
-                            <span className="-ml-8 cursor-pointer text-gray-500" onClick={handleTogglePassword}>
-                                {showPassword ? <FaEyeSlash /> : <FaEye />}
-                            </span>
+                        <div>
+                            <Controller
+                                name="password"
+                                control={control}
+                                rules={{ required: 'Password is required' }}
+                                render={({ field }) => (
+                                    <Password
+                                        {...field}
+                                        feedback={true}
+                                        toggleMask
+                                        promptLabel="Choose a password" weakLabel="Too simple" mediumLabel="Average complexity" strongLabel="Complex password"
+                                    />
+                                )}
+                            />
+                            <ErrorMessage errors={errors} name="password" as={<p className="text-red-500 text-sm" />} />
+                            {loginError && <p className="text-red-500 text-sm">{loginError}</p>}
                         </div>
                     </div>
-                    <button type="submit" className="bg-button w-full flex justify-center" disabled={isUsernameValid === 'Username already exists!'}>
-                        {loading ? (
-                            <ImSpinner10 className='m-auto animate-spin' size={24} />
-                        ) : (
-                            <p className='flex items-center gap-2'>Register to your account <BsPersonAdd size={18} /></p>
-                        )}
-                    </button>
+                    <Button
+                        type="submit"
+                        label="Register to your account"
+                        icon="pi-user-plus"
+                        iconPos="right"
+                        disabled={isFormBtnLoading}
+                        loading={isFormBtnLoading}
+                        className='w-full cs-button'
+                    />
                     <h4 className='text-center text-lg font-semibold text-gray-700'>Or SignUp With</h4>
                     <SocialLogin></SocialLogin>
                     <Link to='/login'>
