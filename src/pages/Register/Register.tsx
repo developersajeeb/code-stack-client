@@ -1,21 +1,16 @@
-//TODO: Implement Formik Form Validation
-
 import { useContext, useRef, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import { AuthContext } from "../../Provider/AuthProvider";
 import SocialLogin from "../../components/SocialLogin/SocialLogin";
-import { ImSpinner10 } from "react-icons/im";
-import bg from '../../assets/others/logreg.jpg'
-import { BsPersonAdd } from "react-icons/bs";
-import { FaEye, FaEyeSlash } from "react-icons/fa";
-import Lottie from 'lottie-react'
-import animation from '../../assets/animation/reg.json'
+import regImg from '../../assets/others/regpage.png'
 import { InputText } from "primereact/inputtext";
 import { Controller, SubmitHandler, useForm } from "react-hook-form";
 import { Password } from "primereact/password";
 import { ErrorMessage } from "@hookform/error-message";
 import { Button } from "primereact/button";
+import toast, { Toaster } from "react-hot-toast";
+import { FirebaseError } from "firebase/app";
 
 interface IFormInput {
     username: string;
@@ -24,30 +19,34 @@ interface IFormInput {
     password: string;
 }
 
-const image_hosting_token = import.meta.env.VITE_Problem_Image_Name;
+const image_hosting_token = import.meta.env.VITE_Image_API;
 
 const Register = () => {
     const authContext = useContext(AuthContext)
     if (!authContext) {
         return <p>Loading...</p>;
     }
-    const { createUser, updateUserProfile, loading } = authContext;
+    const { createUser, updateUserProfile } = authContext;
     const navigate = useNavigate();
     const [isUsernameValid, setIsUsernameValid] = useState('');
-    const [message, setMessage] = useState('');
     const [image, setImage] = useState<File | null>(null);
     const img_hosting_url = `https://api.imgbb.com/1/upload?key=${image_hosting_token}`;
     const [isFormBtnLoading, setIsFormBtnLoading] = useState<boolean>(false);
     const [loginError, setLoginError] = useState<string>('');
     const [isTyping, setIsTyping] = useState<boolean>(false);
     const typingTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+    const [emailUserError, setEmailUserError] = useState<string>('');
+
+    const footer = (
+        <>
+            <p className="mt-2">Minimum 6 characters</p>
+        </>)
 
     const handleUsernameChange = async (newUsername: string) => {
         try {
             const response = await fetch(`http://localhost:5000/check-username?username=${newUsername}`);
             const data = await response.json();
 
-            setMessage(data.message);
             setIsUsernameValid(data.message);
         } catch (error) {
             console.error("Error checking username:", error);
@@ -67,130 +66,96 @@ const Register = () => {
             setIsTyping(false);
         }, 500)
     };
+    
+    function isFirebaseError(error: unknown): error is FirebaseError {
+        return (error as FirebaseError).code !== undefined;
+    }
 
     const { register, control, handleSubmit, formState: { errors } } = useForm<IFormInput>();
-
     const onSubmit: SubmitHandler<IFormInput> = async (data) => {
         setIsFormBtnLoading(true);
         setLoginError('');
+        setEmailUserError('');
 
         const { username, name, email, password } = data;
         const role = 'normalUser';
         const entryPoint = 'manually';
 
         try {
+
+            if (isUsernameValid === 'Username already exists!') {
+                toast('Username already exists!', {
+                    icon: '❌',
+                });
+                setIsFormBtnLoading(false);
+                return;
+            }
+
             await createUser(email, password);
-            await updateUserProfile(email, password);
+
+            let imgURL = '';
 
             if (image) {
                 const formData = new FormData();
                 formData.append('image', image);
 
-                const response = await fetch(img_hosting_url, {
+                const imgResponse = await fetch(img_hosting_url, {
                     method: 'POST',
-                    body: formData
+                    body: formData,
+                    headers: { 'Accept': 'application/json' },
                 });
 
-                const imgResponse = await response.json();
-                if (imgResponse.success) {
-                    const imgURL = imgResponse.data.display_url;
-                    const saveUser = { name, username, email, imgURL, password, role, entryPoint };
+                const imgResult = await imgResponse.json();
 
-                    const result = await fetch('http://localhost:5000/users', {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json'
-                        },
-                        body: JSON.stringify(saveUser)
-                    });
-
-                    await result.json();
-                    Swal.fire(
-                        'Successful Register!',
-                        'You have successfully registered.',
-                        'success'
-                    );
-                    navigate('/news-feed');
+                if (imgResult.success) {
+                    imgURL = imgResult.data.display_url;
+                } else {
+                    throw new Error('Image upload failed');
                 }
-            } else {
-                Swal.fire(
-                    'Successful Register!',
-                    'You have successfully registered.',
-                    'success'
-                );
+            }
+
+            await updateUserProfile(name, imgURL || '');
+            const saveUser = { name, username, email, imgURL, password, role, entryPoint };
+
+            const userResponse = await fetch('http://localhost:5000/users', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(saveUser),
+            });
+
+            const userResult = await userResponse.json();
+
+            if (userResult.insertedId) {
+                Swal.fire('Successful Register!', 'You have successfully registered.', 'success');
                 navigate('/news-feed');
+            } else {
+                Swal.fire('Registration Failed', userResult.message || 'Something went wrong.', 'error');
             }
         } catch (error) {
             console.error('Error:', error);
-            setLoginError('Registration failed');
+            if (isFirebaseError(error) && error.code === 'auth/email-already-in-use') {
+                toast('Email already in use!', {
+                    icon: '❌',
+                });
+                setEmailUserError('Email already in use!');
+            } else {
+                setLoginError('Registration failed');
+                toast('Registration failed. Please try again.', {
+                    icon: '❌',
+                });
+            }
         } finally {
             setIsFormBtnLoading(false);
         }
     };
 
-    // const handleRegister = (event: { preventDefault: () => void; target: any; }) => {
-    //     event.preventDefault();
-    //     const form = event.target;
-    //     const username = form.username.value;
-    //     const name = form.name.value;
-    //     const email = form.email.value;
-    //     const password = form.password.value;
-    //     const role = 'normalUser';
-    //     const entryPoint = 'manually';
-
-
-    //     createUser(email, password)
-    //         .then(() => {
-
-    //             updateUserProfile(email, password)
-    //                 .then(async () => {
-
-    //                     if (image) {
-    //                         const formData = new FormData();
-    //                         formData.append('image', image);
-
-    //                         try {
-    //                             const response = await fetch(img_hosting_url, {
-    //                                 method: 'POST',
-    //                                 body: formData
-    //                             });
-
-    //                             const imgResponse = await response.json();
-    //                             if (imgResponse.success) {
-    //                                 const imgURL = imgResponse.data.display_url;
-    //                                 console.log(imgURL, role);
-    //                                 const saveUser = { name, username, email, imgURL, password, role, entryPoint }
-    //                                 fetch('http://localhost:5000/users', {
-    //                                     method: 'POST',
-    //                                     headers: {
-    //                                         'content-type': 'application/json'
-    //                                     },
-    //                                     body: JSON.stringify(saveUser)
-    //                                 })
-    //                                     .then(result => result.json())
-    //                                     .then(() => {
-    //                                         Swal.fire(
-    //                                             'Successful Register!',
-    //                                             'You have successfully Register.',
-    //                                             'success'
-    //                                         )
-    //                                         navigate('/ news-feed');
-    //                                     })
-    //                             }
-    //                         } catch (error) {
-    //                             console.error("Error uploading image:", error);
-    //                         }
-    //                     }
-    //                 })
-    //         })
-    //         .catch(() => {
-
-    //         })
-    // }
-
     return (
-        <main className='grid md:grid-cols-2' data-aos="fade-up">
-            <div className="py-16 lg:py-28 px-4 lg:px-32">
+        <main className='grid md:grid-cols-2 max-w-[1320px] mx-auto px-4' data-aos="fade-up">
+            <Toaster
+                position="top-center"
+                reverseOrder={false}
+            />
+            <div className="py-10 md:py-16 lg:py-20 md:pr-5 xl:pr-20">
                 <form className="space-y-6" onSubmit={handleSubmit(onSubmit)}>
                     <div>
                         <h5 className="text-3xl font-semibold text-gray-900">Registration</h5>
@@ -216,7 +181,7 @@ const Register = () => {
                                             placeholder="Your username"
                                         />
                                         {!isTyping && field.value && (
-                                            <p className={`${isUsernameValid ? 'text-green-500' : 'text-red-500'} text-sm ml-0.5`}>{message}</p>
+                                            <p className={`${isUsernameValid === 'Username already exists!' ? 'text-red-500' : 'text-green-500'} text-sm ml-0.5`}>{isUsernameValid}</p>
                                         )}
                                         <ErrorMessage errors={errors} name="username" as={<p className="text-red-500 text-sm" />} />
                                     </>
@@ -239,6 +204,7 @@ const Register = () => {
                             className='!w-full'
                         />
                         <ErrorMessage errors={errors} name="email" as={<p className="text-red-500 text-sm" />} />
+                        {emailUserError && <p className="text-red-500 text-sm">{emailUserError}</p>}
                     </div>
                     <div>
                         <label htmlFor="profilePhoto" className="block mb-2 font-medium text-gray-900">Upload Your Photo</label>
@@ -263,6 +229,7 @@ const Register = () => {
                                         {...field}
                                         feedback={true}
                                         toggleMask
+                                        footer={footer}
                                         promptLabel="Choose a password" weakLabel="Too simple" mediumLabel="Average complexity" strongLabel="Complex password"
                                     />
                                 )}
@@ -289,10 +256,8 @@ const Register = () => {
                     </Link>
                 </form>
             </div>
-            <div className='bg-cover py-20 px-4 md:p-6 lg:px-24 lg:py-28' style={{ backgroundImage: `url(${bg})` }}>
-                <div className='backdrop-blur-lg bg-white/25 rounded-lg h-full border-2 border-gray-200 flex items-center'>
-                    <Lottie className='w-full' animationData={animation} loop={true} />
-                </div>
+            <div className="bg-gray-100 p-8 lg:p-16 my-5 md:my-10 rounded-xl flex justify-center items-center">
+                <img className="w-full" src={regImg} alt="Register Image" />
             </div>
         </main>
     );

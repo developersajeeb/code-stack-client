@@ -6,11 +6,9 @@ import SocialLogin from '../../components/SocialLogin/SocialLogin';
 import { Button } from 'primereact/button';
 import { Password } from 'primereact/password';
 import { InputText } from 'primereact/inputtext';
-import Lottie from 'lottie-react';
-import bg from '../../assets/others/logreg.jpg';
-import animation from '../../assets/animation/login.json';
 import { useForm, SubmitHandler, Controller } from 'react-hook-form';
 import { ErrorMessage } from '@hookform/error-message';
+import logImg from '../../assets/others/loginpage.png'
 
 interface IFormInput {
     email: string;
@@ -106,9 +104,9 @@ const Login = () => {
     };
 
     return (
-        <main className='grid md:grid-cols-2' data-aos="fade-up">
-            <div className="py-16 lg:py-28 px-4 lg:px-32">
-                <form className="space-y-6 bg-white rounded-lg sm:p-6 md:p-8" onSubmit={handleSubmit(onSubmit)}>
+        <main className='grid md:grid-cols-2 max-w-[1320px] mx-auto px-4' data-aos="fade-up">
+            <div className="py-10 md:py-16 lg:py-20 md:pr-5 xl:pr-20">
+                <form className="space-y-6" onSubmit={handleSubmit(onSubmit)}>
                     <div>
                         <h5 className="text-3xl font-semibold text-gray-900">LogIn</h5>
                         <p className='text-gray-500 mt-1'>We are glad to see you again!</p>
@@ -168,10 +166,8 @@ const Login = () => {
                     </Link>
                 </form>
             </div>
-            <div className='bg-cover py-20 px-4 md:p-6 lg:px-24 lg:py-28' style={{ backgroundImage: `url(${bg})` }}>
-                <div className='backdrop-blur-lg bg-white/25 rounded-lg h-full border-2 border-gray-200 flex items-center'>
-                    <Lottie className='w-full' animationData={animation} loop={true} />
-                </div>
+            <div className="bg-gray-100 p-8 lg:p-16 my-5 md:my-10 rounded-xl flex justify-center items-center">
+                <img className="w-full" src={logImg} alt="Login Image" />
             </div>
         </main>
     );
