@@ -1,6 +1,6 @@
 import { FaArrowRight } from "react-icons/fa";
 import { TagsInput } from "react-tag-input-component";
-import { useState, useContext } from "react";
+import { useState, useContext, useEffect } from "react";
 import { Toaster, toast } from "react-hot-toast";
 import { AuthContext } from "../../Provider/AuthProvider";
 import { useQuery } from "@tanstack/react-query";
@@ -21,8 +21,8 @@ const EditProfile = () => {
         const data = await res.json();
         return data;
     });
-    
-    const [selected, setSelected] = useState(userData?.selected);
+
+    const [selected, setSelected] = useState<string[]>([]);
 
     const handleUpdateDetails = async (event: { preventDefault: () => void; target: any; }) => {
 
@@ -70,6 +70,12 @@ const EditProfile = () => {
                 }
             })
     }
+
+    useEffect(() => {
+        if (userData && userData.selected) {
+            setSelected(userData.selected);
+        }
+    }, [userData]);
 
     return (
         <main>

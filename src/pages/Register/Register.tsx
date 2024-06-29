@@ -49,7 +49,7 @@ const Register = () => {
 
             setIsUsernameValid(data.message);
         } catch (error) {
-            console.error("Error checking username:", error);
+            
         }
     };
 
@@ -66,7 +66,7 @@ const Register = () => {
             setIsTyping(false);
         }, 500)
     };
-    
+
     function isFirebaseError(error: unknown): error is FirebaseError {
         return (error as FirebaseError).code !== undefined;
     }
@@ -132,7 +132,6 @@ const Register = () => {
                 Swal.fire('Registration Failed', userResult.message || 'Something went wrong.', 'error');
             }
         } catch (error) {
-            console.error('Error:', error);
             if (isFirebaseError(error) && error.code === 'auth/email-already-in-use') {
                 toast('Email already in use!', {
                     icon: '❌',
@@ -223,7 +222,13 @@ const Register = () => {
                             <Controller
                                 name="password"
                                 control={control}
-                                rules={{ required: 'Password is required' }}
+                                rules={{
+                                    required: 'Password is required',
+                                    minLength: {
+                                        value: 6,
+                                        message: 'Password must be at least 6 characters long'
+                                    }
+                                }}
                                 render={({ field }) => (
                                     <Password
                                         {...field}

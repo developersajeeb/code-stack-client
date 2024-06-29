@@ -16,19 +16,13 @@ const ProfileDashboard = () => {
         const res = await fetch(`http://localhost:5000/user?email=${user?.email}`);
         const data = await res.json();
         return data;
-    });
+    });    
 
     return (
         <main>
             <section>
                 <h3 className='bg-indigo-50 px-5 py-2 text-gray-600 rounded-md font-medium text-lg inline-block'>About</h3>
-                <p className="mt-4">
-                    <span className="text-gray-500">
-                        {
-                            userData?.aboutMe || <p className="text-center font-medium">Your about me section is currently blank.</p>
-                        }
-                    </span>
-                </p>
+                <p className="mt-4 text-sm text-gray-800 font-medium">{userData?.aboutMe || 'N/A'}</p>
             </section>
             <div className="divider text-color-second"><AiOutlineArrowDown size={40} /></div>
             <section className="my-6">
@@ -36,23 +30,23 @@ const ProfileDashboard = () => {
                 <div className="flex flex-wrap gap-14 mt-6">
                     <div>
                         <span className="text-gray-400 text-sm font-normal">Email</span>
-                        <p className="font-medium">{userData?.email}</p>
+                        <p className="text-sm text-gray-800 font-medium">{userData?.email}</p>
                     </div>
                     <div>
                         <span className="text-gray-400 text-sm font-normal">Your Age</span>
-                        <p className="font-medium">{userData?.age || 'Age is blank'}</p>
+                        <p className="text-sm text-gray-800 font-medium">{userData?.age || 'N/A'}</p>
                     </div>
                     <div>
                         <span className="text-gray-400 text-sm font-normal">Gender</span>
-                        <p className="font-medium">{userData?.gender || 'Gender is blank'}</p>
+                        <p className="text-sm text-gray-800 font-medium">{userData?.gender || 'N/A'}</p>
                     </div>
                     <div>
                         <span className="text-gray-400 text-sm font-normal">Country</span>
-                        <p className="font-medium">{userData?.country || 'Country is blank'}</p>
+                        <p className="text-sm text-gray-800 font-medium">{userData?.country || 'N/A'}</p>
                     </div>
                     <div>
                         <span className="text-gray-400 text-sm font-normal">City</span>
-                        <p className="font-medium">{userData?.city || 'City is blank'}</p>
+                        <p className="text-sm text-gray-800 font-medium">{userData?.city || 'N/A'}</p>
                     </div>
                 </div>
             </section>
@@ -60,10 +54,10 @@ const ProfileDashboard = () => {
             <section className="mb-6">
                 <h3 className='bg-indigo-50 px-5 py-2 text-gray-600 rounded-md font-medium text-lg inline-block'>Skills</h3>
                 <div className="mt-6 flex flex-wrap items-center gap-4">
-                    { userData ?
-                        userData?.selected?.map((skill: any) => <p className="border-2 text-gray-500 inline-block py-1 px-3 rounded-full">{skill}</p>)
+                    { userData?.selected ?
+                        userData?.selected?.map((skill: any) => <p className="border-2 text-gray-500 inline-block py-1 px-3 rounded-full text-sm">{skill}</p>)
                         :
-                        <p className="text-center font-medium">No Data Here!</p>
+                        <p className="text-sm text-gray-800 font-medium">N/A</p>
                     }
                 </div>
             </section>

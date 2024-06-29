@@ -11,17 +11,17 @@ import notUser from '../../assets/icons/user-not.png';
 import { useQuery } from "@tanstack/react-query";
 
 const MyProfile = () => {
-    const authContext   = useContext(AuthContext);
+    const authContext = useContext(AuthContext);
     if (!authContext) {
         return <p>Loading...</p>;
     }
-    const { user } = authContext;    
+    const { user } = authContext;
 
     const { data: userData = [] } = useQuery([user?.email], async () => {
         const res = await fetch(`http://localhost:5000/user?email=${user?.email}`);
         const data = await res.json();
         return data;
-      });
+    });
 
     return (
         <main className="px-5 py-4 md:py-20 md:px-32">
@@ -50,14 +50,14 @@ const MyProfile = () => {
                                     <p className="text-gray-500 text-start">{userData?.email}</p>
                                 </div>
                             </figure>
-                            <li><NavLink className={({ isActive }) => isActive ? 'text-color flex items-center gap-2 font-medium' : 'text-gray-500 flex items-center gap-2 font-medium'} to={`/my-profile`}><RiProfileLine size={18} /> User Dashboard</NavLink></li>
+                            <li><NavLink className={({ isActive }) => isActive ? 'text-color flex items-center gap-2 font-medium' : 'text-gray-500 flex items-center gap-2 font-medium'} to={`/my-profile`} end><RiProfileLine size={18} /> User Dashboard</NavLink></li>
                             <li><NavLink className={({ isActive }) => isActive ? 'text-color flex items-center gap-2 font-medium' : 'text-gray-500 flex items-center gap-2 font-medium'} to='/my-profile/summery'><TbBrandGoogleAnalytics size={18} /> Summery</NavLink></li>
                             <li><NavLink className={({ isActive }) => isActive ? 'text-color flex items-center gap-2 font-medium' : 'text-gray-500 flex items-center gap-2 font-medium'} to='/my-profile/answers'><IoChatbubblesOutline size={18} /> Answers</NavLink></li>
                             <li><NavLink className={({ isActive }) => isActive ? 'text-color flex items-center gap-2 font-medium' : 'text-gray-500 flex items-center gap-2 font-medium'} to='/my-profile/questions'><TbDeviceIpadHorizontalQuestion size={18} /> Questions</NavLink></li>
                             <li><NavLink className={({ isActive }) => isActive ? 'text-color flex items-center gap-2 font-medium' : 'text-gray-500 flex items-center gap-2 font-medium'} to='/my-profile/saves'><BiBookmarkAlt size={18} /> Saves</NavLink></li>
                             <li><NavLink className={({ isActive }) => isActive ? 'text-color flex items-center gap-2 font-medium' : 'text-gray-500 flex items-center gap-2 font-medium'} to={`/my-profile/edit-profile`}><TbUserEdit size={18} /> Edit Profile</NavLink></li>
-                            <li><NavLink className={({ isActive }) => isActive ? 'text-color flex items-center gap-2 font-medium' : 'text-gray-500 flex items-center gap-2 font-medium'} to='/ news-feed'><FaRegNewspaper size={18} /> News Feed</NavLink></li>
-                            <li><NavLink className={({ isActive }) => isActive ? 'text-color flex items-center gap-2 font-medium' : 'text-gray-500 flex items-center gap-2 font-medium'} to='/ ask-question'><TbUserQuestion size={18} /> Ask Question</NavLink></li>
+                            <li><NavLink className={({ isActive }) => isActive ? 'text-color flex items-center gap-2 font-medium' : 'text-gray-500 flex items-center gap-2 font-medium'} to='/news-feed'><FaRegNewspaper size={18} /> News Feed</NavLink></li>
+                            <li><NavLink className={({ isActive }) => isActive ? 'text-color flex items-center gap-2 font-medium' : 'text-gray-500 flex items-center gap-2 font-medium'} to='/ask-question'><TbUserQuestion size={18} /> Ask Question</NavLink></li>
                         </ul>
                     </div>
                 </div>

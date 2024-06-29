@@ -105,7 +105,7 @@ const AnswerDetails: React.FC<AnswerDetailsProps> = ({ answerFullData }) => {
                                             to={
                                                 answer?.email == user?.email
                                                     ? `/my-profile/${answer?.email}`
-                                                    : `/ user/${answer?.email}`
+                                                    : `/user/${answer?.email}`
                                             }
                                         >
                                             <span className="text-[#02B1FC] duration-200 underline hover:text-black cursor-pointer ml-1">

@@ -39,7 +39,7 @@ const Tag = () => {
           </div>
         ) : (
           tags?.map((tag:any) => (
-            <Link to={`/ tagged?tag=${tag.name}`}>
+            <Link to={`/tagged?tag=${tag.name}`}>
               <p className="hover:bg-indigo-50 hover:border-[#02B1FC] hover:text-[#33B89F] duration-200 bg-white border border-gray-400 px-3 py-1 text-gray-400 rounded-full font-medium cursor-pointer">
                 {tag.name} | <span className="text-color-second">{tag.count}</span>
               </p>

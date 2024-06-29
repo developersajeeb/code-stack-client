@@ -73,7 +73,7 @@ const EditQuestion = () => {
             .then((data) => {
                 if (data.acknowledged) {
                     toast.success('Updated Successfully!');
-                    navigate(`/ news-feed/${questionData?._id}`)
+                    navigate(`/news-feed/${questionData?._id}`)
                 } else {
                     toast.error("Error, Please try again!")
                 }

@@ -8,7 +8,7 @@ const Footer = () => {
         <section className='bg-[#202942] bg-divider'>
             <div className='max-w-[1320px] mx-auto '>
                 <footer className='grid md:grid-cols-3'>
-                    <div className='px-4 pt-20 pb-14 md:pl-8 md:py-32 lg:pl-32 md:col-span-2 bg-[#202942] grid md:grid-cols-2 gap-10'>
+                    <div className='px-4 pt-20 pb-14 md:py-32 md:col-span-2 bg-[#202942] grid md:grid-cols-2 gap-10'>
                         <div className='md:border-r md:pr-10 border-gray-700 text-center md:text-start'>
                             <img src={logo} alt="CodeStack" className='w-60 mx-auto md:mx-0' />
                             <p className='text-gray-400 my-6'>CodeStack is a widely recognized platform where developers of all levels gather to ask questions, share knowledge, and find solutions to coding problems</p>
@@ -64,7 +64,7 @@ const Footer = () => {
                         </div>
                     </div>
                 </footer>
-                <section className='px-4 py-8 md:px-8 lg:px-32 text-gray-400 md:col-span-2 bg-[#202942] border-t border-gray-700'>
+                <section className='px-4 py-8 text-gray-400 md:col-span-2 bg-[#202942] border-t border-gray-700'>
                     <div className='text-center md:text-start text-sm'><p>© Copyright {new Date().getFullYear()}. All Rights Reserved by <span className='text-color duration-200 hover:text-[#02B1FC] cursor-pointer font-medium'>CodeStack</span></p></div>
                 </section>
             </div>

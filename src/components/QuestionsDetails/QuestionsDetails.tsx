@@ -177,7 +177,7 @@ const QuestionsDetails = () => {
                                 'Your file has been deleted.',
                                 'success'
                             )
-                            navigate('/ news-feed')
+                            navigate('/news-feed')
                         }
                     })
             }
@@ -193,7 +193,7 @@ const QuestionsDetails = () => {
             />
             <section>
                 <div className="flex justify-between items-end">
-                    <Link to={questionData?.email == user?.email && `/my-profile/${questionData?.email}` || `/ user/${questionData?.email}`}>
+                    <Link to={questionData?.email == user?.email && `/my-profile/${questionData?.email}` || `/user/${questionData?.email}`}>
                         <div className="inline-block">
                             <div className="flex items-center gap-2 bg-gray-100 px-3 py-2 rounded-md">
                                 <img className="w-11 h-11 object-cover rounded-full" src={questionData?.userPhoto || notUser} alt="" />
@@ -219,7 +219,7 @@ const QuestionsDetails = () => {
                             </label>
                             <div tabIndex={0} className="mt-3 z-[1] card card-compact dropdown-content bg-gray-100 shadow">
                                 <ul className=" bg-base-200 rounded-lg flex p-2">
-                                    <li className="hover:bg-gray-200 p-2 rounded-md cursor-pointer tooltip tooltip-bottom" data-tip="share" onClick={() => handleCopyClick(`/ news-feed/${questionData?._id}`)}>
+                                    <li className="hover:bg-gray-200 p-2 rounded-md cursor-pointer tooltip tooltip-bottom" data-tip="share" onClick={() => handleCopyClick(`/news-feed/${questionData?._id}`)}>
                                         <a>
                                             <FiShare2 size={20} />
                                         </a>
@@ -235,7 +235,7 @@ const QuestionsDetails = () => {
                                     </li>
                                     {
                                         questionData?.email == user?.email && <>
-                                            <Link to={`/ edit-question/${questionData?._id}`}>
+                                            <Link to={`/edit-question/${questionData?._id}`}>
                                                 <li className="hover:bg-gray-200 p-2 rounded-md cursor-pointer duration-300 tooltip tooltip-bottom" data-tip="edit">
                                                     <a>
                                                         <BiEditAlt size={24} />
@@ -273,7 +273,7 @@ const QuestionsDetails = () => {
                         {
                             questionData?.selected?.map((tag, index) => <Link
                                 key={index}
-                                to={`/ tagged?tag=${tag}`}>
+                                to={`/tagged?tag=${tag}`}>
                                 <li className="hover:bg-indigo-50 hover:border-[#02B1FC] hover:text-[#33B89F] duration-200 bg-white border border-gray-400 px-3 text-sm py-1 text-gray-400 rounded-full font-medium cursor-pointer">{tag}</li>
                             </Link>)
                         }
