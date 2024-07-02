@@ -31,6 +31,7 @@ import EditQuestion from "../pages/EditQuestion/EditQuestion";
 import AddPost from "../pages/Dashboard/AddPost/AddPost";
 import AdminRoute from "./AdminRoute";
 import Main from "../pages/Main/Main";
+import RedirectIfAuthenticated from "./RedirectIfAuthenticated";
 
 export const router = createBrowserRouter([
   {
@@ -40,7 +41,7 @@ export const router = createBrowserRouter([
     children: [
       {
         path: '/',
-        element: <Home></Home>
+        element: <RedirectIfAuthenticated><Home></Home></RedirectIfAuthenticated>
       },
       {
         path: 'login',

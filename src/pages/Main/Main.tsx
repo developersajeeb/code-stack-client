@@ -7,7 +7,7 @@ import { NavLink, Outlet } from "react-router-dom";
 
 const Main = () => {
     return (
-        <main className="px-5 py-4 md:py-10 md:px-12 lg:px-32">
+        <main className="px-4 py-4 md:py-10 max-w-[1300px] mx-auto">
             <section>
                 <div className="drawer lg:drawer-open">
                     <input id="my-drawer-2" type="checkbox" className="drawer-toggle" />

@@ -1,5 +1,6 @@
-import Hamburger from "hamburger-react";
 import { useState, useContext } from "react";
+import { useNavigate } from "react-router-dom";
+import Hamburger from "hamburger-react";
 import logo from "../../assets/logo-codeStack.png";
 import notUser from "../../assets/icons/user-not.png";
 import {
@@ -18,12 +19,16 @@ import useAdmin from "./../../hooks/useAdmin";
 import { useQuery } from "@tanstack/react-query";
 
 const NavBar = () => {
-  const [isOpen, setOpen] = useState<boolean>(false);
+  const [isOpen, setOpen] = useState(false);
+  const [searchQuery, setSearchQuery] = useState('');
   const authContext = useContext(AuthContext);
   const { isAdmin } = useAdmin();
+  const navigate = useNavigate();
+
   if (!authContext) {
     return <p>Loading...</p>;
   }
+
   const { user, logOut } = authContext;
 
   const { data: userData = [] } = useQuery([user?.email], async () => {
@@ -43,6 +48,12 @@ const NavBar = () => {
       throw new Error('Failed to parse JSON');
     }
   });
+
+  const handleSearch = (event: { preventDefault: () => void; }) => {
+    event.preventDefault();
+    console.log(searchQuery);
+    navigate(`/news-feed?search_query=${searchQuery}`);
+  };
 
   return (
     <nav className="shadow-md border-t-4 border-[#33B89F] bg-white">
@@ -145,11 +156,18 @@ const NavBar = () => {
             </Link>
           </figure>
         </div>
-        <form className="relative w-full">
-          <input type="text" name="search" id="search" className="bg-gray-100 border-0 px-5 py-2 rounded-full w-full" />
-          <span className="text-gray-500 absolute right-3 top-2 cursor-pointer">
+        <form className="relative w-full" onSubmit={handleSearch}>
+          <input
+            type="text"
+            name="search"
+            id="search"
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            className="bg-gray-50 border focus:border-[#33B89F] focus-visible:border-[#33B89F] border-gray-100 px-5 py-2 rounded-full w-full"
+          />
+          <button type="submit" className="text-gray-500 absolute right-3 top-2 cursor-pointer">
             <BiSearchAlt size={25} />
-          </span>
+          </button>
         </form>
         <div>
           {isAdmin && (

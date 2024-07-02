@@ -2,7 +2,7 @@ import { useEffect, useState, useContext } from "react";
 import { BsQuestionCircle } from "react-icons/bs";
 import { MdUnfoldMore } from "react-icons/md";
 import { PiArrowCircleDownLight } from "react-icons/pi";
-import { Link, useLoaderData } from "react-router-dom";
+import { Link, useLoaderData, useLocation } from "react-router-dom";
 import { AuthContext } from "../../Provider/AuthProvider";
 import { FiUploadCloud } from "react-icons/fi";
 import VavDetails from "../../components/VavDetails/VavDetails";
@@ -29,6 +29,9 @@ const NewsFeed = () => {
     const [questionsToShow, setQuestionsToShow] = useState<number>(10);
     const [showLoadMore, setShowLoadMore] = useState<boolean>(true);
     const [loading, setLoading] = useState<boolean>(false);
+    const [questions, setQuestions] = useState<Question[]>(allQuestions);
+
+    const location = useLocation();
     const authContext = useContext(AuthContext);
     if (!authContext) {
         return <div className='h-screen flex justify-center items-center'>
@@ -43,42 +46,47 @@ const NewsFeed = () => {
         setSelectedTag(selected);
     };
 
-    useEffect(() => {
-        if (selectedTag === '') {
-            setFilteredQuestions(allQuestions);
-        } else {
-            const filtered = allQuestions.filter((question) =>
-                question?.selected?.includes(selectedTag)
-            );
-            setFilteredQuestions(filtered);
-        }
-    }, [selectedTag, allQuestions]);
-
-    const loadMoreQuestions = () => {
-        const newQuestionsToShow = questionsToShow + 10;
-        setQuestionsToShow(newQuestionsToShow);
-
-        if (newQuestionsToShow >= allQuestions.length) {
-            setShowLoadMore(false);
+    const loadMoreQuestions = async () => {
+        setLoading(true);
+        try {
+            const response = await fetch(`/questions?skip=${questions.length}&limit=10`);
+            const newQuestions = await response.json();
+            setQuestions((prevQuestions) => [...prevQuestions, ...newQuestions]);
+            setQuestionsToShow(questionsToShow + 10);
+            if (newQuestions.length < 10) {
+                setShowLoadMore(false);
+            }
+        } catch (error) {
+            console.error("Failed to load more questions:", error);
+        } finally {
+            setLoading(false);
         }
     };
 
     useEffect(() => {
+        const searchParams = new URLSearchParams(location.search);
+        const searchQuery = searchParams.get("search_query");
+
         setLoading(true);
 
         setTimeout(() => {
+            let filteredQuestions = questions;
             if (selectedTag === '') {
-                setFilteredQuestions(allQuestions);
+                if (searchQuery) {
+                    filteredQuestions = questions.filter(question =>
+                        question.title.includes(searchQuery) || question.body.includes(searchQuery)
+                    );
+                }
             } else {
-                const filtered = allQuestions.filter((question) =>
+                filteredQuestions = questions.filter((question) =>
                     question?.selected?.includes(selectedTag)
                 );
-                setFilteredQuestions(filtered);
             }
 
+            setFilteredQuestions(filteredQuestions);
             setLoading(false);
         }, 1000);
-    }, [selectedTag, allQuestions]);
+    }, [selectedTag, questions, location.search]);
 
     return (
         <main className="px-0 lg:pl-6">
@@ -143,7 +151,7 @@ const NewsFeed = () => {
                         </div>
 
                     ) : (
-                        filteredQuestions?.slice(0, questionsToShow).map(question => <div key={question?._id} className="py-4 border-b md:flex justify-between gap-6 items-center">
+                        !loading && filteredQuestions?.slice(0, questionsToShow).map(question => <div key={question?._id} className="py-4 border-b md:flex justify-between gap-6 items-center">
                             <div>
                                 <Link to={`/news-feed/${question?._id}`}>
                                     <h2 className="text-xl font-medium hover:text-[#33B89F] cursor-pointer duration-200">{question?.title}</h2>
@@ -179,7 +187,7 @@ const NewsFeed = () => {
                         </div>)
                     )}
 
-                {showLoadMore && !loading && (
+                {showLoadMore && !loading && questions.length > 10 && (
                     <div className="mt-10">
                         <button className="bg-button mx-auto" onClick={loadMoreQuestions}>
                             Load More <MdUnfoldMore size={20} />
