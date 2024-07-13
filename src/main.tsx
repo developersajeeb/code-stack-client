@@ -1,11 +1,19 @@
-import React from 'react'
-import ReactDOM from 'react-dom/client'
-import './index.css'
-import { RouterProvider } from 'react-router-dom'
-import { router } from './routers/Router'
+import React from "react";
+import ReactDOM from "react-dom/client";
+import "./index.css";
+import { RouterProvider } from "react-router-dom";
+import { router } from "./routers/Router";
+import AuthProviders from "./Provider/AuthProvider";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
-ReactDOM.createRoot(document.getElementById('root')!).render(
+const queryClient = new QueryClient();
+
+ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
-    <RouterProvider router={router} />
-  </React.StrictMode>,
-)
+    <QueryClientProvider client={queryClient}>
+      <AuthProviders>
+        <RouterProvider router={router} />
+      </AuthProviders>
+    </QueryClientProvider>
+  </React.StrictMode>
+);

@@ -1,13 +1,17 @@
 import { Outlet } from "react-router-dom";
 import NavBar from "../components/NavBar/NavBar";
-import { ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import Footer from "../components/Footer/Footer";
+import "primereact/resources/primereact.min.css";
+import 'primereact/resources/themes/lara-light-indigo/theme.css';
+import 'primereact/resources/primereact.css';
+
 const MainLayouts = () => {
     return (
         <>
-        <ToastContainer></ToastContainer>
             <NavBar></NavBar>
             <Outlet></Outlet>
+            <Footer></Footer>
+            
         </>
     );
 };

@@ -1,17 +1,121 @@
-@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap");
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 * {
-    font-family: 'Roboto', sans-serif;
+  font-family: "Roboto", sans-serif;
 }
 
 .primary-bg {
-    background-color: #0278AE;
+  background-color: #33b89f;
 }
 
-.small-btn {
-    @apply bg-[#0278AE] text-white px-3 py-1 rounded-full hover:bg-[#319ac6] duration-200
+.second-bg {
+  background-color: #02b1fc;
+}
+
+.text-color {
+  color: #33b89f;
+}
+
+.text-color-second {
+  color: #02b1fc;
+}
+
+.content {
+  min-height: calc(100vh - 88px - 72px);
+}
+
+.bg-button {
+  @apply primary-bg px-6 py-3 text-white font-medium rounded-md border-2 border-[#33B89F] hover:bg-white duration-200 hover:text-[#33B89F] flex items-center gap-2 shadow-md hover:shadow-sm;
+}
+
+.bg-button-small-red {
+  @apply bg-red-500 px-3 py-1 text-white font-medium rounded-md border-2 border-red-500 hover:bg-white duration-200 hover:text-red-500 flex items-center gap-2 shadow-md hover:shadow-sm;
+}
+
+.bg-button-small {
+  @apply primary-bg px-3 py-1 text-white font-medium rounded-md border-2 border-[#33B89F] hover:bg-white duration-200 hover:text-[#33B89F] flex items-center gap-2 shadow-md hover:shadow-sm;
+}
+
+.transparent-button {
+  @apply bg-white hover:bg-[#33B89F] px-6 py-3 hover:text-white font-medium rounded-md border-2 border-[#33B89F] duration-200 text-color flex items-center gap-2 shadow-sm hover:shadow-md;
+}
+
+.transparent-button-small {
+  @apply bg-white hover:bg-[#33B89F] px-3 py-1 hover:text-white font-medium rounded-md border-2 border-[#33B89F] duration-200 text-color flex items-center gap-2 shadow-sm hover:shadow-md;
+}
+
+pre.ql-syntax {
+  background-color: #f1f1f1;
+  border-radius: 6px;
+  overflow-x: auto;
+  margin-bottom: 15px;
+  padding: 8px;
+}
+
+pre.ql-syntax::-webkit-scrollbar {
+  height: 8px;
+}
+
+pre.ql-syntax::-webkit-scrollbar-thumb {
+  border-radius: 30px;
+}
+
+.ql-image {
+  display: none !important;
+}
+
+/* Custom scrollbar styling */
+::-webkit-scrollbar {
+  width: 10px; /* Adjust the width as needed */
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1; /* Track color */
+}
+
+::-webkit-scrollbar-thumb {
+  background: #33b89f; /* Thumb color */
+  border-radius: 30px; /* Rounded corners */
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #555; /* Thumb color on hover */
+}
+
+.cs-button {
+  @apply !bg-[#33B89F] !duration-300 !border-none !px-9 !py-[10px] !rounded-md !font-normal; 
+  box-shadow: none !important;
+}
+
+
+/* Prime React Input */
+.p-inputtext {
+  padding: 8px 15px 8px 15px !important;
+}
+
+.p-inputwrapper {
+  width: 100% !important;
+}
+
+.p-password.p-input-icon-right i{
+  top: 16px !important;
+  cursor: pointer !important;
+}
+
+.p-password-input {
+  width: 100% !important;
+  padding: 8px 35px 8px 15px !important;
+}
+
+.p-inputtext:enabled:hover {
+    border-color: #33B89F !important;
+}
+
+.p-inputtext:enabled:focus {
+    box-shadow: none !important;
+    border-color: #33B89F !important;
 }
