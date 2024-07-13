@@ -118,9 +118,9 @@ export const router = createBrowserRouter([
             loader: () => fetch('http://localhost:5000/questions')
           },
           {
-            path: 'user/:email',
+            path: 'user/:username',
             element: <SingleUser></SingleUser>,
-            loader: ({ params }) => fetch(`http://localhost:5000/user?email=${params.email}`)
+            loader: ({ params }) => fetch(`http://localhost:5000/user?username=${params.username}`)
           },
           {
             path: 'tags',

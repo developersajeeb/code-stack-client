@@ -24,7 +24,9 @@ const SocialLogin = () => {
                 console.log(result.user);
     
                 const loggedInUser = result.user;
-                const saveUser = { name: loggedInUser.displayName, email: loggedInUser.email, role: 'normalUser', imgURL: loggedInUser.photoURL, entryPoint: 'google' }
+                const email = loggedInUser.email;
+                const username = email.substring(0, email.indexOf('@'));
+                const saveUser = { name: loggedInUser.displayName, username: username, email: loggedInUser.email, role: 'normalUser', imgURL: loggedInUser.photoURL, entryPoint: 'google' }
                 fetch('http://localhost:5000/users', {
                     method: 'POST',
                     headers: {
@@ -47,7 +49,7 @@ const SocialLogin = () => {
                         setLoading(false);
                     });
             })
-            .catch((error) => {
+            .catch(() => {
                 // if (error.code === 'auth/popup-closed-by-user') {
                     
                 // } else {
@@ -64,7 +66,9 @@ const SocialLogin = () => {
                 console.log(result.user);
     
                 const loggedInUser = result.user;
-                const saveUser = { name: loggedInUser.displayName, email: loggedInUser?.email, role: 'user', photo: loggedInUser.photoURL, entryPoint: 'google' }
+                const email = loggedInUser.email;
+                const username = email.substring(0, email.indexOf('@'));
+                const saveUser = { name: loggedInUser.displayName, username: username, email: loggedInUser?.email, role: 'user', photo: loggedInUser.photoURL, entryPoint: 'google' }
                 
                 fetch('http://localhost:5000/users', {
                     method: 'POST',
@@ -89,7 +93,7 @@ const SocialLogin = () => {
                         setLoading(false);
                     });
             })
-            .catch((error) => {
+            .catch(() => {
                 // if (error.code === 'auth/popup-closed-by-user') {
                 //     console.log("Popup closed by user");
                 // } else {

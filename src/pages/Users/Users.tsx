@@ -36,13 +36,14 @@ const Users = () => {
             </form>
             <section className="grid md:grid-cols-2 lg:grid-cols-3 gap-10 mt-8">
                 {
-                    members?.map((member: any) => <div key={member?._id} className="flex items-center gap-2 bg-gray-50 p-2 rounded-md">
+                    members?.map((member: any) => <div key={member?._id} className="flex items-center gap-2 bg-gray-100 px-3 py-2 rounded-xl shadow-sm">
                         <figure>
-                            <img className="w-14 h-14 object-cover rounded-md" src={member?.imgURL || notUser} alt="user image" />
+                            <img className="w-14 h-14 object-cover rounded-full" src={member?.imgURL || notUser} alt="user image" />
                         </figure>
                         <div>
-                            <Link to={member?.email == user?.email && `/my-profile/${member?.email}` || `/user/${member?.email}`}>
-                                <h3 className="font-medium hover:text-[#33B89F] cursor-pointer text-gray-600 duration-300">{member?.name}</h3>
+                            <Link to={user?.email === member?.email && `/my-profile/${member?.username}` || `/user/${member?.username}`}>
+                                <h3 className="font-medium text-base hover:text-[#33B89F] cursor-pointer text-gray-600 duration-300">{member?.name}</h3>
+                                <p className="text-sm font-light text-gray-500 -mt-[2px]">{member?.username}</p>
                             </Link>
                             <p className="text-sm text-gray-400">{member?.country}</p>
                         </div>
