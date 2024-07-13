@@ -19,11 +19,12 @@ import useAdmin from "./../../hooks/useAdmin";
 import { useQuery } from "@tanstack/react-query";
 
 const NavBar = () => {
-  const [isOpen, setOpen] = useState(false);
+  const [isOpen, setOpen] = useState<boolean>(false);
   const [searchQuery, setSearchQuery] = useState('');
   const authContext = useContext(AuthContext);
   const { isAdmin } = useAdmin();
   const navigate = useNavigate();
+  const [emptyError, setEmptyError] = useState<boolean>(false);
 
   if (!authContext) {
     return <p>Loading...</p>;
@@ -51,7 +52,12 @@ const NavBar = () => {
 
   const handleSearch = (event: { preventDefault: () => void; }) => {
     event.preventDefault();
-    console.log(searchQuery);
+    setEmptyError(false);
+    if(!searchQuery){
+      setEmptyError(true);
+      return;
+    }
+    setEmptyError(false);
     navigate(`/news-feed?search_query=${searchQuery}`);
   };
 
@@ -163,7 +169,8 @@ const NavBar = () => {
             id="search"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="bg-gray-50 border focus:border-[#33B89F] focus-visible:border-[#33B89F] border-gray-100 px-5 py-2 rounded-full w-full"
+            placeholder="Search with title and tags"
+            className={`${emptyError && 'border-red-500'} bg-gray-50 border focus:border-[#33B89F] focus-visible:border-[#33B89F] border-gray-100 px-5 py-2 rounded-full w-full`}
           />
           <button type="submit" className="text-gray-500 absolute right-3 top-2 cursor-pointer">
             <BiSearchAlt size={25} />
