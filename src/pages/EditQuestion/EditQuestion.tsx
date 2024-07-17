@@ -1,11 +1,10 @@
 import { useLoaderData, useNavigate } from "react-router-dom";
-import { SetStateAction, useState } from "react";
-import ReactQuill from "react-quill";
+import { useState } from "react";
 import 'react-quill/dist/quill.snow.css';
 import { TagsInput } from "react-tag-input-component";
 import { toast, Toaster } from "react-hot-toast";
-import { FaArrowRight } from "react-icons/fa";
 import { Editor, EditorTextChangeEvent } from "primereact/editor";
+import { Button } from "primereact/button";
 
 interface QuestionData {
     _id: '';
@@ -22,16 +21,8 @@ const EditQuestion = () => {
     const [selected, setSelected] = useState(questionData?.selected);
     const [body, setBody] = useState<string>(questionData?.body || '');
     const [imageLinks, setImageLinks] = useState<string[]>([]);
+    const [isFormBtnLoading, setIsFormBtnLoading] = useState<boolean>(false);
     const navigate = useNavigate();
-    // const currentDate = new Date();
-    // const uploadDate = `${(currentDate.getMonth() + 1).toString().padStart(2, '0')}/${currentDate.getDate().toString().padStart(2, '0')}/${currentDate.getFullYear()}`;
-    // const uploadTime = new Date().toLocaleTimeString();    
-
-    const handleQuill = (value: SetStateAction<string>) => {
-        setBody(value)
-    }
-    console.log(imageLinks);
-
 
     const questionField = async (event: { preventDefault: () => void; target: any; }) => {
         event.preventDefault();
@@ -39,6 +30,7 @@ const EditQuestion = () => {
         const title: string = form.title.value;
 
         const imageUrls: string[] = [];
+        setIsFormBtnLoading(true);
 
         for (let i = 0; i < imageLinks.length; i++) {
             const formData = new FormData();
@@ -72,6 +64,7 @@ const EditQuestion = () => {
             .then(result => result.json())
             .then((data) => {
                 if (data.acknowledged) {
+                    setIsFormBtnLoading(false);
                     toast.success('Updated Successfully!');
                     navigate(`/news-feed/${questionData?._id}`)
                 } else {
@@ -111,7 +104,8 @@ const EditQuestion = () => {
                     </div>
 
                     <div className="my-6 bg-white border p-4 border-dashed rounded-md shadow">
-                        <label htmlFor="problemImage" className="block text-xl font-semibold mb-2">Upload Code/Problem Images</label>
+                        <label htmlFor="problemImage" className="block text-xl font-semibold">Upload Code/Problem Images</label>
+                        <p className="text-xs font-light text-yellow-500 mb-2">Uploading new photos will replace your previous photo.</p>
                         <div className="grid grid-cols-4 md:grid-cols-6 gap-2 rounded-md my-2">
                             {
                                 questionData?.problemImages?.map((singleImage: string, index: number) => <img key={index} src={singleImage} alt="Problem Image" />)
@@ -149,7 +143,15 @@ const EditQuestion = () => {
                             placeHolder="Enter tags"
                         />
                     </div>
-                    <button className="bg-button">Update Now <FaArrowRight size={15} /></button>
+                    <Button
+                        type="submit"
+                        label="Update Now"
+                        icon="pi-user-plus"
+                        iconPos="right"
+                        disabled={isFormBtnLoading}
+                        loading={isFormBtnLoading}
+                        className='max-w-[250px] cs-button'
+                    />
                 </form>
             </section>
         </main>

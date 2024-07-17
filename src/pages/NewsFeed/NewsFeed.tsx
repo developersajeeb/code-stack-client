@@ -154,7 +154,7 @@ const NewsFeed = () => {
                         !loading && filteredQuestions?.slice(0, questionsToShow).map(question => <div key={question?._id} className="py-4 border-b md:flex justify-between gap-6 items-center">
                             <div>
                                 <Link to={`/news-feed/${question?._id}`}>
-                                    <h2 className="text-xl font-medium hover:text-[#33B89F] cursor-pointer duration-200">{question?.title}</h2>
+                                    <h2 className="text-xl font-medium hover:text-[#33B89F] cursor-pointer duration-200 inline-block">{question?.title}</h2>
                                 </Link>
                                 <p className="mt-2 text-gray-500 text-sm" dangerouslySetInnerHTML={{
                                     __html: question && question?.body ? question?.body.slice(0, 120)+"..." : ""
