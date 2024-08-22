@@ -33,6 +33,8 @@ const QuestionsDetails = () => {
     const [body, setBody] = useState('');
     const [likeCount, setLikeCount] = useState(questionData?.QuestionsVote?.length || 0);
     const [isFormBtnLoading, setIsFormBtnLoading] = useState<boolean>(false);
+    const [isMoreBtnLoading, setIsMoreBtnLoading] = useState<boolean>(false);
+    const [showLoadMore, setShowLoadMore] = useState<boolean>(true);
     const authContext = useContext(AuthContext);
 
     if (!authContext) {
@@ -53,7 +55,7 @@ const QuestionsDetails = () => {
             const hasVoted = questionData.QuestionsVote.some(vote => vote === user.email);
             setIsLike(hasVoted);
         }
-    }, [questionData, user?.email]);    
+    }, [questionData, user?.email]);
 
     const handleLike = () => {
         const email = user?.email;
@@ -139,19 +141,25 @@ const QuestionsDetails = () => {
         })
     }
 
+    const { data: userData = [] } = useQuery([user?.email], async () => {
+        const res = await fetch(`http://localhost:5000/user?email=${user?.email}`);
+        const data = await res.json();
+        return data;
+    });
+
     return (
         <main>
             <Toaster position="top-center" reverseOrder={false} />
-            <section>
-                <div className="flex justify-between items-end">
+            <section className="px-0 lg:pl-6">
+                <div className="flex justify-between items-end gap-3">
                     <Link to={questionData?.email === user?.email ? `/my-profile` : `/user/${questionData?.username}`}>
                         <div className="inline-block">
                             <div className="flex items-center gap-2 bg-gray-100 pl-3 pr-8 py-2 shadow rounded-lg relative">
                                 <span className="text-[10px] bg-gray-400 p-1 text-white rounded-full absolute -right-2 -top-2">Entry</span>
-                                <img className="w-11 h-11 object-cover rounded-full" src={questionData?.userPhoto || notUser} alt="" />
+                                <img className="w-11 h-11 object-cover rounded-full" src={questionData?.userPhoto || notUser} alt="User Photo" />
                                 <div>
-                                    <h5 className="font-medium -mb-[3px]">{questionData?.name}</h5>
-                                    <span className="text-sm font-light">{questionData?.username}</span>
+                                    <h5 className="font-medium -mb-[3px] word-break">{questionData?.name}</h5>
+                                    <span className="text-sm font-light word-break">{questionData?.username}</span>
                                 </div>
                             </div>
                         </div>
@@ -236,6 +244,16 @@ const QuestionsDetails = () => {
             <section>
                 <h2 className="text-2xl font-semibold text-gray-700 mb-4">Answers</h2>
                 <AnswerDetails answerFullData={answerFullData} refetch={refetch}></AnswerDetails>
+                <div className="mt-10 text-center">
+                    <Button
+                        label="Load More"
+                        iconPos="right"
+                        disabled={isMoreBtnLoading || !showLoadMore}
+                        loading={isMoreBtnLoading}
+                        className='max-w-[250px] cs-button'
+                        // onClick={loadMoreAnswers}
+                    />
+                </div>
             </section>
 
             <form className="mt-8" onSubmit={(event) => {
@@ -248,7 +266,7 @@ const QuestionsDetails = () => {
                 setIsFormBtnLoading(true);
 
                 const answerData = {
-                    username: user?.displayName?.slice(0, 6) + '...' || 'anonymous',
+                    username: userData?.username,
                     email: user?.email,
                     questionID: questionData?._id,
                     body,

@@ -44,7 +44,7 @@ const VavDetails = ({question}:{ question: Question }) => {
   }, [questionDetails]);   
 
     return (
-        <div className="flex items-center gap-10 mt-6 md:mt-0">
+        <div className="flex items-center justify-center gap-10 mt-6 md:mt-0">
             <ul className="text-center">
                 <li>{votes?.QuestionsVote?.length || '0'}</li>
                 <li className="text-gray-600 my-1">votes</li>

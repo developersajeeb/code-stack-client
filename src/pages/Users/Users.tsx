@@ -36,12 +36,13 @@ const Users = () => {
             </form>
             <section className="grid md:grid-cols-2 lg:grid-cols-3 gap-10 mt-8">
                 {
-                    members?.map((member: any) => <div key={member?._id} className="flex items-center gap-2 bg-gray-100 px-3 py-2 rounded-xl shadow-sm">
+                    members?.map((member: any) => <div key={member?._id} className="flex items-center gap-2 bg-gray-100 px-3 py-2 rounded-xl shadow-sm relative">
+                        <span className="text-[10px] bg-gray-400 p-1 text-white rounded-full absolute -right-2 -top-2">Entry</span>
                         <figure>
                             <img className="w-14 h-14 object-cover rounded-full" src={member?.imgURL || notUser} alt="user image" />
                         </figure>
                         <div>
-                            <Link to={user?.email === member?.email && `/my-profile/${member?.username}` || `/user/${member?.username}`}>
+                            <Link to={user?.email === member?.email && `/my-profile` || `/user/${member?.username}`}>
                                 <h3 className="font-medium text-base hover:text-[#33B89F] cursor-pointer text-gray-600 duration-300">{member?.name}</h3>
                                 <p className="text-sm font-light text-gray-500 -mt-[2px]">{member?.username}</p>
                             </Link>

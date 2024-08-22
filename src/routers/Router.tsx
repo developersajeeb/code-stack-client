@@ -13,7 +13,6 @@ import ProfileDashboard from "../pages/ProfileDashboard/ProfileDashboard";
 import Summery from "../pages/Summery/Summery";
 import EditProfile from "../pages/EditProfile/EditProfile";
 import ErrorPage from "../pages/ErrorPage/ErrorPage";
-import QuestionsDetails from "../components/QuestionsDetails/QuestionsDetails";
 import DashboardLayout from "../Layouts/DashboardLayout";
 import AdminHome from "../pages/Dashboard/AdminHome/AdminHome";
 import AllUsers from "../pages/Dashboard/AllUsers/AllUsers";
@@ -32,6 +31,7 @@ import AddPost from "../pages/Dashboard/AddPost/AddPost";
 import AdminRoute from "./AdminRoute";
 import Main from "../pages/Main/Main";
 import RedirectIfAuthenticated from "./RedirectIfAuthenticated";
+import QuestionsDetails from "../pages/QuestionsDetails/QuestionsDetails";
 
 export const router = createBrowserRouter([
   {

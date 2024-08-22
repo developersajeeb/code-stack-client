@@ -5,7 +5,7 @@
 @tailwind utilities;
 
 * {
-  font-family: "Roboto", sans-serif;
+  font-family: "Roboto", sans-serif !important;
 }
 
 .primary-bg {
@@ -46,6 +46,10 @@
 
 .transparent-button-small {
   @apply bg-white hover:bg-[#33B89F] px-3 py-1 hover:text-white font-medium rounded-md border-2 border-[#33B89F] duration-200 text-color flex items-center gap-2 shadow-sm hover:shadow-md;
+}
+
+.word-break {
+  word-break: break-word;
 }
 
 pre.ql-syntax {
@@ -91,6 +95,11 @@ pre.ql-syntax::-webkit-scrollbar-thumb {
   box-shadow: none !important;
 }
 
+.cs-secondary-button {
+  @apply !bg-slate-300 !duration-300 !border-none !px-9 !py-[10px] !rounded-md !font-normal !text-gray-600; 
+  box-shadow: none !important;
+}
+
 
 /* Prime React Input */
 .p-inputtext {
@@ -118,4 +127,9 @@ pre.ql-syntax::-webkit-scrollbar-thumb {
 .p-inputtext:enabled:focus {
     box-shadow: none !important;
     border-color: #33B89F !important;
+}
+
+/* Prime React Drop Down */
+.p-dropdown:not(.p-disabled).p-focus {
+  box-shadow: none !important;
 }
