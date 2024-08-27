@@ -18,11 +18,11 @@ interface AnswerData {
 }
 
 interface AnswerDetailsProps {
-    answerFullData: AnswerData[];
+    allAnswers: AnswerData[];
     refetch: any;
 }
 
-const AnswerDetails: React.FC<AnswerDetailsProps> = ({ answerFullData, refetch }) => {
+const AnswerDetails: React.FC<AnswerDetailsProps> = ({ allAnswers, refetch }) => {
     const authContext = useContext(AuthContext)
     if (!authContext) {
         return <p>Loading...</p>;
@@ -145,8 +145,8 @@ const AnswerDetails: React.FC<AnswerDetailsProps> = ({ answerFullData, refetch }
         <>
             <Toaster position="top-center" reverseOrder={false} />
             {
-                answerFullData?.length > 0 ? (
-                    answerFullData.map((answer) => (
+                allAnswers?.length > 0 ? (
+                    allAnswers.map((answer) => (
                         <div key={answer?._id} className="border-b py-4">
                             <div className="flex items-start gap-2 justify-between">
                                 {editingAnswerId === answer._id ? (

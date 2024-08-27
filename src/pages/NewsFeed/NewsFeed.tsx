@@ -1,12 +1,12 @@
 import { useEffect, useState, useContext } from "react";
 import { BsQuestionCircle } from "react-icons/bs";
-import { MdUnfoldMore } from "react-icons/md";
 import { Link, useLoaderData, useLocation } from "react-router-dom";
 import { AuthContext } from "../../Provider/AuthProvider";
 import { FiUploadCloud } from "react-icons/fi";
 import VavDetails from "../../components/VavDetails/VavDetails";
 import useAdmin from "../../hooks/useAdmin";
 import { Dropdown, DropdownChangeEvent } from "primereact/dropdown";
+import { Button } from "primereact/button";
 
 interface Question {
     email: any;
@@ -32,10 +32,11 @@ const NewsFeed = () => {
     const [selectedTag, setSelectedTag] = useState<Tag | null>(null);
     const [filteredQuestions, setFilteredQuestions] = useState<Question[]>([]);
     const [questionsToShow, setQuestionsToShow] = useState<number>(10);
-    const [showLoadMore, setShowLoadMore] = useState<boolean>(true);
+    const [newQuestionLength, setNewQuestionLength] = useState<number | undefined>(undefined);
     const [loading, setLoading] = useState<boolean>(false);
     const [questions, setQuestions] = useState<Question[]>(allQuestions);
     const [tags, setTags] = useState<Tag[]>([]);
+    const [isMoreBtnLoading, setIsMoreBtnLoading] = useState<boolean>(false);
 
     const location = useLocation();
     const authContext = useContext(AuthContext);
@@ -48,28 +49,27 @@ const NewsFeed = () => {
     const { isAdmin } = useAdmin();
 
     const loadMoreQuestions = async () => {
-        setLoading(true);
+        setIsMoreBtnLoading(true);
         try {
-            const response = await fetch(`/questions?skip=${questions.length}&limit=10`);
+            const response = await fetch(`http://localhost:5000/questions?skip=${questions.length}&limit=10`);
             const newQuestions = await response.json();
+            setNewQuestionLength(newQuestions?.length);
+
             setQuestions((prevQuestions) => [...prevQuestions, ...newQuestions]);
-            setQuestionsToShow(questionsToShow + 10);
-            if (newQuestions.length < 10) {
-                setShowLoadMore(false);
-            }
+            setQuestionsToShow((prevShow) => prevShow + 10);
         } catch (error) {
             console.error("Failed to load more questions:", error);
         } finally {
-            setLoading(false);
+            setIsMoreBtnLoading(false);
         }
     };
 
     useEffect(() => {
         const searchParams = new URLSearchParams(location.search);
         const searchQuery = searchParams.get("search_query");
-    
+
         setLoading(true);
-    
+
         let filteredQuestions = questions;
         if (selectedTag?.tagName === "All" || !selectedTag?.tagName) {
             if (searchQuery) {
@@ -82,11 +82,11 @@ const NewsFeed = () => {
                 question?.selected?.includes(selectedTag?.tagName)
             );
         }
-    
+
         setFilteredQuestions(filteredQuestions);
         setLoading(false);
-    
-    }, [selectedTag?.tagName, questions, location.search]);    
+
+    }, [selectedTag?.tagName, questions, location.search]);
 
     useEffect(() => {
         const fetchTags = async () => {
@@ -104,6 +104,19 @@ const NewsFeed = () => {
 
         fetchTags();
     }, []);
+
+    const incrementViewCount = async (questionId: string) => {
+        try {
+            await fetch(`http://localhost:5000/questions/${questionId}/increment-view`, {
+                method: 'PATCH',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            });
+        } catch (error) {
+            console.error("Failed to increment view count:", error);
+        }
+    };
 
     return (
         <main className="px-0 lg:pl-6">
@@ -161,49 +174,57 @@ const NewsFeed = () => {
                         </div>
 
                     ) : (
-                        filteredQuestions?.slice(0, questionsToShow).map(question => <div key={question?._id} className="py-4 border-b md:flex justify-between gap-6 items-center">
-                            <div>
-                                <Link to={`/news-feed/${question?._id}`}>
-                                    <h2 className="text-xl font-medium hover:text-[#33B89F] cursor-pointer duration-200 inline-block">{question?.title}</h2>
-                                </Link>
-                                <p className="mt-2 text-gray-500 text-sm w-full" dangerouslySetInnerHTML={{
-                                    __html: question && question?.body ? question?.body.slice(0, 120) + "..." : ""
-                                }} />
-                                <ul className="flex flex-wrap gap-2 my-3 mt-5">
-                                    {
-                                        question?.selected?.map((tag: string, index: number) => <Link
-                                            key={index}
-                                            to={`/tagged?tag=${tag}`}>
-                                            <li className="hover:bg-indigo-50 hover:border-[#02B1FC] hover:text-[#33B89F] duration-200 bg-white border border-gray-400 px-3 text-sm py-1 text-gray-400 rounded-full font-medium cursor-pointer">{tag}</li>
-                                        </Link>)
-                                    }
-                                </ul>
-                                <p className="flex items-center gap-2 mt-5">
-                                    <span className="border rounded-full p-1.5 border-gray-400 text-color-second"><FiUploadCloud /></span>
-                                    <span className="text-gray-400 text-sm">{question?.uploadDate} | {question?.uploadTime}</span>
-                                    {
-                                        isAdmin ?
-                                            <Link to={question?.email == user?.email ? `/dashboard` : `/user/${question?.username}`}>
-                                                <span className="hover:text-[#02B1FC] text-gray-700 duration-200 cursor-pointer underline">{question?.username || question?.name?.slice(0, 6) + '...'}</span>
-                                            </Link>
-                                            :
-                                            <Link to={question?.email == user?.email ? `/my-profile` : `/user/${question?.username}`}>
-                                                <span className="hover:text-[#02B1FC] text-gray-700 duration-200 cursor-pointer underline">{question?.username || question?.name?.slice(0, 6) + '...'}</span>
-                                            </Link>
-                                    }
-                                </p>
-                            </div>
-                            <VavDetails question={question}></VavDetails>
-                        </div>)
+                        filteredQuestions?.slice(0, questionsToShow).map(question => {                            
+                            return (
+                                <div key={question?._id} className="py-4 border-b md:flex justify-between gap-6 items-center">
+                                    <div>
+                                        <Link to={`/news-feed/${question?._id}`} onClick={() => incrementViewCount(question?._id)}>
+                                            <h2 className="text-xl font-medium hover:text-[#33B89F] cursor-pointer duration-200 inline-block">{question?.title}</h2>
+                                        </Link>
+                                        <p className="mt-2 text-gray-500 text-sm w-full" dangerouslySetInnerHTML={{
+                                            __html: question && question?.body ? question?.body.slice(0, 120) + "..." : ""
+                                        }} />
+                                        <ul className="flex flex-wrap gap-2 my-3 mt-5">
+                                            {
+                                                question?.selected?.map((tag: string, index: number) => <Link
+                                                    key={index}
+                                                    to={`/tagged?tag=${tag}`}>
+                                                    <li className="hover:bg-indigo-50 hover:border-[#02B1FC] hover:text-[#33B89F] duration-200 bg-white border border-gray-400 px-3 text-sm py-1 text-gray-400 rounded-full font-medium cursor-pointer">{tag}</li>
+                                                </Link>)
+                                            }
+                                        </ul>
+                                        <p className="flex items-center gap-2 mt-5">
+                                            <span className="border rounded-full p-1.5 border-gray-400 text-color-second"><FiUploadCloud /></span>
+                                            <span className="text-gray-400 text-sm">{question?.uploadDate} | {question?.uploadTime}</span>
+                                            {
+                                                isAdmin ?
+                                                    <Link to={question?.email == user?.email ? `/dashboard` : `/user/${question?.username}`}>
+                                                        <span className="hover:text-[#02B1FC] text-gray-700 duration-200 cursor-pointer underline">{question?.username || question?.name?.slice(0, 6) + '...'}</span>
+                                                    </Link>
+                                                    :
+                                                    <Link to={question?.email == user?.email ? `/my-profile` : `/user/${question?.username}`}>
+                                                        <span className="hover:text-[#02B1FC] text-gray-700 duration-200 cursor-pointer underline">{question?.username || question?.name?.slice(0, 6) + '...'}</span>
+                                                    </Link>
+                                            }
+                                        </p>
+                                    </div>
+                                    <VavDetails question={question}></VavDetails>
+                                </div>
+                            )
+                        })
                     )}
-
-                {showLoadMore && !loading && questions.length > 10 && (
-                    <div className="mt-10">
-                        <button className="bg-button mx-auto" onClick={loadMoreQuestions}>
-                            Load More <MdUnfoldMore size={20} />
-                        </button>
-                    </div>
-                )}
+                {newQuestionLength === 0 &&
+                    <p className="text-xl text-gray-500 text-center mt-8 font-medium">No more questions</p>
+                }
+                <div className={`${newQuestionLength === 0 && 'hidden'} mt-10 text-center`}>
+                    <Button
+                        label="Load More"
+                        disabled={isMoreBtnLoading}
+                        loading={isMoreBtnLoading}
+                        className='max-w-[250px] cs-button'
+                        onClick={loadMoreQuestions}
+                    />
+                </div>
             </section>
         </main>
     );

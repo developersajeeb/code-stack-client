@@ -34,7 +34,8 @@ const QuestionsDetails = () => {
     const [likeCount, setLikeCount] = useState(questionData?.QuestionsVote?.length || 0);
     const [isFormBtnLoading, setIsFormBtnLoading] = useState<boolean>(false);
     const [isMoreBtnLoading, setIsMoreBtnLoading] = useState<boolean>(false);
-    const [showLoadMore, setShowLoadMore] = useState<boolean>(true);
+    const [answerToShow, setAnswerToShow] = useState<number>(10);
+    const [newAnswerLength, setNewAnswerLength] = useState<number | undefined>(undefined);
     const authContext = useContext(AuthContext);
 
     if (!authContext) {
@@ -49,6 +50,24 @@ const QuestionsDetails = () => {
         const data = await res.json();
         return data;
     });
+    const [answers, setAnswers] = useState(answerFullData);
+
+    const loadMoreAnswer = async () => {
+        setIsMoreBtnLoading(true);
+        try {
+            const response = await fetch(`http://localhost:5000/tenAnswer?skip=${answers?.length}&limit=10`);
+            const newAnswers = await response.json();
+            setNewAnswerLength(newAnswers?.length);
+            setAnswers((prevAnswers: any) => [...prevAnswers, ...newAnswers]);
+            setAnswerToShow(answerToShow + 10);
+
+        } catch (error) {
+            console.error("Failed to load more answers:", error);
+        } finally {
+            setIsMoreBtnLoading(false);
+        }
+    };
+    const allAnswers = answerFullData?.slice(0, answerToShow);
 
     useEffect(() => {
         if (user?.email && questionData?.QuestionsVote) {
@@ -145,7 +164,7 @@ const QuestionsDetails = () => {
         const res = await fetch(`http://localhost:5000/user?email=${user?.email}`);
         const data = await res.json();
         return data;
-    });
+    });    
 
     return (
         <main>
@@ -243,15 +262,17 @@ const QuestionsDetails = () => {
 
             <section>
                 <h2 className="text-2xl font-semibold text-gray-700 mb-4">Answers</h2>
-                <AnswerDetails answerFullData={answerFullData} refetch={refetch}></AnswerDetails>
-                <div className="mt-10 text-center">
+                <AnswerDetails allAnswers={allAnswers} refetch={refetch}></AnswerDetails>
+                {newAnswerLength === 0 &&
+                    <p className="text-xl text-gray-500 text-center mt-8 font-medium">No more answers</p>
+                }
+                <div className={`${newAnswerLength === 0 || allAnswers.length < 10 && 'hidden'} mt-10 text-center`}>
                     <Button
                         label="Load More"
-                        iconPos="right"
-                        disabled={isMoreBtnLoading || !showLoadMore}
+                        disabled={isMoreBtnLoading}
                         loading={isMoreBtnLoading}
                         className='max-w-[250px] cs-button'
-                        // onClick={loadMoreAnswers}
+                        onClick={loadMoreAnswer}
                     />
                 </div>
             </section>

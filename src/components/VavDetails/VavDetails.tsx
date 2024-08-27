@@ -43,6 +43,8 @@ const VavDetails = ({question}:{ question: Question }) => {
     setVotes(questionDetails);
   }, [questionDetails]);   
 
+  console.log(questionDetails?.totalViews);
+  
     return (
         <div className="flex items-center justify-center gap-10 mt-6 md:mt-0">
             <ul className="text-center">
@@ -56,7 +58,7 @@ const VavDetails = ({question}:{ question: Question }) => {
                 <li className="grid justify-center text-gray-600"><PiChatsCircleBold /></li>
             </ul>
             <ul className="text-center">
-                <li>0</li>
+                <li>{questionDetails?.totalViews || 0}</li>
                 <li className="text-gray-600 my-1">views</li>
                 <li className="grid justify-center text-gray-600"><AiOutlineEye /></li>
             </ul>
