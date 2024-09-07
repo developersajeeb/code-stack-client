@@ -5,7 +5,6 @@ import { AuthContext } from "../../Provider/AuthProvider";
 import { FiUploadCloud } from "react-icons/fi";
 import VavDetails from "../../components/VavDetails/VavDetails";
 import useAdmin from "../../hooks/useAdmin";
-import { Dropdown, DropdownChangeEvent } from "primereact/dropdown";
 import { Button } from "primereact/button";
 
 interface Question {
@@ -22,20 +21,16 @@ interface Question {
     totalViews: '';
 }
 
-interface Tag {
-    tagName: string;
-    count: number;
-}
-
 const NewsFeed = () => {
+    useEffect(() => {
+        window.scrollTo(0, 0);
+    }, []);
     const allQuestions = useLoaderData() as Question[];
-    const [selectedTag, setSelectedTag] = useState<Tag | null>(null);
     const [filteredQuestions, setFilteredQuestions] = useState<Question[]>([]);
     const [questionsToShow, setQuestionsToShow] = useState<number>(10);
     const [newQuestionLength, setNewQuestionLength] = useState<number | undefined>(undefined);
     const [loading, setLoading] = useState<boolean>(false);
     const [questions, setQuestions] = useState<Question[]>(allQuestions);
-    const [tags, setTags] = useState<Tag[]>([]);
     const [isMoreBtnLoading, setIsMoreBtnLoading] = useState<boolean>(false);
 
     const location = useLocation();
@@ -67,26 +62,19 @@ const NewsFeed = () => {
     useEffect(() => {
         const searchParams = new URLSearchParams(location.search);
         const searchQuery = searchParams.get("search_query");
-
+    
         setLoading(true);
-
+    
         let filteredQuestions = questions;
-        if (selectedTag?.tagName === "All" || !selectedTag?.tagName) {
-            if (searchQuery) {
-                filteredQuestions = questions.filter(question =>
-                    question.title.includes(searchQuery) || question.body.includes(searchQuery)
-                );
-            }
-        } else {
-            filteredQuestions = questions.filter((question) =>
-                question?.selected?.includes(selectedTag?.tagName)
+        if (searchQuery) {
+            filteredQuestions = questions.filter(question =>
+                question.title.includes(searchQuery) || question.body.includes(searchQuery)
             );
         }
-
+    
         setFilteredQuestions(filteredQuestions);
         setLoading(false);
-
-    }, [selectedTag?.tagName, questions, location.search]);
+    }, [questions, location.search]);    
 
     useEffect(() => {
         const fetchTags = async () => {
@@ -95,8 +83,6 @@ const NewsFeed = () => {
                 if (!response.ok) {
                     throw new Error('Network response was not ok');
                 }
-                const data: Tag[] = await response.json();
-                setTags(data);
             } catch (error) {
                 console.error('Fetch error:', error);
             }
@@ -129,18 +115,7 @@ const NewsFeed = () => {
                     <Link to='/ask-question'><button className="bg-button">Ask Question <BsQuestionCircle /></button></Link>
                 </div>
             </section>
-            <div id="box" className="mt-5 md:mt-8 flex flex-col md:flex-row md:items-center gap-3">
-                <h4 className="text-lg md:text-2xl font-medium">Filtering by top tags: </h4>
-                <Dropdown
-                    value={selectedTag}
-                    onChange={(e: DropdownChangeEvent) => setSelectedTag(e.value)}
-                    options={[{ tagName: "All", count: 0 }, ...tags]}
-                    optionLabel="tagName"
-                    placeholder="Select a Tag"
-                    className="max-w-80"
-                />
-            </div>
-            <section className="mt-6">
+            <section className="mt-5">
                 {
                     loading ? (
                         <div className="mt-12">
@@ -182,7 +157,7 @@ const NewsFeed = () => {
                                             <h2 className="text-xl font-medium hover:text-[#33B89F] cursor-pointer duration-200 inline-block">{question?.title}</h2>
                                         </Link>
                                         <p className="mt-2 text-gray-500 text-sm w-full" dangerouslySetInnerHTML={{
-                                            __html: question && question?.body ? question?.body.slice(0, 120) + "..." : ""
+                                            __html: question && question?.body ? question?.body.slice(0, 120)+"..." : ""
                                         }} />
                                         <ul className="flex flex-wrap gap-2 my-3 mt-5">
                                             {

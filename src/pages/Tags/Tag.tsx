@@ -1,7 +1,11 @@
 import { useQuery } from "@tanstack/react-query";
+import { useEffect } from "react";
 import { Link } from "react-router-dom";
 
 const Tag = () => {
+  useEffect(() => {
+    window.scrollTo(0, 0);
+}, []); 
   const { data: tags = {}, isLoading } = useQuery([], async () => {
     const res = await fetch('http://localhost:5000/tags');
     const data = await res.json();
@@ -9,7 +13,7 @@ const Tag = () => {
   });
 
   return (
-    <main>
+    <main className="px-0 lg:pl-6">
       <div>
         <span className='bg-indigo-50 px-5 py-2 text-color-second rounded-md font-medium'>Tags</span>
         <h2 className='text-3xl font-semibold text-gray-700 leading-snug mb-2 mt-4 w-full md:w-96'>Here are all the tags that used the questions</h2>
@@ -38,11 +42,9 @@ const Tag = () => {
             <progress className="progress h-7 rounded-full md:w-14" value={0} max="100"></progress>
           </div>
         ) : (
-          tags?.map((tag:any) => (
-            <Link to={`/tagged?tag=${tag.name}`}>
-              <p className="hover:bg-indigo-50 hover:border-[#02B1FC] hover:text-[#33B89F] duration-200 bg-white border border-gray-400 px-3 py-1 text-gray-400 rounded-full font-medium cursor-pointer">
+          tags?.map((tag:any, index:number) => (
+            <Link to={`/tagged?tag=${tag.name}`} key={index} className="hover:bg-indigo-50 hover:border-[#02B1FC] hover:text-[#33B89F] duration-200 bg-white border border-gray-400 px-3 py-1 text-gray-400 rounded-full font-medium">
                 {tag.name} | <span className="text-color-second">{tag.count}</span>
-              </p>
             </Link>
           ))
         )}

@@ -142,7 +142,7 @@ const AnswerDetails: React.FC<AnswerDetailsProps> = ({ allAnswers, refetch }) =>
     }
 
     return (
-        <>
+        <section>
             <Toaster position="top-center" reverseOrder={false} />
             {
                 allAnswers?.length > 0 ? (
@@ -222,7 +222,7 @@ const AnswerDetails: React.FC<AnswerDetailsProps> = ({ allAnswers, refetch }) =>
                     <div className="text-center text-lg font-medium text-gray-400">No answers</div>
                 )
             }
-        </>
+        </section>
     );
 };
 

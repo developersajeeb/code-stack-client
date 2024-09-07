@@ -49,7 +49,8 @@ const Main = () => {
                 setQuestionLoading(true);
                 const response = await fetch('http://localhost:5000/hot-questions');
                 if (!response.ok) {
-                    throw new Error('Network response was not ok');
+                    const errorDetails = await response.json();
+                    throw new Error(`Network response was not ok: ${response.statusText} - ${errorDetails.error}`);
                 }
                 const data: HotQuestion[] = await response.json();
                 setHotQuestions(data);
@@ -62,6 +63,12 @@ const Main = () => {
 
         fetchHotQuestion();
     }, []);
+
+    const formatNumber = (number: number) => {
+        if (number >= 1000000) return (number / 1000000).toFixed(1) + 'M';
+        if (number >= 1000) return (number / 1000).toFixed(1) + 'k';
+        return number;
+      };
 
     return (
         <main className="px-4 pt-7 pb-10 max-w-[1300px] mx-auto">
@@ -93,8 +100,8 @@ const Main = () => {
                                             {
                                                 tags?.map((tag, index) => (
                                                     <li className="flex items-center justify-between" key={index}>
-                                                        <Link to={`/tagged?tag=${tag?.tagName}`} className="bg-indigo-50 px-3 text-sm py-1 text-color rounded-md font-medium cursor-pointer">{tag?.tagName}</Link>
-                                                        <span className="font-medium text-gray-600">{tag?.count}</span>
+                                                        <Link to={`/tagged?tag=${tag?.tagName}`} className="bg-indigo-50 px-3 py-1 text-color rounded-md font-medium cursor-pointer">{tag?.tagName}</Link>
+                                                        <span className="font-medium text-gray-600">{formatNumber(tag?.count)}</span>
                                                     </li>
                                                 ))
                                             }
@@ -120,7 +127,7 @@ const Main = () => {
                                             {
                                                 hotQuestions?.map(question => (
                                                     <li key={question?._id}>
-                                                        <Link to={`/news-feed/${question?._id}`} className="hover:text-[#5138EE] cursor-pointer duration-200 flex items-center justify-between gap-4">
+                                                        <Link to={`/news-feed/${question?._id}`} className="hover:text-[#5138EE] cursor-pointer duration-200 flex items-center justify-between gap-1 text-sm">
                                                             {question?.title} <span><MdKeyboardArrowRight size={25} /></span>
                                                         </Link>
                                                     </li>

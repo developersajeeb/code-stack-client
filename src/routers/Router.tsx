@@ -115,7 +115,6 @@ export const router = createBrowserRouter([
           {
             path: 'tagged',
             element: <TagQuestions></TagQuestions>,
-            loader: () => fetch('http://localhost:5000/questions')
           },
           {
             path: 'user/:username',
@@ -125,7 +124,6 @@ export const router = createBrowserRouter([
           {
             path: 'tags',
             element: <Tag></Tag>,
-            loader: () => fetch('http://localhost:5000/questions')
           },
           {
             path: 'users',

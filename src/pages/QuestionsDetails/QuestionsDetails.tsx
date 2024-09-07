@@ -28,6 +28,9 @@ interface QuestionInfo {
 }
 
 const QuestionsDetails = () => {
+    useEffect(() => {
+        window.scrollTo(0, 0);
+    }, []);
     const navigate = useNavigate();
     const questionData = useLoaderData() as QuestionInfo | undefined;
     const [body, setBody] = useState('');
@@ -167,9 +170,9 @@ const QuestionsDetails = () => {
     });    
 
     return (
-        <main>
+        <main className="px-0 lg:pl-6">
             <Toaster position="top-center" reverseOrder={false} />
-            <section className="px-0 lg:pl-6">
+            <section>
                 <div className="flex justify-between items-end gap-3">
                     <Link to={questionData?.email === user?.email ? `/my-profile` : `/user/${questionData?.username}`}>
                         <div className="inline-block">
@@ -212,16 +215,16 @@ const QuestionsDetails = () => {
                                         <>
                                             <Link to={`/edit-question/${questionData?._id}`}>
                                                 <li>
-                                                    <a className="hover:bg-gray-200 p-2 rounded-md cursor-pointer duration-300 tooltip tooltip-bottom" data-tip="edit">
+                                                    <div className="hover:bg-gray-200 p-2 rounded-md cursor-pointer duration-300 tooltip tooltip-bottom" data-tip="edit">
                                                         <BiEditAlt size={24} />
-                                                    </a>
+                                                    </div>
                                                 </li>
                                             </Link>
                                             {questionData?._id && (
                                                 <li>
-                                                    <a className="hover:bg-gray-200 p-2 rounded-md cursor-pointer duration-300 tooltip tooltip-bottom" data-tip="delete" onClick={() => handleDeleteQuestion(questionData._id)}>
+                                                    <div className="hover:bg-gray-200 p-2 rounded-md cursor-pointer duration-300 tooltip tooltip-bottom" data-tip="delete" onClick={() => handleDeleteQuestion(questionData._id)}>
                                                         <FaRegTrashCan size={20} />
-                                                    </a>
+                                                    </div>
                                                 </li>
                                             )}
                                         </>
