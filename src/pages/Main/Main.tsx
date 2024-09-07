@@ -99,7 +99,7 @@ const Main = () => {
                                         <ul className="mt-6 grid gap-6">
                                             {
                                                 tags?.map((tag, index) => (
-                                                    <li className="flex items-center justify-between" key={index}>
+                                                    <li className="flex items-center justify-between gap-2" key={index}>
                                                         <Link to={`/tagged?tag=${tag?.tagName}`} className="bg-indigo-50 px-3 py-1 text-color rounded-md font-medium cursor-pointer">{tag?.tagName}</Link>
                                                         <span className="font-medium text-gray-600">{formatNumber(tag?.count)}</span>
                                                     </li>
