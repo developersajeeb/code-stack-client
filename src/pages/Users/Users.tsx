@@ -2,11 +2,14 @@ import { useQuery } from "@tanstack/react-query";
 import notUser from "../../assets/icons/user-not.png";
 import { BiSearchAlt } from "react-icons/bi";
 import { Link } from "react-router-dom";
-import { useContext, useState } from "react"
+import { useContext, useEffect, useState } from "react"
 import { AuthContext } from "../../Provider/AuthProvider";
 import { Skeleton } from "primereact/skeleton";
 
 const Users = () => {
+    useEffect(() => {
+        window.scrollTo(0, 0);
+    }, []);
     const [searchTerm, setSearchTerm] = useState('');
 
     const authContext = useContext(AuthContext)
@@ -44,7 +47,14 @@ const Users = () => {
             </form>
             <section className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5 xl:gap-10 mt-8">
                 {members.length < 0 ? (
-                    <Skeleton height="1.5rem" width="9rem" className="my-6"></Skeleton>
+                    <>
+                        <Skeleton height="5rem" width="100%"></Skeleton>
+                        <Skeleton height="5rem" width="100%"></Skeleton>
+                        <Skeleton height="5rem" width="100%"></Skeleton>
+                        <Skeleton height="5rem" width="100%"></Skeleton>
+                        <Skeleton height="5rem" width="100%"></Skeleton>
+                        <Skeleton height="5rem" width="100%"></Skeleton>
+                    </>
                 ) : (
                     filteredMembers.length > 0 ? (
                         filteredMembers.map((member: any) => (

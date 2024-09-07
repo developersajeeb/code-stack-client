@@ -32,6 +32,7 @@ import AdminRoute from "./AdminRoute";
 import Main from "../pages/Main/Main";
 import RedirectIfAuthenticated from "./RedirectIfAuthenticated";
 import QuestionsDetails from "../pages/QuestionsDetails/QuestionsDetails";
+import Badges from "../pages/Badges/Badges";
 
 export const router = createBrowserRouter([
   {
@@ -41,120 +42,124 @@ export const router = createBrowserRouter([
     children: [
       {
         path: '/',
-        element: <RedirectIfAuthenticated><Home></Home></RedirectIfAuthenticated>
+        element: <RedirectIfAuthenticated><Home/></RedirectIfAuthenticated>
       },
       {
         path: 'login',
-        element: <Login></Login>
+        element: <Login/>
       },
       {
         path: 'register',
-        element: <Register></Register>
+        element: <Register/>
       },
       {
         path: 'disclaimer',
-        element: <Disclaimer></Disclaimer>
+        element: <Disclaimer/>
       },
       {
         path: 'trams-and-conditions',
-        element: <TramsConditions></TramsConditions>
+        element: <TramsConditions/>
       },
       {
         path: 'contact-us',
-        element: <ContactUs></ContactUs>
+        element: <ContactUs/>
       },
       {
         path: 'my-profile',
-        element: <PrivateRoute><MyProfile></MyProfile></PrivateRoute>,
-        errorElement: <ErrorPage></ErrorPage>,
+        element: <PrivateRoute><MyProfile/></PrivateRoute>,
+        errorElement: <ErrorPage/>,
         children: [
           {
             path: '/my-profile',
-            element: <ProfileDashboard></ProfileDashboard>,
+            element: <ProfileDashboard/>,
           },
           {
             path: 'summery',
-            element: <Summery></Summery>
+            element: <Summery/>,
           },
           {
             path: 'edit-profile',
-            element: <EditProfile></EditProfile>,
+            element: <EditProfile/>,
           },
           {
             path: 'answers',
-            element: <Answers></Answers>
+            element: <Answers/>
           },
           {
             path: 'questions',
-            element: <Questions></Questions>
+            element: <Questions/>
           },
           {
             path: 'saves',
-            element: <Saves></Saves>
+            element: <Saves/>
           },
         ]
       },
       {
         path: '/',
-        element: <PrivateRoute><Main></Main></PrivateRoute>,
+        element: <PrivateRoute><Main/></PrivateRoute>,
         children: [
           {
             path: 'news-feed',
-            element: <NewsFeed></NewsFeed>,
+            element: <NewsFeed/>,
             loader: () => fetch('http://localhost:5000/questions')
           },
           {
             path: 'news-feed/:id',
-            element: <QuestionsDetails></QuestionsDetails>,
+            element: <QuestionsDetails/>,
             loader: ({ params }) => fetch(`http://localhost:5000/question-details/${params.id}`)
           },
           {
             path: 'ask-question',
-            element: <AddQuestions></AddQuestions>,
+            element: <AddQuestions/>,
           },
           {
             path: 'tagged',
-            element: <TagQuestions></TagQuestions>,
+            element: <TagQuestions/>,
           },
           {
             path: 'user/:username',
-            element: <SingleUser></SingleUser>,
+            element: <SingleUser/>,
             loader: ({ params }) => fetch(`http://localhost:5000/user?username=${params.username}`)
           },
           {
             path: 'tags',
-            element: <Tag></Tag>,
+            element: <Tag/>,
           },
           {
             path: 'users',
-            element: <Users></Users>,
+            element: <Users/>,
           },
           {
             path: 'edit-question/:id',
-            element: <EditQuestion></EditQuestion>,
+            element: <EditQuestion/>,
             loader: ({ params }) => fetch(`http://localhost:5000/question-details/${params.id}`)
           },
+          {
+            path: '/badges',
+            element: <Badges/>
+          }
         ]
       },
       {
         path: 'dashboard',
-        element: <PrivateRoute><AdminRoute><DashboardLayout></DashboardLayout></AdminRoute></PrivateRoute>,
+        element: <PrivateRoute><AdminRoute><DashboardLayout/></AdminRoute></PrivateRoute>,
         children: [
           {
             path: '/dashboard',
-            element: <AdminHome></AdminHome>
+            element: <AdminHome/>
           },
           {
             path: "allUsers",
-            element: <AllUsers></AllUsers>
+            element: <AllUsers/>
           },
           {
             path: 'edit-profile',
-            element: <EditProfile></EditProfile>,
+            element: <EditProfile/>,
           },
           {
             path: 'add-post',
-            element: <AddPost></AddPost>,
+            element: <AddPost/>,
           }
         ]
       },
