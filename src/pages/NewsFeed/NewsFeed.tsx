@@ -29,7 +29,7 @@ const NewsFeed = () => {
     const [filteredQuestions, setFilteredQuestions] = useState<Question[]>([]);
     const [questionsToShow, setQuestionsToShow] = useState<number>(10);
     const [newQuestionLength, setNewQuestionLength] = useState<number | undefined>(undefined);
-    const [loading, setLoading] = useState<boolean>(false);
+    const [loading, setLoading] = useState<boolean>(true);
     const [questions, setQuestions] = useState<Question[]>(allQuestions);
     const [isMoreBtnLoading, setIsMoreBtnLoading] = useState<boolean>(false);
 
@@ -74,22 +74,7 @@ const NewsFeed = () => {
     
         setFilteredQuestions(filteredQuestions);
         setLoading(false);
-    }, [questions, location.search]);    
-
-    useEffect(() => {
-        const fetchTags = async () => {
-            try {
-                const response = await fetch('http://localhost:5000/top-tags');
-                if (!response.ok) {
-                    throw new Error('Network response was not ok');
-                }
-            } catch (error) {
-                console.error('Fetch error:', error);
-            }
-        };
-
-        fetchTags();
-    }, []);
+    }, [questions, location.search]);
 
     const incrementViewCount = async (questionId: string) => {
         try {
