@@ -1,4 +1,4 @@
-import { useContext, useRef, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import { AuthContext } from "../../Provider/AuthProvider";
@@ -22,6 +22,9 @@ interface IFormInput {
 const image_hosting_token = import.meta.env.VITE_Image_API;
 
 const Register = () => {
+    useEffect(() => {
+        window.scrollTo(0, 0);
+    }, []);
     const authContext = useContext(AuthContext)
     if (!authContext) {
         return <p>Loading...</p>;

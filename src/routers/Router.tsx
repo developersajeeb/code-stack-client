@@ -120,7 +120,7 @@ export const router = createBrowserRouter([
           {
             path: 'user/:username',
             element: <SingleUser/>,
-            loader: ({ params }) => fetch(`http://localhost:5000/user?username=${params.username}`)
+            loader: ({ params }) => fetch(`http://localhost:5000/user-by-username?username=${params.username}`)
           },
           {
             path: 'tags',

@@ -5,6 +5,9 @@ import { useContext, useEffect, useState } from "react"
 import { AuthContext } from "../../Provider/AuthProvider";
 import { Skeleton } from "primereact/skeleton";
 import { Button } from "primereact/button";
+import b2 from '../../assets/badges/l1.png'
+import b3 from '../../assets/badges/l2.png'
+import b4 from '../../assets/badges/top.png'
 
 const Users = () => {
     useEffect(() => {
@@ -15,6 +18,7 @@ const Users = () => {
     const [members, setMembers] = useState<any[]>([]);
     const [skip, setSkip] = useState<number>(0);
     const [hasMore, setHasMore] = useState<boolean>(true);
+    const [questionCounts, setQuestionCounts] = useState<{ [key: string]: number }>({});
 
     const authContext = useContext(AuthContext)
     if (!authContext) {
@@ -22,26 +26,49 @@ const Users = () => {
     }
     const { user } = authContext;
 
+    const fetchQuestionCount = async (email: string) => {
+        try {
+            const res = await fetch(`http://localhost:5000/single-user-all-questions/${email}`);
+            const questions = await res.json();
+            return questions.length;
+        } catch (error) {
+            console.error('Error fetching question count:', error);
+            return 0;
+        }
+    };
+
     const fetchMembers = async () => {
         setLoading(true);
         const res = await fetch(`http://localhost:5000/users?skip=${skip}&limit=18`);
         const { users, total } = await res.json();
         setLoading(false);
-    
+
         if (users.length > 0) {
             setMembers((prev) => {
-                const newMembers = users.filter((newMember: any) => 
+                const newMembers = users.filter((newMember: any) =>
                     !prev.some((existingMember: any) => existingMember._id === newMember._id)
                 );
                 return [...prev, ...newMembers];
             });
             setSkip(skip + 18);
+
+            const questionCountPromises = users.map((user: any) =>
+                fetchQuestionCount(user.email).then(count => ({ email: user.email, count }))
+            );
+            const counts = await Promise.all(questionCountPromises);
+            setQuestionCounts((prev) => {
+                const newCounts = { ...prev };
+                counts.forEach(({ email, count }) => {
+                    newCounts[email] = count;
+                });
+                return newCounts;
+            });
         }
 
         if (members.length + users.length >= total) {
             setHasMore(false);
         }
-    };        
+    };
 
     useEffect(() => {
         fetchMembers();
@@ -74,16 +101,25 @@ const Users = () => {
                 ) : (
                     filteredMembers.map((member: any) => (
                         <div key={member?._id} className="flex items-center gap-2 bg-gray-100 px-3 py-2 rounded-xl shadow-sm relative border-4 border-gray-50">
-                            <span className="text-[10px] bg-gray-400 p-1 text-white rounded-full absolute -right-2 -top-2">Entry</span>
+                            {questionCounts[member?.email] >= 5 && (
+                                <div className="absolute -right-2 -top-2">
+                                    {questionCounts[member?.email] >= 20 ? (
+                                        <img className="w-6" src={b4} alt="Top Level" />
+                                    ) : questionCounts[member?.email] >= 10 ? (
+                                        <img className="w-6" src={b3} alt="Level 2" />
+                                    ) : (
+                                        <img className="w-6" src={b2} alt="Level 1" />
+                                    )}
+                                </div>
+                            )}
                             <figure>
                                 <img className="w-14 h-14 object-cover rounded-full" src={member?.imgURL || notUser} alt="user image" />
                             </figure>
                             <div>
                                 <Link to={user?.email === member?.email ? `/my-profile` : `/user/${member?.username}`}>
                                     <h3 className="font-medium text-base hover:text-[#33B89F] cursor-pointer text-gray-600 duration-300">{member?.name}</h3>
-                                    <p className="text-sm font-light text-gray-500 -mt-[2px]">{member?.username}</p>
+                                    <p className="text-sm font-light text-gray-500 -mt-[2px]">@{member?.username}</p>
                                 </Link>
-                                <p className="text-sm text-gray-400">{member?.country}</p>
                             </div>
                         </div>
                     ))

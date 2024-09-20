@@ -13,6 +13,9 @@ import Swal from "sweetalert2";
 import { Image } from 'primereact/image';
 import { Editor, EditorTextChangeEvent } from "primereact/editor";
 import { Button } from "primereact/button";
+import l1 from '../../assets/badges/l1.png';
+import l2 from '../../assets/badges/l2.png';
+import top from '../../assets/badges/top.png';
 
 interface QuestionInfo {
     _id: string;
@@ -40,6 +43,8 @@ const QuestionsDetails = () => {
     const [answerToShow, setAnswerToShow] = useState<number>(10);
     const [newAnswerLength, setNewAnswerLength] = useState<number | undefined>(undefined);
     const authContext = useContext(AuthContext);
+    const [allUserQuestion, setAllUserQuestion] = useState([]);
+    const [userBadgeComing, setUserBadgeComing] = useState<boolean>(true);
 
     if (!authContext) {
         return <p>Loading...</p>;
@@ -167,7 +172,14 @@ const QuestionsDetails = () => {
         const res = await fetch(`http://localhost:5000/user?email=${user?.email}`);
         const data = await res.json();
         return data;
-    });    
+    });
+
+    useEffect(() => {
+        fetch(`http://localhost:5000/single-user-all-questions/${questionData?.email}`)
+            .then(res => res.json())
+            .then(data => setAllUserQuestion(data))
+        setUserBadgeComing(false);
+    }, [questionData?.email]);
 
     return (
         <main className="px-0 lg:pl-6">
@@ -177,7 +189,15 @@ const QuestionsDetails = () => {
                     <Link to={questionData?.email === user?.email ? `/my-profile` : `/user/${questionData?.username}`}>
                         <div className="inline-block">
                             <div className="flex items-center gap-2 bg-gray-100 pl-3 pr-8 py-2 shadow rounded-lg relative">
-                                <span className="text-[10px] bg-gray-400 p-1 text-white rounded-full absolute -right-2 -top-2">Entry</span>
+                                {
+                                    !userBadgeComing && allUserQuestion?.length !== 0 && (
+                                        <span className="absolute -right-2 -top-2">
+                                            {allUserQuestion.length >= 20 ? <img className="w-6" src={top} /> :
+                                                allUserQuestion.length >= 10 ? <img className="w-6" src={l2} /> :
+                                                    allUserQuestion.length >= 5 ? <img className="w-6" src={l1} /> : ''}
+                                        </span>
+                                    )
+                                }
                                 <img className="w-11 h-11 object-cover rounded-full" src={questionData?.userPhoto || notUser} alt="User Photo" />
                                 <div>
                                     <h5 className="font-medium -mb-[3px] word-break">{questionData?.name}</h5>

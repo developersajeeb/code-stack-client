@@ -20,9 +20,7 @@ const SocialLogin = () => {
     const handleGoogleSingIn = () => {
         setLoading(true);
         googleSignIn()
-            .then((result: { user: any; }) => {
-                console.log(result.user);
-    
+            .then((result: { user: any; }) => {    
                 const loggedInUser = result.user;
                 const email = loggedInUser.email;
                 const username = email.substring(0, email.indexOf('@'));
@@ -50,11 +48,6 @@ const SocialLogin = () => {
                     });
             })
             .catch(() => {
-                // if (error.code === 'auth/popup-closed-by-user') {
-                    
-                // } else {
-                //     console.error("Error during Google sign-in:", error);
-                // }
                 setLoading(false);
             });
     }
