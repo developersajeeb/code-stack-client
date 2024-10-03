@@ -8,6 +8,10 @@
   font-family: "Roboto", sans-serif !important;
 }
 
+body {
+  overflow-x: hidden;
+}
+
 .primary-bg {
   background-color: #33b89f;
 }

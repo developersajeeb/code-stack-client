@@ -1,23 +1,23 @@
 import { useState, useEffect } from 'react';
 import { Chart } from 'primereact/chart';
-import { useQuery } from '@tanstack/react-query';
+// import { useQuery } from '@tanstack/react-query';
 
 export default function VerticalBarDemo() {
     const [chartData, setChartData] = useState({});
     const [chartOptions, setChartOptions] = useState({});
-    const [allUsers, setAllUsers] = useState([]);
+    // const [allUsers, setAllUsers] = useState([]);
 
-    const { data: allQuestions = [] } = useQuery([], async () => {
-        const res = await fetch(`http://localhost:5000/questions`);
-        const data = await res.json();
-        return data;
-    });
+    // const { data: allQuestions = [] } = useQuery([], async () => {
+    //     const res = await fetch(`http://localhost:5000/questions`);
+    //     const data = await res.json();
+    //     return data;
+    // });
 
-    useEffect(() => {
-        fetch(`http://localhost:5000/users`)
-            .then(res => res.json())
-            .then(data => setAllUsers(data))
-    }, []);
+    // useEffect(() => {
+    //     fetch(`http://localhost:5000/users`)
+    //         .then(res => res.json())
+    //         .then(data => setAllUsers(data))
+    // }, []);
 
     useEffect(() => {
         const documentStyle = getComputedStyle(document.documentElement);

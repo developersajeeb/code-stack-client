@@ -10,7 +10,6 @@ import AddQuestions from "../pages/AddQuestions/AddQuestions";
 import MyProfile from "../pages/MyProfile/MyProfile";
 import PrivateRoute from "./PrivateRoute";
 import ProfileDashboard from "../pages/ProfileDashboard/ProfileDashboard";
-import Summery from "../pages/Summery/Summery";
 import EditProfile from "../pages/EditProfile/EditProfile";
 import ErrorPage from "../pages/ErrorPage/ErrorPage";
 import DashboardLayout from "../Layouts/DashboardLayout";
@@ -72,10 +71,6 @@ export const router = createBrowserRouter([
           {
             path: '/my-profile',
             element: <ProfileDashboard/>,
-          },
-          {
-            path: 'summery',
-            element: <Summery/>,
           },
           {
             path: 'edit-profile',

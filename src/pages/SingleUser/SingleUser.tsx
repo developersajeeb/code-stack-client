@@ -247,9 +247,9 @@ const SingleUser = () => {
                             ))
                     }
                     {!hasMore && !isSkeletonLoading && (
-                        <p className="text-gray-500 font-medium text-lg mt-10 text-center">No more questions.</p>
+                        <p className="text-gray-500 font-medium text-lg mt-10 text-center">No questions here.</p>
                     )}
-                    {!isSkeletonLoading && hasMore && (
+                    {!isSkeletonLoading && hasMore && allQuestions.length > 0 && (
                         <div className="text-center mt-10">
                             <Button
                                 label="Load More"
