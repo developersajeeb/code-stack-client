@@ -31,7 +31,7 @@ import AdminRoute from "./AdminRoute";
 import Main from "../pages/Main/Main";
 import RedirectIfAuthenticated from "./RedirectIfAuthenticated";
 import QuestionsDetails from "../pages/QuestionsDetails/QuestionsDetails";
-import Badges from "../pages/Badges/Badges";
+import Level from "../pages/Level/Level";
 
 export const router = createBrowserRouter([
   {
@@ -131,8 +131,8 @@ export const router = createBrowserRouter([
             loader: ({ params }) => fetch(`http://localhost:5000/question-details/${params.id}`)
           },
           {
-            path: '/badges',
-            element: <Badges/>
+            path: '/level',
+            element: <Level/>
           }
         ]
       },

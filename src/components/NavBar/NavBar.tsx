@@ -109,9 +109,9 @@ const NavBar = () => {
                 isActive
                   ? "text-color flex items-center gap-2 mb-5"
                   : " text-gray-500 flex items-center gap-2 mb-5"
-              } to="/badges"
+              } to="/level"
             >
-              <BiBookmarkAlt /> Badges
+              <BiBookmarkAlt /> Level
             </NavLink>
             {user ? (
               <>

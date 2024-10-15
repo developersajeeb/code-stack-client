@@ -4,7 +4,7 @@ import l2 from '../../assets/badges/l2.png';
 import top from '../../assets/badges/top.png';
 
 
-const Badges = () => {
+const Level = () => {
     useEffect(() => {
         window.scrollTo(0, 0);
     }, []);
@@ -33,4 +33,4 @@ const Badges = () => {
     );
 };
 
-export default Badges;
+export default Level;

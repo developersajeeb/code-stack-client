@@ -144,7 +144,7 @@ const Main = () => {
                         <li><NavLink className={({ isActive }) => isActive ? 'text-color flex items-center gap-2' : ' text-gray-500 flex items-center gap-2'} to='/ask-question'><TbUserQuestion /> Ask Question</NavLink></li>
                         <li><NavLink className={({ isActive }) => isActive ? 'text-color flex items-center gap-2' : ' text-gray-500 flex items-center gap-2'} to='/tags'><TbTags /> Tags</NavLink></li>
                         <li><NavLink className={({ isActive }) => isActive ? 'text-color flex items-center gap-2' : ' text-gray-500 flex items-center gap-2'} to='/users'><FiUsers /> Users</NavLink></li>
-                        <li><NavLink className={({ isActive }) => isActive ? 'text-color flex items-center gap-2' : ' text-gray-500 flex items-center gap-2'} to='/badges'><BiBookmarkAlt /> Badges</NavLink></li>
+                        <li><NavLink className={({ isActive }) => isActive ? 'text-color flex items-center gap-2' : ' text-gray-500 flex items-center gap-2'} to='/level'><BiBookmarkAlt /> Level</NavLink></li>
                     </ul>
                 </div>
             </section>

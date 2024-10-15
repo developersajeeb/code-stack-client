@@ -1,9 +1,10 @@
 import { Link } from "react-router-dom";
-import storage from '../../assets/others/pngwing.com.png'
 import { useContext, useEffect, useState } from "react";
 import { RiQuestionAnswerLine } from "react-icons/ri";
-import { MdUnfoldMore } from "react-icons/md";
 import { AuthContext } from "../../Provider/AuthProvider";
+import { Button } from "primereact/button";
+import { HiOutlineEye } from "react-icons/hi";
+import giveQuestionImg from '../../assets/others/question.png';
 
 interface QuestionData {
     _id: '',
@@ -11,35 +12,64 @@ interface QuestionData {
 }
 
 const Questions = () => {
+    useEffect(() => {
+        window.scrollTo(0, 0);
+    }, []);
     const [allQuestions, setAllQuestions] = useState<QuestionData[]>([]);
-    const [questionsToDisplay, setQuestionsToDisplay] = useState<number>(6);
-    const [hasMoreQuestions, setHasMoreQuestions] = useState<boolean>(true);
     const authContext = useContext(AuthContext)
     if (!authContext) {
         return <p>Loading...</p>;
     }
     const { user } = authContext;
-    const [isLoading, setIsLoading] = useState<boolean>(true);
+    const [isLoading, setIsLoading] = useState<boolean>(false);
+    const [isButtonLoading, setIsButtonLoading] = useState<boolean>(true);
+    const [skip, setSkip] = useState<number>(0);
+    const [hasMore, setHasMore] = useState<boolean>(true);
 
-    const handleLoadMore = () => {
-        const nextQuestionsToDisplay = questionsToDisplay + 6;
-        setQuestionsToDisplay(nextQuestionsToDisplay);
+    const fetchQuestions = async () => {
+        try {
+            if (skip === 0) {
+                setIsLoading(true);
+            } else {
+                setIsButtonLoading(true);
+            }
 
-        if (nextQuestionsToDisplay >= allQuestions.length) {
-            setHasMoreQuestions(false);
+            const res = await fetch(`http://localhost:5000/questions/${user?.email}?skip=${skip}&limit=10`);
+            const questions = await res.json();
+
+            if (questions.length > 0) {
+                setAllQuestions((prev) => {
+                    const newQuestions = questions.filter((newQuestion: any) =>
+                        !prev.some((existingQuestion: any) => existingQuestion._id === newQuestion._id)
+                    );
+                    return [...prev, ...newQuestions];
+                });
+                setSkip(skip + 10);
+            }
+
+            if (questions.length < 10) {
+                setHasMore(false);
+            }
+
+        } catch (error) {
+            console.error("Error fetching questions:", error);
+        } finally {
+            setIsLoading(false);
+            setIsButtonLoading(false);
+        }
+    };
+
+    const loadMoreQuestions = () => {
+        if (hasMore) {
+            fetchQuestions();
         }
     };
 
     useEffect(() => {
-        fetch(`http://localhost:5000/questions/${user?.email}`)
-            .then(res => res.json())
-            .then(data => {
-                setAllQuestions(data);
-                setTimeout(() => {
-                    setIsLoading(false);
-                }, 1000);
-            })
-    }, [])
+        if (user?.email) {
+            fetchQuestions();
+        }
+    }, [user?.email]);
 
     return (
         <main>
@@ -48,7 +78,7 @@ const Questions = () => {
                     <span className='bg-indigo-50 px-5 py-2 text-color-second rounded-md font-medium'>Questions</span>
                     <h2 className='text-3xl font-semibold text-gray-700 leading-snug mt-4'>Your All Posted Questions</h2>
                 </div>
-                <div className="h-[450px] overflow-y-auto custom-scrollbar mt-5">
+                <div className="mt-5">
                     {
                         isLoading ? (
                             <div>
@@ -72,43 +102,42 @@ const Questions = () => {
                                     <progress className="progress w-14 h-7 mr-2 rounded-full" value={0} max="100"></progress>
                                     <progress className="progress h-7 w-9/12 rounded-full" value={0} max="100"></progress>
                                 </div>
-                                <div className="animate-pulse mb-4 flex items-center">
-                                    <progress className="progress w-14 h-7 mr-2 rounded-full" value={0} max="100"></progress>
-                                    <progress className="progress h-7 w-7/12 rounded-full" value={0} max="100"></progress>
-                                </div>
-                                <div className="animate-pulse mb-4 flex items-center">
-                                    <progress className="progress w-14 h-7 mr-2 rounded-full" value={0} max="100"></progress>
-                                    <progress className="progress h-7 w-10/12 rounded-full" value={0} max="100"></progress>
-                                </div>
-                                <div className="animate-pulse mb-4 flex items-center">
-                                    <progress className="progress w-14 h-7 mr-2 rounded-full" value={0} max="100"></progress>
-                                    <progress className="progress h-7 w-11/12 rounded-full" value={0} max="100"></progress>
-                                </div>
                             </div>
 
                         ) : (
-                            allQuestions ? (
-                                allQuestions?.map(question => <Link key={question._id} to={`/news-feed/${question._id}`}>
-                                    <p className="border-b flex items-center gap-2 py-2 text-lg text-gray-500 hover:text-[#33B89F] cursor-pointer duration-200 font-normal"><span><RiQuestionAnswerLine size={24} /></span> {question?.title}</p>
-                                </Link>))
+                            allQuestions.length > 0 ? (
+                                allQuestions?.map(question => (
+                                    <div key={question?._id} className='flex items-start justify-between border-b gap-4'>
+                                        <p className="flex gap-2 py-2 text-base text-gray-500 font-normal">
+                                            <span><RiQuestionAnswerLine size={24} /></span> {question?.title}
+                                        </p>
+                                        <Link to={`/news-feed/${question._id}`} className='text-gray-500 hover:text-[#33B89F] cursor-pointer duration-200 inline-block' title='View'>
+                                            <HiOutlineEye size={24} />
+                                        </Link>
+                                    </div>
+                                )))
                                 :
                                 <div className="flex justify-center">
-                                    <p className="text-sm mt-4 text-gray-500 text-center">
-                                        <img className="w-40 mx-auto" src={storage} alt="" />
-                                        <span>Just getting started? Try answering a question!</span>
-                                        <p className="w-full md:w-96 mt-3">Your most helpful questions, answers and tags will appear here. Start by <Link to='/ask-question'><span className="ml-1 text-color-second cursor-pointer">answering a question</span></Link> or selecting tags that match topics you’re interested in.</p>
-                                    </p>
+                                    <div className="text-sm my-20 text-gray-500 text-center">
+                                        <img className='w-32 mx-auto mb-4' src={giveQuestionImg} alt="" />
+                                        <span className='font-medium'>Just getting started? Ask a question!</span>
+                                        <p className="max-w-[384px] mt-3">Your most helpful questions, answers and tags will appear here. Start by <Link to='/ask-question'><span className="ml-1 text-color-second cursor-pointer">ask a question</span></Link> ans selecting tags that match topics with your questions.</p>
+                                    </div>
                                 </div>)
                     }
-                    {
-                        hasMoreQuestions && !isLoading && (
-                            <div className="mt-6">
-                                <button className="bg-button mx-auto" onClick={handleLoadMore}>
-                                    More <MdUnfoldMore size={20} />
-                                </button>
-                            </div>
-                        )}
                 </div>
+
+                {!isLoading && hasMore && allQuestions.length > 0 && (
+                    <div className="text-center mt-10">
+                        <Button
+                            label="Load More"
+                            disabled={isButtonLoading}
+                            loading={isButtonLoading}
+                            className='max-w-[250px] cs-button'
+                            onClick={loadMoreQuestions}
+                        />
+                    </div>
+                )}
             </section>
         </main>
     );

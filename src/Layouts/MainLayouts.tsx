@@ -8,6 +8,7 @@ import 'primereact/resources/themes/lara-light-indigo/theme.css';
 import 'primereact/resources/primereact.css';
 import { Dialog } from 'primereact/dialog'; // Import Dialog from PrimeReact
 import { AuthContext } from "../Provider/AuthProvider";
+import { Button } from "primereact/button";
 
 const MainLayouts = () => {
     const [pieces, setPieces] = useState(200);
@@ -16,10 +17,9 @@ const MainLayouts = () => {
     const [levelTwo, SetLevelTwo] = useState<boolean>();
     const [levelTop, SetLevelTop] = useState<boolean>();
     const [visible, setVisible] = useState<boolean>(false);
+    const [buttonLoading, setButtonLoading] = useState<boolean>(false);
     const [allLengthQuestion, setLengthQuestion] = useState<number>();
     const authContext = useContext(AuthContext);
-
-    console.log(levelOne, levelTwo, levelTop);
 
     if (!authContext) {
         return <p>Loading...</p>;
@@ -43,16 +43,15 @@ const MainLayouts = () => {
     useEffect(() => {
         const fetchQuestions = async () => {
             if (!user?.email) return;
-    
             try {
                 const response = await fetch(`http://localhost:5000/single-user-all-questions/${user?.email}`);
-                
+
                 if (!response.ok) {
                     throw new Error('Network response was not ok');
                 }
-                
+
                 const questionsData = await response.json();
-                
+
                 SetLevelOne(questionsData?.levelOne);
                 SetLevelTwo(questionsData?.levelTwo);
                 SetLevelTop(questionsData?.levelTop);
@@ -60,12 +59,12 @@ const MainLayouts = () => {
 
             } catch (error) {
                 console.error('Error fetching questions:', error);
-                
+
             }
         };
-    
+
         fetchQuestions();
-    }, [user?.email]);    
+    }, [user?.email]);
 
     useEffect(() => {
         const milestoneCheck = () => {
@@ -74,11 +73,12 @@ const MainLayouts = () => {
                 setVisible(true);
             }
         };
-        
+
         milestoneCheck();
-    }, [levelOne, levelTwo, levelTop]);    
+    }, [levelOne, levelTwo, levelTop]);
 
     const handleOkClick = async () => {
+        setButtonLoading(true);
         try {
             const response = await fetch(`http://localhost:5000/update-level/${user?.email}`, {
                 method: 'PUT',
@@ -93,6 +93,7 @@ const MainLayouts = () => {
             });
 
             if (response.ok) {
+                setButtonLoading(false);
                 setVisible(false);
             } else {
                 console.error('Failed to update user level');
@@ -120,10 +121,25 @@ const MainLayouts = () => {
             )}
 
             {/* PrimeReact Dialog */}
-            <Dialog header="Milestone Achieved!" visible={visible} style={{ width: '50vw' }} onHide={() => setVisible(false)}>
-                <div className="flex flex-column align-items-center">
-                    <p>Congratulations! You've reached a milestone!</p>
-                    <button className="bg-button" onClick={handleOkClick}>Ok</button>
+            <Dialog header="Level Achieved! 👏" visible={visible} onHide={() => setVisible(false)} closable={false} className="!max-w-[400px] !mx-4">
+                <div>
+                    <p><span className="font-medium word-break">Congratulations! 🎉</span> You've reached a Level! Please check your profile dashboard.</p>
+
+                    <div className={`mt-7 relative ${buttonLoading ? 'max-w-[193px]' : 'max-w-[169px]'} mx-auto`}>
+                        <div className="absolute h-3 w-3 z-10 -top-1 -right-1">
+                            <span className="relative flex h-3 w-3">
+                                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#269782] opacity-75"></span>
+                                <span className="relative inline-flex rounded-full h-3 w-3 bg-[#269782]"></span>
+                            </span>
+                        </div>
+                        <Button
+                            label="Make as read"
+                            className="cs-button"
+                            onClick={handleOkClick}
+                            disabled={buttonLoading}
+                            loading={buttonLoading}
+                            />
+                    </div>
                 </div>
             </Dialog>
         </>

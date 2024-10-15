@@ -6,7 +6,7 @@ import { AuthContext } from "../../Provider/AuthProvider";
 import AnswerDetails from "./AnswerDetails";
 import notUser from '../../assets/icons/user-not.png';
 import { useQuery } from "@tanstack/react-query";
-import { BsBookmarks, BsThreeDots } from "react-icons/bs";
+import { BsBookmarks, BsBookmarksFill, BsThreeDots } from "react-icons/bs";
 import { FiShare2 } from "react-icons/fi";
 import { FaRegTrashCan } from "react-icons/fa6";
 import Swal from "sweetalert2";
@@ -45,7 +45,8 @@ const QuestionsDetails = () => {
     const authContext = useContext(AuthContext);
     const [allUserQuestion, setAllUserQuestion] = useState([]);
     const [userBadgeComing, setUserBadgeComing] = useState<boolean>(true);
-
+    const [isSaveLoading, setSaveLoading] = useState<boolean>(false);
+    const [isLikeLoading, setLikeLoading] = useState<boolean>(false);
     if (!authContext) {
         return <p>Loading...</p>;
     }
@@ -85,6 +86,7 @@ const QuestionsDetails = () => {
     }, [questionData, user?.email]);
 
     const handleLike = () => {
+        setLikeLoading(true);
         const email = user?.email;
         const url = `http://localhost:5000/vote/${questionData?._id}`;
         const method = isLike ? 'DELETE' : 'POST';
@@ -100,6 +102,7 @@ const QuestionsDetails = () => {
             .then(result => result.json())
             .then((data) => {
                 if (data.updateResult.modifiedCount > 0) {
+                    setLikeLoading(false);
                     setIsLike(!isLike);
                     setLikeCount(isLike ? likeCount - 1 : likeCount + 1);
                     refetch();
@@ -117,26 +120,41 @@ const QuestionsDetails = () => {
             });
     };
 
-    const handleSaves = (questionID: string | undefined) => {
+    const handleSaves = async (questionID: string | undefined) => {
         const savesData = { questionID, userEmail: user?.email, questionTitle: questionData?.title };
-
-        fetch('http://localhost:5000/saves', {
+        setSaveLoading(true);
+        const res = await fetch('http://localhost:5000/saves', {
             method: 'POST',
-            headers: {
-                'content-type': 'application/json'
-            },
+            headers: { 'content-type': 'application/json' },
             body: JSON.stringify(savesData)
-        })
-            .then(result => result.json())
-            .then((data) => {
-                if (data.insertedId) {
-                    refetch();
-                    toast.success('Saved this question!');
-                } else {
-                    toast.error("Error, Please try again!");
-                }
-            })
-    }
+        });
+
+        const data = await res.json();
+        setSaveLoading(false);
+
+        if (data.action === "saved") {
+          toast.success(data.message);
+        } else if (data.action === "unsaved") {
+          toast.success(data.message);
+        }
+    
+        refetchSavedStatus();
+    };
+
+    const { data: savedStatusData, refetch: refetchSavedStatus } = useQuery({
+        queryKey: ['checkSaved', questionData?._id, user?.email],
+        queryFn: async () => {
+            const res = await fetch(`http://localhost:5000/check-saved/${questionData?._id}/${user?.email}`);
+            if (!res.ok) {
+                throw new Error('Error fetching saved status');
+            }
+            return res.json();
+        },
+        enabled: !!questionData && !!user?.email,
+        onError: (error) => {
+            console.error("Error fetching saved status:", error);
+        },
+    });    
 
     const handleDeleteQuestion = (id: string) => {
         Swal.fire({
@@ -207,7 +225,7 @@ const QuestionsDetails = () => {
                         </div>
                     </Link>
                     <div className="flex items-center gap-3">
-                        <p onClick={handleLike} className="cursor-pointer bg-gray-100 text-gray-500 rounded-full flex items-center gap-1 px-2 py-1 border-gray-400">
+                        <p onClick={handleLike} className={`${isLikeLoading === true ? 'disabled opacity-50 cursor-progress' : ''} cursor-pointer bg-gray-100 text-gray-500 rounded-full flex items-center gap-1 px-2 py-1 border-gray-400`}>
                             <span>
                                 {isLike ? <BiSolidLike size={25} /> : <BiLike size={25} />}
                             </span>
@@ -222,13 +240,13 @@ const QuestionsDetails = () => {
                             <div tabIndex={0} className="mt-3 z-[1] card card-compact dropdown-content bg-gray-100 shadow">
                                 <ul className=" bg-base-200 rounded-lg flex px-2 pt-2">
                                     <li>
-                                        <a className="hover:bg-gray-200 p-2 rounded-md cursor-pointer tooltip tooltip-bottom" data-tip="share" onClick={() => handleCopyClick(`/news-feed/${questionData?._id}`)}>
+                                        <a className="hover:bg-gray-200 p-2 rounded-md cursor-pointer tooltip tooltip-bottom" data-tip="share" onClick={() => handleCopyClick(`https://code-stack.netlify.app/news-feed/${questionData?._id}`)}>
                                             <FiShare2 size={20} />
                                         </a>
                                     </li>
                                     <li>
-                                        <a className="hover:bg-gray-200 p-2 rounded-md cursor-pointer tooltip tooltip-bottom" data-tip="save" onClick={() => handleSaves(questionData?._id)}>
-                                            <BsBookmarks size={20} />
+                                        <a className={`hover:bg-gray-200 p-2 rounded-md cursor-pointer tooltip tooltip-bottom ${isSaveLoading === true ? 'disabled opacity-50 cursor-progress' : ''}`} data-tip={`${savedStatusData?.isSaved?'saved':'save'}`} onClick={() => handleSaves(questionData?._id)}>
+                                            {savedStatusData?.isSaved ? <BsBookmarksFill className="text-color" size={20} /> : <BsBookmarks size={20} />}
                                         </a>
                                     </li>
                                     {questionData?.email === user?.email && (

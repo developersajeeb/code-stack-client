@@ -142,7 +142,7 @@ const SingleUser = () => {
                                         <progress className="progress w-11 h-7 rounded-md" value={0} max="100"></progress>
                                     </div>
                                 ) : (
-                                    allUserQuestion?.length
+                                    allUserQuestion?.length || 0
                                 )
                             }</span>
                         </div>

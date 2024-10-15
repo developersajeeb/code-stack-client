@@ -160,7 +160,7 @@ const ProfileDashboard = () => {
                     </div>
                 </div>
                 <div className="rounded-lg p-6 bg-slate-50">
-                    <h5 className="text-xl font-medium text-gray-600">Earn Level/Badges</h5>
+                    <h5 className="text-xl font-medium text-gray-600">Earn Level's</h5>
                     <ul className="flex gap-4 mt-1">
                         {isDataQLoading ? (
                             <>
