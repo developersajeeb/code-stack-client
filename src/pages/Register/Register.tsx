@@ -152,7 +152,7 @@ const Register = () => {
     };
 
     return (
-        <main className='grid md:grid-cols-2 max-w-[1320px] mx-auto px-4' data-aos="fade-up">
+        <main className='grid md:grid-cols-2 max-w-[1352px] mx-auto px-4 pt-20' data-aos="fade-up">
             <Toaster
                 position="top-center"
                 reverseOrder={false}

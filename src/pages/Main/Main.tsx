@@ -74,18 +74,17 @@ const Main = () => {
         <main className="px-4 pt-7 pb-10 max-w-[1300px] mx-auto">
             <section>
                 <div className="drawer lg:drawer-open">
-                    <input id="my-drawer-2" type="checkbox" className="drawer-toggle" />
                     <div className="drawer-content">
                         {/* Page content here */}
                         <main className="grid grid-cols-1 md:grid-cols-4 gap-10">
                             <section className="col-span-1 md:col-span-3">
                                 <Outlet></Outlet>
                             </section>
-                            <main className="col-span-1">
+                            <main className="col-span-1 pt-20">
                                 <section>
                                     <div className="relative">
                                         <h2 className="text-8xl font-medium text-gray-100">top</h2>
-                                        <h3 className="font-medium text-2xl text-gray-500 absolute bottom-0 left-0">Tags</h3>
+                                        <h3 className="font-bold text-2xl text-gray-500 absolute bottom-0 left-0">Tags</h3>
                                     </div>
                                     {loading ? (
                                         <>
@@ -112,7 +111,7 @@ const Main = () => {
                                 <section className="mt-4">
                                     <div className="relative">
                                         <h2 className="text-8xl font-medium text-gray-100">hot</h2>
-                                        <h3 className="font-medium text-2xl text-gray-500 absolute bottom-0 left-0">Questions</h3>
+                                        <h3 className="font-bold text-2xl text-gray-500 absolute bottom-0 left-0">Questions</h3>
                                     </div>
                                     {questionLoading ? (
                                         <>
@@ -139,12 +138,12 @@ const Main = () => {
                             </main>
                         </main>
                     </div>
-                    <ul className="menu text-base h-full font-medium hidden lg:block">
-                        <li><NavLink className={({ isActive }) => isActive ? 'text-color flex items-center gap-2' : ' text-gray-500 flex items-center gap-2'} to='/news-feed'><FaRegNewspaper /> News Feed</NavLink></li>
-                        <li><NavLink className={({ isActive }) => isActive ? 'text-color flex items-center gap-2' : ' text-gray-500 flex items-center gap-2'} to='/ask-question'><TbUserQuestion /> Ask Question</NavLink></li>
-                        <li><NavLink className={({ isActive }) => isActive ? 'text-color flex items-center gap-2' : ' text-gray-500 flex items-center gap-2'} to='/tags'><TbTags /> Tags</NavLink></li>
-                        <li><NavLink className={({ isActive }) => isActive ? 'text-color flex items-center gap-2' : ' text-gray-500 flex items-center gap-2'} to='/users'><FiUsers /> Users</NavLink></li>
-                        <li><NavLink className={({ isActive }) => isActive ? 'text-color flex items-center gap-2' : ' text-gray-500 flex items-center gap-2'} to='/level'><BiBookmarkAlt /> Level</NavLink></li>
+                    <ul className="menu text-base h-full font-medium hidden lg:block pt-20">
+                        <li><NavLink className={({ isActive }) => isActive ? 'text-color flex items-center gap-2' : ' text-gray-600 flex items-center gap-2'} to='/news-feed'><FaRegNewspaper /> News Feed</NavLink></li>
+                        <li><NavLink className={({ isActive }) => isActive ? 'text-color flex items-center gap-2' : ' text-gray-600 flex items-center gap-2'} to='/ask-question'><TbUserQuestion /> Ask Question</NavLink></li>
+                        <li><NavLink className={({ isActive }) => isActive ? 'text-color flex items-center gap-2' : ' text-gray-600 flex items-center gap-2'} to='/tags'><TbTags /> Tags</NavLink></li>
+                        <li><NavLink className={({ isActive }) => isActive ? 'text-color flex items-center gap-2' : ' text-gray-600 flex items-center gap-2'} to='/users'><FiUsers /> Users</NavLink></li>
+                        <li><NavLink className={({ isActive }) => isActive ? 'text-color flex items-center gap-2' : ' text-gray-600 flex items-center gap-2'} to='/level'><BiBookmarkAlt /> Level</NavLink></li>
                     </ul>
                 </div>
             </section>

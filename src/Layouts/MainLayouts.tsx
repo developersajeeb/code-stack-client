@@ -20,6 +20,8 @@ const MainLayouts = () => {
     const [buttonLoading, setButtonLoading] = useState<boolean>(false);
     const [allLengthQuestion, setLengthQuestion] = useState<number>();
     const authContext = useContext(AuthContext);
+    console.log(allLengthQuestion);
+    
 
     if (!authContext) {
         return <p>Loading...</p>;

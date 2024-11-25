@@ -76,7 +76,7 @@ const Questions = () => {
             <section>
                 <div>
                     <span className='bg-indigo-50 px-5 py-2 text-color-second rounded-md font-medium'>Questions</span>
-                    <h2 className='text-3xl font-semibold text-gray-700 leading-snug mt-4'>Your All Posted Questions</h2>
+                    <h2 className='text-xl md:text-3xl font-semibold text-gray-700 leading-snug mt-4'>Your All Posted Questions</h2>
                 </div>
                 <div className="mt-5">
                     {

@@ -65,7 +65,7 @@ const Footer = () => {
                     </div>
                 </footer>
                 <section className='px-4 py-8 text-gray-400 md:col-span-2 bg-[#202942] border-t border-gray-700'>
-                    <div className='text-center md:text-start text-sm'><p>© Copyright {new Date().getFullYear()}. All Rights Reserved by <span className='text-color duration-200 hover:text-[#02B1FC] cursor-pointer font-medium'>CodeStack</span></p></div>
+                    <div className='text-center text-sm'><p>© Copyright {new Date().getFullYear()}. All Rights Reserved by <span className='text-color duration-200 hover:text-[#02B1FC] cursor-pointer font-medium'>CodeStack</span> | Develop by <Link to='https://www.developersajeeb.com' target='_blank' className='font-medium text-color duration-200 hover:text-[#02B1FC]'>Sajeeb Debnath</Link></p></div>
                 </section>
             </div>
         </section>
