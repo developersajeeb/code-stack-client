@@ -186,65 +186,62 @@ const ProfileDashboard = () => {
 
                 </div>
             </section>
-            <section className="mt-8 grid grid-cols-1 md:grid-cols-5 gap-5">
-                <div className="col-span-1 md:col-span-3">
-                    <Chart type="line" data={chartData} options={chartOptions} />
-                </div>
-
-                <div className="col-span-1 md:col-span-2 mt-5 md:mt-0">
-                    <div className="p-4 bg-gray-100 rounded-lg">
-                        <h3 className='text-gray-800 font-medium text-xl mb-4'>Personal Information</h3>
-                        <div className="grid grid-cols-2 gap-x-5 gap-y-3">
-                            <div className="col-span-2">
-                                <span className="text-gray-400 text-sm">Email</span>
-                                <p className=" text-gray-600 text-sm font-medium word-break">{userData?.email}</p>
-                            </div>
-                            <div>
-                                <span className="text-gray-400 text-sm">Your Age</span>
-                                <p className=" text-gray-600 text-sm font-medium">{userData?.age || 'N/A'}</p>
-                            </div>
-                            <div>
-                                <span className="text-gray-400 text-sm">Gender</span>
-                                <p className=" text-gray-600 text-sm font-medium">{userData?.gender || 'N/A'}</p>
-                            </div>
-                            <div>
-                                <span className="text-gray-400 text-sm">Country</span>
-                                <p className=" text-gray-600 text-sm font-medium">{userData?.country || 'N/A'}</p>
-                            </div>
-                            <div>
-                                <span className="text-gray-400 text-sm">City</span>
-                                <p className=" text-gray-600 text-sm font-medium">{userData?.city || 'N/A'}</p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div className="p-4 bg-gray-100 rounded-lg mt-5">
-                        <h3 className='text-gray-800 font-medium text-xl mb-1'>About</h3>
-                        <p className="text-sm text-gray-500 word-break">{userData?.aboutMe || 'N/A'}</p>
-                    </div>
-
-                    <div className="p-4 bg-gray-100 rounded-lg mt-5">
-                        <h3 className='text-gray-800 font-medium text-xl mb-2'>Social Account</h3>
-                        <ul className="flex flex-wrap items-center gap-x-4 gap-y-2 font-medium">
-                            <li><a className="text-gray-600 hover:text-[#33B89F] duration-300 flex items-center gap-1" href={userData?.facebookURL}><BsFacebook size={25} /> Facebook</a></li>
-                            <li><a className="text-gray-600 hover:text-[#33B89F] duration-300 flex items-center gap-1" href={userData?.githubURL}><BsGithub size={25} /> Github</a></li>
-                            <li><a className="text-gray-600 hover:text-[#33B89F] duration-300 flex items-center gap-1" href={userData?.twitterURL}><AiFillTwitterCircle size={30} /> Twitter</a></li>
-                            <li><a className="text-gray-600 hover:text-[#33B89F] duration-300 flex items-center gap-1" href={userData?.portfolioURL}><TbWorldLongitude size={28} /> Portfolio</a></li>
-                        </ul>
-                    </div>
-
-                    <div className="p-4 bg-gray-100 rounded-lg mt-5">
-                        <h3 className='text-gray-800 font-medium text-xl'>Skills</h3>
-                        <div className="mt-1 flex flex-wrap items-center gap-3">
-                            {userData?.selected ?
-                                userData?.selected?.map((skill: any, index: number) => <p key={index} className="bg-[#dae8e5] inline-block py-1 px-3 rounded-lg text-sm text-gray-600">{skill}</p>)
-                                :
-                                <p className="text-sm text-gray-500 font-medium">N/A</p>
-                            }
-                        </div>
-                    </div>
-                </div>
+            <section className="mt-10">
+                <Chart type="line" data={chartData} options={chartOptions} />
             </section>
+            <div className="mt-5 grid sm:grid-cols-2 gap-5">
+                <div className="p-4 bg-gray-100 rounded-lg">
+                    <h3 className='text-gray-800 font-medium text-xl mb-2'>Personal Information</h3>
+                    <div className="grid grid-cols-2 gap-x-5 gap-y-3">
+                        <div className="col-span-2">
+                            <span className="text-gray-400 text-sm">Email</span>
+                            <p className=" text-gray-600 text-sm font-medium word-break">{userData?.email}</p>
+                        </div>
+                        <div>
+                            <span className="text-gray-400 text-sm">Your Age</span>
+                            <p className=" text-gray-600 text-sm font-medium">{userData?.age || 'N/A'}</p>
+                        </div>
+                        <div>
+                            <span className="text-gray-400 text-sm">Gender</span>
+                            <p className=" text-gray-600 text-sm font-medium">{userData?.gender || 'N/A'}</p>
+                        </div>
+                        <div>
+                            <span className="text-gray-400 text-sm">Country</span>
+                            <p className=" text-gray-600 text-sm font-medium">{userData?.country || 'N/A'}</p>
+                        </div>
+                        <div>
+                            <span className="text-gray-400 text-sm">City</span>
+                            <p className=" text-gray-600 text-sm font-medium">{userData?.city || 'N/A'}</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div className="p-4 bg-gray-100 rounded-lg">
+                    <h3 className='text-gray-800 font-medium text-xl'>Skills</h3>
+                    <div className="mt-1 flex flex-wrap items-center gap-3">
+                        {userData?.selected ?
+                            userData?.selected?.map((skill: any, index: number) => <p key={index} className="bg-[#dae8e5] inline-block py-1 px-3 rounded-lg text-sm text-gray-600">{skill}</p>)
+                            :
+                            <p className="text-sm text-gray-500 font-medium">N/A</p>
+                        }
+                    </div>
+                </div>
+
+                <div className="p-4 bg-gray-100 rounded-lg sm:col-span-2">
+                    <h3 className='text-gray-800 font-medium text-xl mb-1'>About</h3>
+                    <p className="text-sm text-gray-500 word-break">{userData?.aboutMe || 'N/A'}</p>
+                </div>
+
+                <div className="p-4 bg-gray-100 rounded-lg sm:col-span-2">
+                    <h3 className='text-gray-800 font-medium text-xl mb-3'>Social Account</h3>
+                    <ul className="flex flex-wrap items-center gap-x-4 gap-y-2 font-medium">
+                        <li><a className="text-gray-600 hover:text-[#33B89F] duration-300 flex items-center gap-1" href={userData?.facebookURL} target="_blank"><BsFacebook size={25} /> Facebook</a></li>
+                        <li><a className="text-gray-600 hover:text-[#33B89F] duration-300 flex items-center gap-1" href={userData?.githubURL} target="_blank"><BsGithub size={25} /> Github</a></li>
+                        <li><a className="text-gray-600 hover:text-[#33B89F] duration-300 flex items-center gap-1" href={userData?.twitterURL} target="_blank"><AiFillTwitterCircle size={30} /> Twitter</a></li>
+                        <li><a className="text-gray-600 hover:text-[#33B89F] duration-300 flex items-center gap-1" href={userData?.portfolioURL} target="_blank"><TbWorldLongitude size={28} /> Portfolio</a></li>
+                    </ul>
+                </div>
+            </div>
         </main>
     );
 };

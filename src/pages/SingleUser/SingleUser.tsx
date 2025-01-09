@@ -109,7 +109,7 @@ const SingleUser = () => {
     }, [userData?.email]);
 
     return (
-        <main className="px-0 lg:pl-6">
+        <main className="px-0 lg:pl-6 pt-20">
             <img src={`${sectionBg}`} alt="" className="rounded-lg h-44 w-full object-cover object-right-bottom" />
             <section className="-mt-[65px] px-5 flex flex-col sm:flex-row gap-5 justify-between">
                 <div>

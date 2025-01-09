@@ -28,7 +28,7 @@ const MyProfile = () => {
 
     return (
         <main>
-            <div className="bg-no-repeat bg-cover bg-center h-40 lg:h-64 px-4 py-4" style={{ backgroundImage: `url(${bgImage})` }}>
+            <div className="bg-no-repeat bg-cover bg-center h-80 px-4 py-4" style={{ backgroundImage: `url(${bgImage})` }}>
                 <div className="max-w-[1320px] mx-auto h-full flex items-end">
                     <figure className="flex items-center gap-5 text-white">
                         <img className="w-24 md:w-32 max-w-[128px] h-24 md:h-32 max-h-[128px] rounded-full object-cover border-4 border-indigo-100 bg-white" src={userData?.imgURL || notUser} alt="" />

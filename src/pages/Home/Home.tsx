@@ -4,11 +4,14 @@ import { AiOutlineComment } from "react-icons/ai";
 import headerBannerImg from '../../assets/others/leanding-hero-bg.webp'
 import CountUp from '../../components/CountUp/CountUp';
 import bg from '../../assets/others/bg-dots.png';
-import logo1 from '../../assets/sponsor/phero.png'
-import logo2 from '../../assets/sponsor/ollyo.png'
-import logo3 from '../../assets/sponsor/codersBucket.png'
-import logo4 from '../../assets/sponsor/DS-logo.png'
-import logo5 from '../../assets/sponsor/BS-Logo-Blue_Hr.svg'
+import logo1 from '../../assets/logos/1.png'
+import logo2 from '../../assets/logos/2.png'
+import logo3 from '../../assets/logos/3.png'
+import logo4 from '../../assets/logos/4.png'
+import logo5 from '../../assets/logos/5.png'
+import logo6 from '../../assets/logos/6.png'
+import logo7 from '../../assets/logos/7.png'
+import logo8 from '../../assets/logos/8.png'
 import { Link } from 'react-router-dom';
 import heroImg from '../../assets/uiImages/hero-img.png';
 import { TbUsersGroup } from "react-icons/tb";
@@ -27,9 +30,9 @@ import { BsLinkedin } from "react-icons/bs";
 import { TfiWorld } from "react-icons/tfi";
 
 const Home = () => {
-    // useEffect(() => {
-    //     window.scrollTo(0, 0);
-    // }, []);
+    useEffect(() => {
+        window.scrollTo(0, 0);
+    }, []);
 
     return (
         <>
@@ -164,7 +167,7 @@ const Home = () => {
                             <h2 className="text-[30px] leading-[44px] md:text-[36px] md:leading-[48px] lg:text-[38px] lg:leading-[52px] font-bold text-gray-800 mb-5">Get a Complete <span className="text-color-second">Overview</span> of Our App in Action</h2>
                             <p className="text-base md:text-lg text-[#7f7f7f]">Explore the full potential of our app with this in-depth review. Learn about its features, capabilities, and how it delivers a seamless experience tailored to your needs.</p>
                         </div>
-                        <div className="h-96 relative">
+                        <div className="h-72 md:h-96 relative">
                             <img className=" h-full object-cover rounded-2xl" src={videoThumb} alt="App overview" />
                             {/* <span className="w-20 h-20 flex justify-center items-center bg-white rounded-full absolute right-1/2 top-1/3 mt-4 -mr-11 animate-border-fade"><FaPlay className="-mr-1" size={25} /></span> */}
                             <div className="absolute right-1/2 top-1/3 mt-4 -mr-14">
@@ -196,7 +199,7 @@ const Home = () => {
                                             <Link className="hover:text-[#33b89f] duration-300" to="https://www.linkedin.com/in/developersajeeb24/" target="_blank">
                                                 <BsLinkedin size={24} />
                                             </Link>
-                                            <Link className="hover:text-[#33b89f] duration-300" to="https://www.linkedin.com/in/developersajeeb24/" target="_blank">
+                                            <Link className="hover:text-[#33b89f] duration-300" to="http://www.developersajeeb.com" target="_blank">
                                                 <TfiWorld size={24} />
                                             </Link>
                                         </div>
@@ -208,7 +211,7 @@ const Home = () => {
                                         <Link className="hover:text-[#33b89f] duration-300" to="https://www.linkedin.com/in/developersajeeb24/" target="_blank">
                                             <BsLinkedin size={24} />
                                         </Link>
-                                        <Link className="hover:text-[#33b89f] duration-300" to="https://www.linkedin.com/in/developersajeeb24/" target="_blank">
+                                        <Link className="hover:text-[#33b89f] duration-300" to="http://www.developersajeeb.com" target="_blank">
                                             <TfiWorld size={24} />
                                         </Link>
                                     </div>
@@ -272,6 +275,50 @@ const Home = () => {
                                 <p className='leading-7 text-gray-500 mb-5'>On the other hand, we denounce with righteous indignation and dislike men who are so beguiled and demoralized the charms of pleasure</p>
                                 <span className='flex items-center gap-2 text-color cursor-pointer'>Read More <FaArrowRight size={15} /></span>
                             </div>
+                        </div>
+                    </div>
+                </section>
+
+                <section className="logo-slider">
+                    <div className="slide-track">
+                        <div className="slide">
+                            <img src={logo1} height="100" width="220" alt="" />
+                        </div>
+                        <div className="slide">
+                            <img src={logo2} height="100" width="220" alt="" />
+                        </div>
+                        <div className="slide">
+                            <img src={logo3} height="100" width="220" alt="" />
+                        </div>
+                        <div className="slide">
+                            <img src={logo4} height="100" width="220" alt="" />
+                        </div>
+                        <div className="slide">
+                            <img src={logo5} height="100" width="220" alt="" />
+                        </div>
+                        <div className="slide">
+                            <img src={logo6} height="100" width="220" alt="" />
+                        </div>
+                        <div className="slide">
+                            <img src={logo7} height="100" width="220" alt="" />
+                        </div>
+                        <div className="slide">
+                            <img src={logo8} height="100" width="220" alt="" />
+                        </div>
+                        <div className="slide">
+                            <img src={logo1} height="100" width="220" alt="" />
+                        </div>
+                        <div className="slide">
+                            <img src={logo2} height="100" width="220" alt="" />
+                        </div>
+                        <div className="slide">
+                            <img src={logo3} height="100" width="220" alt="" />
+                        </div>
+                        <div className="slide">
+                            <img src={logo4} height="100" width="220" alt="" />
+                        </div>
+                        <div className="slide">
+                            <img src={logo5} height="100" width="220" alt="" />
                         </div>
                     </div>
                 </section>

@@ -106,14 +106,14 @@ const AddQuestions = () => {
     }
 
     return (
-        <main className="px-0 lg:pl-6">
+        <main className="px-0 lg:pl-6 pt-32 lg:pt-20">
             <Toaster
                 position="top-center"
                 reverseOrder={false}
             />
             <div>
                 <span className='bg-indigo-50 px-5 py-2 text-color rounded-md font-medium'>Questions</span>
-                <h2 className='text-4xl font-semibold text-gray-800 leading-snug mb-2 mt-4'>Ask A Public Question For Solve Your Issus</h2>
+                <h2 className='text-xl md:text-2xl lg:text-3xl font-semibold text-gray-800 leading-snug mb-2 mt-4'>Ask A Public Question For Solve Your Issus</h2>
             </div>
             <section className="mt-6">
                 <form onSubmit={questionField}>

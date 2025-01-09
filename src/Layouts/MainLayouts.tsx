@@ -9,6 +9,7 @@ import 'primereact/resources/primereact.css';
 import { Dialog } from 'primereact/dialog'; // Import Dialog from PrimeReact
 import { AuthContext } from "../Provider/AuthProvider";
 import { Button } from "primereact/button";
+import { useQuery } from "@tanstack/react-query";
 
 const MainLayouts = () => {
     const [pieces, setPieces] = useState(200);
@@ -20,9 +21,6 @@ const MainLayouts = () => {
     const [buttonLoading, setButtonLoading] = useState<boolean>(false);
     const [allLengthQuestion, setLengthQuestion] = useState<number>();
     const authContext = useContext(AuthContext);
-    console.log(allLengthQuestion);
-    
-
     if (!authContext) {
         return <p>Loading...</p>;
     }
@@ -42,31 +40,32 @@ const MainLayouts = () => {
         }, 8000);
     };
 
+    const fetchQuestions = async (email: string | null | undefined) => {
+        const response = await fetch(`http://localhost:5000/single-user-all-questions/${email}`);
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        return response.json();
+    };
+    
+    const { data: questionsData = {} } = useQuery(
+        ['userQuestions', user?.email],
+        () => fetchQuestions(user?.email),
+        {
+            enabled: !!user?.email,
+            refetchInterval: 5000,
+            refetchOnWindowFocus: true,
+        }
+    );
+    
     useEffect(() => {
-        const fetchQuestions = async () => {
-            if (!user?.email) return;
-            try {
-                const response = await fetch(`http://localhost:5000/single-user-all-questions/${user?.email}`);
-
-                if (!response.ok) {
-                    throw new Error('Network response was not ok');
-                }
-
-                const questionsData = await response.json();
-
-                SetLevelOne(questionsData?.levelOne);
-                SetLevelTwo(questionsData?.levelTwo);
-                SetLevelTop(questionsData?.levelTop);
-                setLengthQuestion(questionsData?.questions?.length);
-
-            } catch (error) {
-                console.error('Error fetching questions:', error);
-
-            }
-        };
-
-        fetchQuestions();
-    }, [user?.email]);
+        if (questionsData) {
+            SetLevelOne(questionsData.levelOne);
+            SetLevelTwo(questionsData.levelTwo);
+            SetLevelTop(questionsData.levelTop);
+            setLengthQuestion(questionsData.questions?.length);
+        }
+    }, [questionsData]);
 
     useEffect(() => {
         const milestoneCheck = () => {
@@ -77,7 +76,7 @@ const MainLayouts = () => {
         };
 
         milestoneCheck();
-    }, [levelOne, levelTwo, levelTop]);
+    }, [levelOne, levelTwo, levelTop, allLengthQuestion]);
 
     const handleOkClick = async () => {
         setButtonLoading(true);
@@ -128,7 +127,7 @@ const MainLayouts = () => {
                     <p><span className="font-medium word-break">Congratulations! 🎉</span> You've reached a Level! Please check your profile dashboard.</p>
 
                     <div className={`mt-7 relative ${buttonLoading ? 'max-w-[193px]' : 'max-w-[169px]'} mx-auto`}>
-                        <div className="absolute h-3 w-3 z-10 -top-1 -right-1">
+                        <div className="absolute h-3 w-3 z-10 -top-1 -right-2">
                             <span className="relative flex h-3 w-3">
                                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#269782] opacity-75"></span>
                                 <span className="relative inline-flex rounded-full h-3 w-3 bg-[#269782]"></span>
@@ -136,7 +135,7 @@ const MainLayouts = () => {
                         </div>
                         <Button
                             label="Make as read"
-                            className="cs-button"
+                            className="cs-button whitespace-nowrap"
                             onClick={handleOkClick}
                             disabled={buttonLoading}
                             loading={buttonLoading}

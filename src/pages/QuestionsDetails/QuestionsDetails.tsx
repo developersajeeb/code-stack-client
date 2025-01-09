@@ -200,7 +200,7 @@ const QuestionsDetails = () => {
     }, [questionData?.email]);
 
     return (
-        <main className="px-0 lg:pl-6">
+        <main className="px-0 lg:pl-6 pt-20">
             <Toaster position="top-center" reverseOrder={false} />
             <section>
                 <div className="flex justify-between items-end gap-3">

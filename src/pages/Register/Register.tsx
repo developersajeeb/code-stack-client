@@ -179,7 +179,7 @@ const Register = () => {
                                                 onUsernameChange(e);
                                             }}
                                             id="username"
-                                            className={`!border !border-gray-300 !text-gray-900 !text-sm !rounded-md !block !w-full !px-3 !py-4 !h-[41px]`}
+                                            className={`!border !border-gray-300 !text-gray-900 !text-sm !rounded-md !block !w-full !px-3 !py-4 !h-[41px] lowercase`}
                                             placeholder="Your username"
                                         />
                                         {!isTyping && field.value && (
@@ -258,7 +258,7 @@ const Register = () => {
                     <h4 className='text-center text-lg font-semibold text-gray-700'>Or SignUp With</h4>
                     <SocialLogin></SocialLogin>
                     <Link to='/login'>
-                        <div className="font-medium text-gray-500 dark:text-gray-300 mt-4 text-center text-sm">
+                        <div className="font-medium text-gray-500 mt-4 text-center text-sm">
                             Already have an account? <span className="text-color hover:underline">Login</span>
                         </div>
                     </Link>

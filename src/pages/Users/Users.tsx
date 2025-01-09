@@ -80,10 +80,10 @@ const Users = () => {
     );
 
     return (
-        <main className="px-0 lg:pl-6">
+        <main className="px-0 lg:pl-6 pt-32 lg:pt-20">
             <div>
                 <span className='bg-indigo-50 px-5 py-2 text-color-second rounded-md font-medium'>Users</span>
-                <h2 className='text-3xl font-semibold text-gray-700 leading-snug my-4'>Here are all users</h2>
+                <h2 className='text-xl md:text-2xl lg:text-3xl font-semibold text-gray-700 leading-snug my-4'>Here are all users</h2>
             </div>
             <form className="relative max-w-sm" onSubmit={(e) => e.preventDefault()}>
                 <input onChange={(e) => setSearchTerm(e.target.value)} type="text" placeholder="Search users with name or username..." name="search" id="search" className="bg-gray-100 pl-5 pr-11 py-2 rounded-md w-full outline-none border focus:border-[#33B89F]" />
@@ -113,7 +113,7 @@ const Users = () => {
                                 </div>
                             )}
                             <figure>
-                                <img className="w-14 h-14 object-cover rounded-full" src={member?.imgURL || notUser} alt="user image" />
+                                <img className="max-w-[56px] max-h-[56px] w-14 h-14 object-cover rounded-full" src={member?.imgURL || notUser} alt="user image" />
                             </figure>
                             <div>
                                 <Link to={user?.email === member?.email ? `/my-profile` : `/user/${member?.username}`}>

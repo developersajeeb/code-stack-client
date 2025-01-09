@@ -13,10 +13,10 @@ const Tag = () => {
   });
 
   return (
-    <main className="px-0 lg:pl-6">
+    <main className="px-0 lg:pl-6 pt-32 lg:pt-20">
       <div>
         <span className='bg-indigo-50 px-5 py-2 text-color-second rounded-md font-medium'>Tags</span>
-        <h2 className='text-3xl font-semibold text-gray-700 leading-snug mb-2 mt-4 w-full md:w-96'>Here are all the tags that used the questions</h2>
+        <h2 className='text-xl md:text-2xl lg:text-3xl font-semibold text-gray-700 leading-snug mb-2 mt-4 w-full md:w-96'>Here are all the tags that used the questions</h2>
       </div>
       <section className="flex flex-wrap gap-4 mt-8">
         {isLoading ? (

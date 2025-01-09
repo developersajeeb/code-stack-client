@@ -22,7 +22,6 @@ import Answers from "../pages/Answers/Answers";
 import Questions from "../pages/Questions/Questions";
 import Users from "../pages/Users/Users";
 import Disclaimer from "../pages/Disclaimer/Disclaimer";
-import TramsConditions from "../pages/TramsConditions/TramsConditions";
 import ContactUs from "../pages/ContactUs/ContactUs";
 import Saves from "../pages/Saves/Saves";
 import EditQuestion from "../pages/EditQuestion/EditQuestion";
@@ -54,10 +53,6 @@ export const router = createBrowserRouter([
       {
         path: 'disclaimer',
         element: <Disclaimer/>
-      },
-      {
-        path: 'trams-and-conditions',
-        element: <TramsConditions/>
       },
       {
         path: 'contact-us',
