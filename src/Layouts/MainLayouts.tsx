@@ -14,9 +14,7 @@ import { useQuery } from "@tanstack/react-query";
 const MainLayouts = () => {
     const [pieces, setPieces] = useState(200);
     const [showConfetti, setShowConfetti] = useState(false);
-    const [levelOne, SetLevelOne] = useState<boolean>();
-    const [levelTwo, SetLevelTwo] = useState<boolean>();
-    const [levelTop, SetLevelTop] = useState<boolean>();
+    const [manualLevelUpdate, setManualLevelUpdate] = useState<boolean>(false);
     const [visible, setVisible] = useState<boolean>(false);
     const [buttonLoading, setButtonLoading] = useState<boolean>(false);
     const [allLengthQuestion, setLengthQuestion] = useState<number>();
@@ -47,7 +45,7 @@ const MainLayouts = () => {
         }
         return response.json();
     };
-    
+
     const { data: questionsData = {} } = useQuery(
         ['userQuestions', user?.email],
         () => fetchQuestions(user?.email),
@@ -57,47 +55,33 @@ const MainLayouts = () => {
             refetchOnWindowFocus: true,
         }
     );
-    
+
     useEffect(() => {
         if (questionsData) {
-            SetLevelOne(questionsData.levelOne);
-            SetLevelTwo(questionsData.levelTwo);
-            SetLevelTop(questionsData.levelTop);
-            setLengthQuestion(questionsData.questions?.length);
+            setLengthQuestion(questionsData.questionCount);
+            setManualLevelUpdate(questionsData.manualLevelUpdate);
         }
     }, [questionsData]);
 
     useEffect(() => {
-        const milestoneCheck = () => {
-            if (levelOne || levelTwo || levelTop) {
-                triggerConfetti();
-                setVisible(true);
-            }
-        };
-
-        milestoneCheck();
-    }, [levelOne, levelTwo, levelTop, allLengthQuestion]);
+        if (manualLevelUpdate && [5, 10, 20].includes(allLengthQuestion)) {
+            triggerConfetti();
+        }
+    }, [manualLevelUpdate, allLengthQuestion]);
 
     const handleOkClick = async () => {
         setButtonLoading(true);
         try {
             const response = await fetch(`http://localhost:5000/update-level/${user?.email}`, {
                 method: 'PUT',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    levelOne: false,
-                    levelTwo: false,
-                    levelTop: false
-                }),
+                headers: { 'Content-Type': 'application/json' }
             });
-
+    
             if (response.ok) {
                 setButtonLoading(false);
                 setVisible(false);
             } else {
-                console.error('Failed to update user level');
+                console.error('Failed to update milestone status');
             }
         } catch (error) {
             console.error('Error:', error);
@@ -139,7 +123,7 @@ const MainLayouts = () => {
                             onClick={handleOkClick}
                             disabled={buttonLoading}
                             loading={buttonLoading}
-                            />
+                        />
                     </div>
                 </div>
             </Dialog>

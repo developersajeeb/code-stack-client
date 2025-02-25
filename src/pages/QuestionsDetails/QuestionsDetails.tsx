@@ -200,7 +200,7 @@ const QuestionsDetails = () => {
     }, [questionData?.email]);
 
     return (
-        <main className="px-0 lg:pl-6 pt-20">
+        <main className="px-0 lg:pl-6 pt-32 lg:pt-20">
             <Toaster position="top-center" reverseOrder={false} />
             <section>
                 <div className="flex justify-between items-end gap-3">
@@ -273,11 +273,11 @@ const QuestionsDetails = () => {
                         </div>
                     </div>
                 </div>
-                <div className="mt-4">
+                <div className="mt-8">
                     <div className="flex gap-4 items-center">
-                        <h1 className="text-3xl font-medium text-gray-700">{questionData?.title}</h1>
+                        <h1 className="text-xl md:text-3xl font-medium text-gray-700">{questionData?.title}</h1>
                     </div>
-                    <div className="my-4 overflow-x-auto" dangerouslySetInnerHTML={{
+                    <div className="my-5 overflow-x-auto question-body-content" dangerouslySetInnerHTML={{
                         __html: questionData?.body || ""
                     }} />
                 </div>

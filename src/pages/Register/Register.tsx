@@ -83,8 +83,16 @@ const Register = () => {
         const { username, name, email, password } = data;
         const role = 'normalUser';
         const entryPoint = 'manually';
+        const lowerCaseUsername = username.toLowerCase();
 
         try {
+
+            if (/\s/.test(username)) {
+                setIsUsernameValid('Username cannot contain spaces!');
+                toast.error('Username cannot contain spaces!');
+                setIsFormBtnLoading(false);
+                return;
+            }
 
             if (isUsernameValid === 'Username already exists!') {
                 toast('Username already exists!', {
@@ -118,7 +126,7 @@ const Register = () => {
             }
 
             await updateUserProfile(name, imgURL || '');
-            const saveUser = { name, username, email, imgURL, password, role, entryPoint };
+            const saveUser = { name, username:lowerCaseUsername, email, imgURL, password, role, entryPoint };
 
             const userResponse = await fetch('http://localhost:5000/users', {
                 method: 'POST',
@@ -152,7 +160,7 @@ const Register = () => {
     };
 
     return (
-        <main className='grid md:grid-cols-2 max-w-[1352px] mx-auto px-4 pt-20' data-aos="fade-up">
+        <main className='grid md:grid-cols-2 max-w-[1352px] mx-auto px-4 pt-32 lg:pt-20' data-aos="fade-up">
             <Toaster
                 position="top-center"
                 reverseOrder={false}
@@ -169,7 +177,12 @@ const Register = () => {
                             <Controller
                                 name="username"
                                 control={control}
-                                rules={{ required: 'Username is required' }}
+                                rules={{ 
+                                    required: 'Username is required',
+                                    validate: {
+                                        noSpaces: (value) => !/\s/.test(value) || 'Username cannot contain spaces!',
+                                    }
+                                 }}
                                 render={({ field }) => (
                                     <>
                                         <InputText
@@ -185,6 +198,7 @@ const Register = () => {
                                         {!isTyping && field.value && (
                                             <p className={`${isUsernameValid === 'Username already exists!' ? 'text-red-500' : 'text-green-500'} text-sm ml-0.5`}>{isUsernameValid}</p>
                                         )}
+                                        {isTyping && <span className="loading loading-dots loading-sm ml-0.5 block"></span>}
                                         <ErrorMessage errors={errors} name="username" as={<p className="text-red-500 text-sm" />} />
                                     </>
                                 )}

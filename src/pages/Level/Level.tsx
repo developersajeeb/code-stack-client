@@ -9,7 +9,7 @@ const Level = () => {
         window.scrollTo(0, 0);
     }, []);
     return (
-        <main className="px-0 lg:pl-6 pt-20">
+        <main className="px-0 lg:pl-6 pt-32 lg:pt-20">
             <section className="grid sm:grid-cols-3 gap-5">                
                 <div className="text-center">
                     <img className="w-full max-w-[160px] mx-auto" src={l1} alt="" />

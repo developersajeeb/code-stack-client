@@ -126,7 +126,7 @@ const Login = () => {
     };
 
     return (
-        <main className='grid md:grid-cols-2 max-w-[1320px] mx-auto px-4 pt-20' data-aos="fade-up">
+        <main className='grid md:grid-cols-2 max-w-[1320px] mx-auto px-4 pt-32 lg:pt-20' data-aos="fade-up">
             <div className="py-10 md:py-16 lg:py-20 md:pr-5 xl:pr-20">
                 <form className="space-y-6" onSubmit={handleLoginSubmit(onSubmit)}>
                     <div>

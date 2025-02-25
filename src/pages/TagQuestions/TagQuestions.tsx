@@ -92,7 +92,7 @@ const TagQuestions = () => {
     };    
 
     return (
-        <div className='px-0 lg:pl-6'>
+        <div className='px-0 lg:pl-6 pt-32 lg:pt-20'>
             <h2 className='text-3xl bg-indigo-50 px-3 py-1 text-color-second rounded-md font-medium inline-block'>{paramValue}</h2>
             <p className='mt-3 text-gray-500'>A tag is a keyword or label that categorizes your question with other, similar questions. Using the right tags makes it easier for others to find and answer your question.</p>
             <div className="divider text-gray-500"><TbMessageQuestion size={50} /></div>

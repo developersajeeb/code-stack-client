@@ -209,3 +209,22 @@ pre.ql-syntax::-webkit-scrollbar-thumb {
   height: 100px;
   width: 220px;
 }
+
+.question-body-content a {
+  text-decoration: underline;
+  color: #0266fc;
+}
+
+.question-body-content code {
+    background-color: #e1e1e1 !important;
+    padding: 4px 6px;
+    font-size: 14px;
+    display: inline-block;
+    border-radius: 6px;
+}
+
+.question-body-content blockquote {
+  border-left: 4px solid #d1d1d1;
+  padding-left: 8px;
+  margin: 10px 0px;
+}

@@ -25,7 +25,7 @@ const NavBar = () => {
   const authContext = useContext(AuthContext);
   const { isAdmin } = useAdmin();
   const navigate = useNavigate();
-  const [emptyError, setEmptyError] = useState<boolean>(false);
+  // const [emptyError, setEmptyError] = useState<boolean>(false);
   const [isScrolled, setIsScrolled] = useState<boolean>(false);
   const opDesktop = useRef<OverlayPanel>(null);
   const opMobile = useRef<OverlayPanel>(null);
@@ -57,12 +57,12 @@ const NavBar = () => {
 
   const handleSearch = (event: { preventDefault: () => void; }) => {
     event.preventDefault();
-    setEmptyError(false);
+    // setEmptyError(false);
     if (!searchQuery) {
-      setEmptyError(true);
+      // setEmptyError(true);
       return;
     }
-    setEmptyError(false);
+    // setEmptyError(false);
     navigate(`/news-feed?search_query=${searchQuery}`);
   };
 
