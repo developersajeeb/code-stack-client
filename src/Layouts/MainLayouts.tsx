@@ -64,7 +64,7 @@ const MainLayouts = () => {
     }, [questionsData]);
 
     useEffect(() => {
-        if (manualLevelUpdate && [5, 10, 20].includes(allLengthQuestion)) {
+        if (manualLevelUpdate && [5, 10, 20].includes(allLengthQuestion as number)) {
             triggerConfetti();
         }
     }, [manualLevelUpdate, allLengthQuestion]);
