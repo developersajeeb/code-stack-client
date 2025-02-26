@@ -1,9 +1,7 @@
-# CodeStack
-
-![CodeStack Banner](https://via.placeholder.com/1200x400?text=CodeStack)
+# CodeStack - The Best Platform for Programming and Code Solutions
 
 ## 🚀 Live Demo
-🔗 [Click here to explore CodeStack](#)
+🔗 [Click here to explore CodeStack](https://code-stack.netlify.app/)
 
 ---
 

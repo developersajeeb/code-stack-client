@@ -108,7 +108,7 @@ const MainLayouts = () => {
             {/* PrimeReact Dialog */}
             <Dialog header="Level Achieved! 👏" visible={visible} onHide={() => setVisible(false)} closable={false} className="!max-w-[400px] !mx-4">
                 <div>
-                    <p><span className="font-medium word-break">Congratulations! 🎉</span> You've reached a Level! Please check your profile dashboard.</p>
+                    <p><span className="font-medium word-break">Great job! 🎉</span> You've reached this level milestone. Keep going and check your profile dashboard!</p>
 
                     <div className={`mt-7 relative ${buttonLoading ? 'max-w-[193px]' : 'max-w-[169px]'} mx-auto`}>
                         <div className="absolute h-3 w-3 z-10 -top-1 -right-2">
