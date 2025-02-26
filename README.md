@@ -1,227 +1,100 @@
-# Knowledge Bytes
+# CodeStack
 
-A place to share and organize knowledge where you can ask or answer questions.
+![CodeStack Banner](https://via.placeholder.com/1200x400?text=CodeStack)
 
-![image]()
+## 🚀 Live Demo
+🔗 [Click here to explore CodeStack](#)
 
-## Table of Contents
+---
 
-- [Features](#features)
-- [Tools and Technologies](#tools-and-technologies)
-- [Dependencies](#dependencies)
-- [Dev-dependencies](#dev-dependencies)
-- [Prerequisites](#prerequisites)
-- [Installation and setup](#installation-and-setup)
-- [Backend API](#backend-api)
-- [frontend pages](#frontend-pages)
-- [npm scripts](#npm-scripts)
-- [Contributing](#contributing)
-- [Useful Links](#useful-links)
-- [Contact](#contact)
+## 📌 Overview
+CodeStack is a collaborative question-and-answer web application inspired by StackOverflow. It empowers users to ask questions, provide answers, vote, tag, and interact with the community seamlessly. Built using modern web technologies, CodeStack is designed for an engaging and efficient user experience.
 
-## Features
+🚧 **Version:** 1.8.0  
+👨‍💻 **Team Size:** 5 Members  
+🛠 **Role:** Full Stack Developer  
 
-### User-oriented features
+---
 
-- Signup
-- Login
-- Logout
-- Forgot and reset password
-- Users can ask questions providing the title and body with formatting as well.
-- Users can edit the questions asked by them.
-- The already asked questions with their answers can be viewed by all people.
-- Users can answer the questions by selecting any from all the questions present.
-- Users can also view questions specifically asked by them.
-- Users can view and edit their profile. This also includes changing their username and password as well.
-- Users can bookmark/unbookmark a question or a specific answer.
-- Users can view the bookmarks on separate page, where they can directly toggle those.
-- Users can like the questions/answers of others. The like count is publicly visible.
-- All the likes of a user can also be accessed separately.
-- Users can view their activities in separate page.
-- Link to question or a specific answer to question can also be copied.
-- Questions along with the answers can also be downloaded.
+## 🛠️ Tech Stack
 
-### Developer-oriented features
+### Frontend:
+- ⚛ **React.js (v18)**
+- 🔷 **TypeScript**
+- 🎨 **Tailwind CSS, PrimeReact, Daisy UI**
+- 🎥 **Swiper.js**
 
-- Loaders used when fetching data
-- Dynamic document titles
-- Date formatting to "X time ago" for displaying dates
-- DARK and LIGHT theme
-- Editors used in website for providing various styles
-- Emails sent using nodemailer for account activation, reset password etc.
-- Form validations in frontend and backend
-- Global user state using Redux
-- Highlight specific answer on page load based on link url
-- Prompt login modal when non-logged persons try to perform auth activity
-- Responsive Sidebar with toggle option
-- Slugs used for SEO friendly URLs
-- Search params used for applying filters
-- Toasts for success and error messages
-- Use of 404 page for wrong urls
-- Use of layout component for pages
-- Usage of Tooltips
-- Usage of Popconfirm modals for asking for confirmation
-- Usage of React hooks like useState, useEffect, etc.
-- Custom hooks used like useFetch, useDebounce etc.
-- Resource availability checking (to check availability of username of a user while he types)
-- Website themed using tailwind config
-- Middleware for verifying the user in backend
-- Routes protection
-- Token based Authentication
-- Use of Promise.all in backend to improve efficiency
-- Use of different HTTP status codes for sending responses
+### Backend:
+- 🟢 **Node.js, Express.js, MongoDB**
 
-## Tools and Technologies
+### Libraries & Utilities:
+- 📊 **Chart.js**
+- 🔍 **Tenstack Query**
+- 🚏 **React Router DOM**
+- 📜 **React Hook Form, Quill**
 
-- HTML
-- CSS
-- Javascript
-- Tailwind CSS
-- Node.js
-- Express.js
-- React
-- Redux
-- Mongodb
-- Vitejs
-- Font Awesome
-- Google Fonts
+### Authentication:
+- 🔐 **Firebase (Manual, Google, GitHub)**
 
-## Dependencies
+---
 
-Following are the major dependencies of the project:  
-Frontend:
+## ✨ Features
 
-- axios
-- jspdf
-- react
-- react-dom
-- react-redux
-- react-router-dom
-- react-simple-wysiwyg
-- react-toastify
-- redux
-- redux-thunk
+### 🔑 User Authentication
+- Sign up & login manually or via Google/GitHub.
+- Manually registered users choose a unique username.
+- Auto-generated usernames for Google/GitHub signups.
 
-Backend:
+### 📰 Newsfeed
+- Browse all posted questions dynamically.
+- Infinite scrolling with "ajax load more".
 
-- bcrypt
-- cors
-- dotenv
-- express
-- googleapis
-- jsonwebtoken
-- mongoose
+### ❓ Ask a Question
+- Authenticated users can post questions with title, description, images, and tags.
 
-## Dev-dependencies
+### 🔍 Question Details
+- View detailed question pages.
+- Edit & delete own questions.
+- Save, share, upvote, and answer questions.
 
-Following are the major dev-dependencies of the project:
+### ✍️ Answering Questions
+- Post, edit, or delete answers.
 
-- nodemon
-- concurrently
+### 📊 Voting System
+- Upvote questions with real-time updates.
 
-## Prerequisites
+### 🔖 Tag Page
+- View all tags with question counts.
+- Click a tag to filter relevant questions.
 
-- Node.js must be installed on the system.
-- You should have a MongoDB database.
-- You should have a code editor (preferred: VS Code)
+### 👥 User Directory
+- Browse all registered users.
+- Click on a profile to view user details.
 
-## Installation and Setup
+### 🏆 Badges & Levels
+- Earn badges & levels (Level 1, Level 2, Top User) based on engagement.
 
-1. Download the source code in your desired location on your system.
-2. Open the code in your code editor.
-3. Go to terminal and type the following command and hit enter:
+### 🏗 Sidebar Widgets
+- Top 5 most popular tags.
+- Top 5 most answered questions.
 
-   ```sh
-   npm run install-all
-   ```
+### 🔎 Search Functionality
+- Find questions by title or tag from the top navbar.
 
-   This will install all the dependencies and dev-dependencies required at root, at frontend and at backend in your project.
+### 📌 My Profile Section
+- **User Dashboard**: Activity summary, badges, levels, and monthly chart.
+- **Answers Page**: View all answers posted by the user.
+- **Questions Page**: View all questions posted by the user.
+- **Saved Questions**: List of saved questions.
+- **Edit Profile**: Update personal details & profile photo.
 
-4. Create a file named ".env" inside the backend folder and add data from .env.example file and substitute your credentials there.
+---
 
-5. Go to terminal and type the following command and hit enter:
+## 🚀 Upcoming Features (In Progress)
+- 🛠 **Super Admin Role**: Manage the entire platform.
+- ✍️ **Super Admin Blog Posting**: Create and manage blogs.
 
-   ```sh
-   npm run dev
-   ```
+---
 
-   This will start both backend and frontend.
-
-6. Open browser and go to url: http://localhost:3000. You can see the app running now.
-
-## Backend API
-
-The backend api docs file is already provided in the project.  
-Please refer to [this]() link to view.
-
-## Frontend pages
-
-The list of routes for frontend pages can be found on the RouteProvider Component in project.  
-Please refer to [this]() link to view.
-
-## npm scripts
-
-At root:
-
-- `npm run dev`: Starts both backend and frontend
-- `npm run dev-server`: Starts only backend
-- `npm run dev-client`: Starts only frontend
-- `npm run install-all`: Installs all dependencies and dev-dependencies required at root, at frontend and at backend.
-
-Inside frontend folder:
-
-- `npm run dev`: Starts frontend server in development mode.
-- `npm run build`: Builds frontend into dist folder.
-- `npm run preview`: For Previewing the build.
-
-Inside backend folder:
-
-- `npm run dev`: Starts backend using nodemon.
-- `npm start`: Starts backend without nodemon.
-
-## Contributing
-
-- Feature Requests:  
-  Want a new feature or improve already existing feature in the app? Feel free to create an issue at [issue tracker]() about the feature you want to see in the app.
-- Bug reports:  
-  Found a bug in the application? Feel free to create a new issue at [issue tracker]() stating the clear description of the bug.
-
-- Code contributions:  
-  Want to contribute code to the project? You can do so by either correcting bugs or adding new features which can be found in the issues tab and then submitting a Pull Request referencing that issue.
-
-- Security vulnerabilities:  
-  Discovered a security vulnerability within this project? Please send an email to Aayush (author) at aayush5521186@gmail.com.
-
-## Useful Links
-
-- This project
-
-  - Github Repo:
-
-- Official Docs
-
-  - Reactjs docs: https://reactjs.org/docs/getting-started.html
-  - npmjs docs: https://docs.npmjs.com/
-  - Mongodb docs: https://docs.mongodb.com/manual/introduction/
-  - Github docs: https://docs.github.com/en/get-started/quickstart/hello-world
-
-- Youtube tutorials
-
-  - Expressjs: https://youtu.be/L72fhGm1tfE
-  - React: https://youtu.be/EHTWMpD6S_0
-  - Redux: https://youtu.be/1oU_YGhT7ck
-
-- Download links
-
-  - Nodejs download: https://nodejs.org/
-  - VS Code download: https://code.visualstudio.com/
-
-- Cheatsheets
-  - Git cheatsheet: https://education.github.com/git-cheat-sheet-education.pdf
-  - VS Code keyboard shortcuts: https://code.visualstudio.com/shortcuts/keyboard-shortcuts-windows.pdf
-  - CSS Selectors Cheatsheet: https://frontend30.com/css-selectors-cheatsheet/
-
-## Contact
-
-- Email: codestack@gmail.com
-- Linkedin:
+## 🌟 Show Your Support
+Give a ⭐ if you like this project!
