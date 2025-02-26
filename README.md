@@ -9,8 +9,7 @@
 CodeStack is a collaborative question-and-answer web application inspired by StackOverflow. It empowers users to ask questions, provide answers, vote, tag, and interact with the community seamlessly. Built using modern web technologies, CodeStack is designed for an engaging and efficient user experience.
 
 🚧 **Version:** 1.8.0  
-👨‍💻 **Team Size:** 5 Members  
-🛠 **Role:** Full Stack Developer  
+👨‍💻 **Team Size:** Group Project  
 
 ---
 
