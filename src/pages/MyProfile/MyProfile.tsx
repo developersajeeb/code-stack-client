@@ -25,13 +25,15 @@ const MyProfile = () => {
         const data = await res.json();
         return data;
     });
+    console.log(userData);
+    
 
     return (
         <main>
             <div className="bg-no-repeat bg-cover bg-center h-80 px-4 py-4" style={{ backgroundImage: `url(${bgImage})` }}>
                 <div className="max-w-[1320px] mx-auto h-full flex items-end">
                     <figure className="flex items-center gap-5 text-white">
-                        <img className="w-24 md:w-32 max-w-[128px] h-24 md:h-32 max-h-[128px] rounded-full object-cover border-4 border-indigo-100 bg-white" src={userData?.imgURL || notUser} alt="" />
+                        <img className="w-24 md:w-32 max-w-[128px] h-24 md:h-32 max-h-[128px] rounded-full object-cover border-4 border-indigo-100 bg-white" src={userData?.imgURL || notUser} alt="user profile" />
                         <figcaption>
                             <h4 className="font-medium text-xl md:text-2xl mt-2">{userData?.name}</h4>
                             <p className="text-gray-400 text-sm word-break">@{userData?.username}</p>

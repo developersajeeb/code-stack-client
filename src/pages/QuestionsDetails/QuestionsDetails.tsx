@@ -30,6 +30,10 @@ interface QuestionInfo {
     problemImages: string[];
 }
 
+interface QuestionArray {
+    questionCount: number
+}
+
 const QuestionsDetails = () => {
     useEffect(() => {
         window.scrollTo(0, 0);
@@ -43,7 +47,7 @@ const QuestionsDetails = () => {
     const [answerToShow, setAnswerToShow] = useState<number>(10);
     const [newAnswerLength, setNewAnswerLength] = useState<number | undefined>(undefined);
     const authContext = useContext(AuthContext);
-    const [allUserQuestion, setAllUserQuestion] = useState([]);
+    const [allUserQuestion, setAllUserQuestion] = useState<QuestionArray>({ questionCount: 0 });
     const [userBadgeComing, setUserBadgeComing] = useState<boolean>(true);
     const [isSaveLoading, setSaveLoading] = useState<boolean>(false);
     const [isLikeLoading, setLikeLoading] = useState<boolean>(false);
@@ -199,6 +203,9 @@ const QuestionsDetails = () => {
         setUserBadgeComing(false);
     }, [questionData?.email]);
 
+    console.log(allUserQuestion);
+    
+
     return (
         <main className="px-0 lg:pl-6 pt-32 lg:pt-20">
             <Toaster position="top-center" reverseOrder={false} />
@@ -208,15 +215,15 @@ const QuestionsDetails = () => {
                         <div className="inline-block">
                             <div className="flex items-center gap-2 bg-gray-100 pl-3 pr-8 py-2 shadow rounded-lg relative">
                                 {
-                                    !userBadgeComing && allUserQuestion?.length !== 0 && (
+                                    !userBadgeComing && allUserQuestion?.questionCount !== 0 && (
                                         <span className="absolute -right-2 -top-2">
-                                            {allUserQuestion.length >= 20 ? <img className="w-6" src={top} /> :
-                                                allUserQuestion.length >= 10 ? <img className="w-6" src={l2} /> :
-                                                    allUserQuestion.length >= 5 ? <img className="w-6" src={l1} /> : ''}
+                                            {allUserQuestion.questionCount >= 20 ? <img className="w-6" src={top} /> :
+                                                allUserQuestion.questionCount >= 10 ? <img className="w-6" src={l2} /> :
+                                                    allUserQuestion.questionCount >= 5 ? <img className="w-6" src={l1} /> : ''}
                                         </span>
                                     )
                                 }
-                                <img className="w-11 h-11 object-cover rounded-full" src={questionData?.userPhoto || notUser} alt="User Photo" />
+                                <img className="w-11 h-11 object-cover rounded-full" src={userData?.imgURL || notUser} alt="User Photo" />
                                 <div>
                                     <h5 className="font-medium -mb-[3px] word-break">{questionData?.name}</h5>
                                     <span className="text-sm font-light word-break">{questionData?.username}</span>

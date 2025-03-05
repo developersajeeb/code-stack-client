@@ -89,7 +89,7 @@ const EditQuestion = () => {
     }
 
     return (
-        <main className="px-0 lg:pl-6">
+        <main className="px-0 lg:pl-6 pt-32 lg:pt-20">
             <Toaster
                 position="top-center"
                 reverseOrder={false}

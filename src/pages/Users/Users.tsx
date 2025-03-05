@@ -30,7 +30,7 @@ const Users = () => {
         try {
             const res = await fetch(`http://localhost:5000/single-user-all-questions/${email}`);
             const questions = await res.json();
-            return questions.length;
+            return questions.questionCount;
         } catch (error) {
             console.error('Error fetching question count:', error);
             return 0;
@@ -51,15 +51,17 @@ const Users = () => {
                 return [...prev, ...newMembers];
             });
             setSkip(skip + 18);
-            
+
             const questionCountPromises = users.map((user: any) =>
                 fetchQuestionCount(user.email).then(count => ({ email: user.email, count }))
             );
+
             const counts = await Promise.all(questionCountPromises);
+
             setQuestionCounts((prev) => {
                 const newCounts = { ...prev };
                 counts.forEach(({ email, count }) => {
-                    newCounts[email] = count;
+                    newCounts[email] = count ?? 0;
                 });
                 return newCounts;
             });
@@ -99,30 +101,28 @@ const Users = () => {
                         <Skeleton height="5rem" width="100%"></Skeleton>
                     </>
                 ) : (
-                    filteredMembers.map((member: any) => (
-                        <div key={member?._id} className="flex items-center gap-2 bg-gray-100 px-3 py-2 rounded-xl shadow-sm relative border-4 border-gray-50">
-                            {questionCounts[member?.email] >= 5 && (
+                    filteredMembers.map((member: any) => {
+                        return (
+                            <div key={member?._id} className="flex items-center gap-2 bg-gray-100 px-3 py-2 rounded-xl shadow-sm relative border-4 border-gray-50">
                                 <div className="absolute -right-2 -top-2">
-                                    {questionCounts[member?.email] >= 20 ? (
-                                        <img className="w-6" src={b4} alt="Top Level" />
-                                    ) : questionCounts[member?.email] >= 10 ? (
-                                        <img className="w-6" src={b3} alt="Level 2" />
-                                    ) : (
-                                        <img className="w-6" src={b2} alt="Level 1" />
-                                    )}
+                                    {(() => {
+                                        const count = questionCounts?.[member?.email] ?? 0;
+                                        const badgeSrc = count >= 20 ? b4 : count >= 10 ? b3 : count >= 5 ? b2 : null;
+                                        return badgeSrc ? <img className="w-6" src={badgeSrc} alt="Badge" /> : null;
+                                    })()}
                                 </div>
-                            )}
-                            <figure>
-                                <img className="max-w-[56px] max-h-[56px] w-14 h-14 object-cover rounded-full" src={member?.imgURL || notUser} alt="user image" />
-                            </figure>
-                            <div>
-                                <Link to={user?.email === member?.email ? `/my-profile` : `/user/${member?.username}`}>
-                                    <h3 className="font-medium text-base hover:text-[#33B89F] cursor-pointer text-gray-600 duration-300">{member?.name}</h3>
-                                    <p className="text-sm font-light text-gray-500 -mt-[2px]">@{member?.username}</p>
-                                </Link>
+                                <figure>
+                                    <img className="max-w-[56px] max-h-[56px] w-14 h-14 object-cover rounded-full" src={member?.imgURL || notUser} alt="user image" />
+                                </figure>
+                                <div>
+                                    <Link to={user?.email === member?.email ? `/my-profile` : `/user/${member?.username}`}>
+                                        <h3 className="font-medium text-base hover:text-[#33B89F] cursor-pointer text-gray-600 duration-300">{member?.name}</h3>
+                                        <p className="text-sm font-light text-gray-500 -mt-[2px]">@{member?.username}</p>
+                                    </Link>
+                                </div>
                             </div>
-                        </div>
-                    ))
+                        )
+                    })
                 )}
             </section>
             {!hasMore && !loading && searchTerm === '' && (
