@@ -25,8 +25,6 @@ const MyProfile = () => {
         const data = await res.json();
         return data;
     });
-    console.log(userData);
-    
 
     return (
         <main>

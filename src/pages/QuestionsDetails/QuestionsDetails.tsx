@@ -203,9 +203,6 @@ const QuestionsDetails = () => {
         setUserBadgeComing(false);
     }, [questionData?.email]);
 
-    console.log(allUserQuestion);
-    
-
     return (
         <main className="px-0 lg:pl-6 pt-32 lg:pt-20">
             <Toaster position="top-center" reverseOrder={false} />

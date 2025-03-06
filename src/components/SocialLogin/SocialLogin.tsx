@@ -56,8 +56,6 @@ const SocialLogin = () => {
         setLoading(true);
         githubSignIn()
             .then((result: { user: any; }) => {
-                console.log(result.user);
-    
                 const loggedInUser = result.user;
                 const email = loggedInUser.email;
                 const username = email.substring(0, email.indexOf('@'));
