@@ -24,7 +24,19 @@ const EditProfile = () => {
     }
     const { user } = authContext;
 
-    const { register, handleSubmit, control, setValue, formState: { errors } } = useForm({
+    const { register, handleSubmit, control, setValue, formState: { errors } } = useForm<{ 
+        name: string;
+        age: string;
+        gender: string;
+        portfolioURL: string;
+        country: string;
+        city: string;
+        facebookURL: string;
+        twitterURL: string;
+        githubURL: string;
+        selected: string[];
+        aboutMe: string;
+    }>({
         defaultValues: {
             name: '',
             age: '',
@@ -38,7 +50,7 @@ const EditProfile = () => {
             selected: [],
             aboutMe: '',
         }
-    });    
+    });     
 
     const { data: userData = [], refetch } = useQuery([user?.email], async () => {
         const res = await fetch(`http://localhost:5000/user?email=${user?.email}`);
@@ -113,10 +125,11 @@ const EditProfile = () => {
             setValue('facebookURL', userData?.facebookURL);
             setValue('twitterURL', userData?.twitterURL);
             setValue('githubURL', userData?.githubURL);
-            setValue('selected', userData?.selected);
+            setValue('selected', userData?.selected || []);
+            setSelected(userData?.selected || []);
             setValue('aboutMe', userData?.aboutMe);
         }
-    }, [userData, setValue]);    
+    }, [userData, setValue]);      
 
     return (
         <main>
@@ -259,7 +272,10 @@ const EditProfile = () => {
                     <label className='block text-gray-500 text-sm font-medium mb-1' htmlFor="skills">Skills</label>
                     <TagsInput
                         value={selected}
-                        onChange={setSelected}
+                        onChange={(tags: string[]) => {
+                            setSelected(tags);
+                            setValue("selected", tags);
+                        }}
                         name="skills"
                         placeHolder="Type your skills & hit enter"
                     />

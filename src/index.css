@@ -85,6 +85,29 @@ pre.ql-syntax::-webkit-scrollbar-thumb {
   display: none !important;
 }
 
+.rti--container {
+  padding: 8px 15px 8px 15px !important;
+  transition: 0.3s all;
+}
+
+.rti--input {
+  border-radius: 4px !important;
+  width: 100% !important;
+}
+
+.rti--container:hover {
+  border-color: #33B89F;
+}
+
+.rti--container:focus-within {
+  border-color: #33B89F !important;
+  box-shadow: none !important;
+}
+
+.rti--tag {
+  font-size: 14px;
+}
+
 /* Custom scrollbar styling */
 ::-webkit-scrollbar {
   width: 10px; /* Adjust the width as needed */
