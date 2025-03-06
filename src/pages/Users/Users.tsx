@@ -5,9 +5,9 @@ import { useContext, useEffect, useState } from "react"
 import { AuthContext } from "../../Provider/AuthProvider";
 import { Skeleton } from "primereact/skeleton";
 import { Button } from "primereact/button";
-import b2 from '../../assets/badges/l1.png'
-import b3 from '../../assets/badges/l2.png'
-import b4 from '../../assets/badges/top.png'
+import l1 from '../../assets/badges/l1.png'
+import l2 from '../../assets/badges/l2.png'
+import Top from '../../assets/badges/top.png'
 
 const Users = () => {
     useEffect(() => {
@@ -107,8 +107,8 @@ const Users = () => {
                                 <div className="absolute -right-2 -top-2">
                                     {(() => {
                                         const count = questionCounts?.[member?.email] ?? 0;
-                                        const badgeSrc = count >= 20 ? b4 : count >= 10 ? b3 : count >= 5 ? b2 : null;
-                                        return badgeSrc ? <img className="w-6" src={badgeSrc} alt="Badge" /> : null;
+                                        const badgeSrc = count >= 20 ? Top : count >= 10 ? l2 : count >= 5 ? l1 : null;
+                                        return badgeSrc ? <span className="tooltip tooltip-bottom" data-tip={`${count >= 20 ? 'Top' : count >= 10 ? 'Level 2' : count >= 5 ? 'Level 1' : ''}`}><img className="w-6" src={badgeSrc} alt="Badge" /></span> : null;
                                     })()}
                                 </div>
                                 <figure>

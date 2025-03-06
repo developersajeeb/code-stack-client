@@ -217,9 +217,9 @@ const QuestionsDetails = () => {
                                 {
                                     !userBadgeComing && allUserQuestion?.questionCount !== 0 && (
                                         <span className="absolute -right-2 -top-2">
-                                            {allUserQuestion.questionCount >= 20 ? <img className="w-6" src={top} /> :
-                                                allUserQuestion.questionCount >= 10 ? <img className="w-6" src={l2} /> :
-                                                    allUserQuestion.questionCount >= 5 ? <img className="w-6" src={l1} /> : ''}
+                                            {allUserQuestion.questionCount >= 20 ? <span className="tooltip tooltip-bottom" data-tip="Top"><img className="w-6" src={top} /></span> :
+                                                allUserQuestion.questionCount >= 10 ? <span className="tooltip tooltip-bottom" data-tip="Level 2"><img className="w-6" src={l2} /></span> :
+                                                    allUserQuestion.questionCount >= 5 ? <span className="tooltip tooltip-bottom" data-tip="Level 1"><img className="w-6" src={l1} /></span> : ''}
                                         </span>
                                     )
                                 }

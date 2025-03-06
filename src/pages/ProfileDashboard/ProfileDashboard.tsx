@@ -2,9 +2,9 @@ import { useEffect, useState, useContext } from "react";
 import { MdOutlineQuestionAnswer } from "react-icons/md";
 import { TbMessageCircleQuestion, TbWorldLongitude } from "react-icons/tb";
 import { AuthContext } from "../../Provider/AuthProvider";
-import b2 from '../../assets/badges/l1.png'
-import b3 from '../../assets/badges/l2.png'
-import b4 from '../../assets/badges/top.png'
+import l1 from '../../assets/badges/l1.png'
+import l2 from '../../assets/badges/l2.png'
+import Top from '../../assets/badges/top.png'
 import { Skeleton } from "primereact/skeleton";
 import { Chart } from "primereact/chart";
 import { useQuery } from "@tanstack/react-query";
@@ -171,13 +171,19 @@ const ProfileDashboard = () => {
                         ) : (
                             <>
                                 {allLengthQuestion?.length >= 5 && (
-                                    <img className="w-12 h-12" src={b2} alt="" />
+                                    <span className="tooltip tooltip-bottom" data-tip="Level 1">
+                                        <img className="w-12 h-12" src={l1} alt="" />
+                                    </span>
                                 )}
                                 {allLengthQuestion?.length >= 10 && (
-                                    <img className="w-12 h-12" src={b3} alt="" />
+                                    <span className="tooltip tooltip-bottom" data-tip="Level 2">
+                                        <img className="w-12 h-12" src={l2} alt="" />
+                                    </span>
                                 )}
                                 {allLengthQuestion?.length >= 20 && (
-                                    <img className="w-12 h-12" src={b4} alt="" />
+                                    <span className="tooltip tooltip-bottom" data-tip="Top">
+                                        <img className="w-12 h-12" src={Top} alt="" />
+                                    </span>
                                 )}
                                 {allLengthQuestion?.length < 5 && <><p className="text-sm text-gray-400">You have no level.</p></>}
                             </>
