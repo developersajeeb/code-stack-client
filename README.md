@@ -28,7 +28,7 @@ CodeStack is a collaborative question-and-answer web application inspired by Sta
 - 📊 **Chart.js**
 - 🔍 **Tenstack Query**
 - 🚏 **React Router DOM**
-- 📜 **React Hook Form, Quill**
+- 📜 **React Hook Form**
 
 ### Authentication:
 - 🔐 **Firebase (Manual, Google, GitHub)**

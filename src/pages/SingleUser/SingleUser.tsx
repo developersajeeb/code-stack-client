@@ -32,6 +32,12 @@ interface QuestionData {
     title: '',
 }
 
+interface UserQuestion {
+    questions: QuestionData[],
+    questionCount: number,
+    manualLevelUpdate: boolean,
+}
+
 const SingleUser = () => {
     useEffect(() => {
         window.scrollTo(0, 0);
@@ -39,7 +45,7 @@ const SingleUser = () => {
     const userData = useLoaderData() as UserInfo | undefined;
     const [allQuestions, setAllQuestions] = useState<QuestionData[]>([]);
     const [allAnswers, setAllAnswers] = useState([]);
-    const [allUserQuestion, setAllUserQuestion] = useState([]);
+    const [allUserQuestion, setAllUserQuestion] = useState<UserQuestion>({ questions: [], questionCount: 0, manualLevelUpdate: false });
     const [isButtonLoading, setIsButtonLoading] = useState<boolean>(true);
     const [isSkeletonLoading, setIsSkeletonLoading] = useState<boolean>(true);
     const [isDataQLoading, setIsDataQLoading] = useState<boolean>(true);
@@ -142,7 +148,7 @@ const SingleUser = () => {
                                         <progress className="progress w-11 h-7 rounded-md" value={0} max="100"></progress>
                                     </div>
                                 ) : (
-                                    allUserQuestion?.length || 0
+                                    allUserQuestion?.questionCount || 0
                                 )
                             }</span>
                         </div>
@@ -159,25 +165,25 @@ const SingleUser = () => {
                         </div>
                     </div>
                     {
-                        allUserQuestion?.length > 5 &&
+                        allUserQuestion?.questionCount > 5 &&
                         <div>
                             <h3 className="text-xl font-medium mb-3">Badges</h3>
                             <ul className="flex gap-4">
-                                {allUserQuestion?.length >= 5 &&
+                                {allUserQuestion?.questionCount >= 5 &&
 
                                     <li className="text-center">
                                         <img className="w-14 h-14 max-w-[56px] max-h-[56px] object-fill" src={b2} alt="" />
                                         <small className="font-medium text-gray-400">L1</small>
                                     </li>
                                 }
-                                {allUserQuestion?.length >= 10 &&
+                                {allUserQuestion?.questionCount >= 10 &&
 
                                     <li className="text-center">
                                         <img className="w-14 h-14 max-w-[56px] max-h-[56px] object-fill" src={b3} alt="" />
                                         <small className="font-medium text-gray-400">L2</small>
                                     </li>
                                 }
-                                {allUserQuestion?.length >= 20 &&
+                                {allUserQuestion?.questionCount >= 20 &&
 
                                     <li className="text-center">
                                         <img className="w-14 h-14 max-w-[56px] max-h-[56px] object-fill" src={b4} alt="" />

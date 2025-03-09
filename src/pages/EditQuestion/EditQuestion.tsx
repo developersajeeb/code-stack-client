@@ -1,6 +1,5 @@
 import { useLoaderData, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
-import 'react-quill/dist/quill.snow.css';
 import { TagsInput } from "react-tag-input-component";
 import { toast, Toaster } from "react-hot-toast";
 import { Editor, EditorTextChangeEvent } from "primereact/editor";
