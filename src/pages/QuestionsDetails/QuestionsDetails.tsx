@@ -203,6 +203,8 @@ const QuestionsDetails = () => {
         setUserBadgeComing(false);
     }, [questionData?.email]);
 
+    const userImage = userData?.email === questionData?.email ? userData?.imgURL : questionData?.userPhoto || notUser;
+
     return (
         <main className="px-0 lg:pl-6 pt-32 lg:pt-20">
             <Toaster position="top-center" reverseOrder={false} />
@@ -220,7 +222,7 @@ const QuestionsDetails = () => {
                                         </span>
                                     )
                                 }
-                                <img className="w-11 h-11 object-cover rounded-full" src={userData?.imgURL || notUser} alt="User Photo" />
+                                <img className="w-11 h-11 object-cover rounded-full" src={userImage} alt="User Photo" />
                                 <div>
                                     <h5 className="font-medium -mb-[3px] word-break">{questionData?.name}</h5>
                                     <span className="text-sm font-light word-break">{questionData?.username}</span>
